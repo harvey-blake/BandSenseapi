@@ -43,7 +43,7 @@ class App
         // $controller = 'app\\' .  $APP_LICATION . '\\'  . VERSION . '\\controller\\' . $controller;
         // 控制器实例化
         // $users =  Db::table('dex_TAGS')->field('*')->select();
-        // dump($users);
+        dump($controller);
 
 
         $controller =  new $controller();
@@ -92,7 +92,7 @@ class App
     {
         // 类文件的命名空间,应该与类文件所在的路径存在一一对应关系
         $file = ROOT_PATH . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
-        // dump($file);
+        dump($file);
         // dump(CONFIG['app']['debug']);
         if (file_exists($file)) {
             require $file;
