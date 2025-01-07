@@ -32,9 +32,9 @@ class Router
             $pathinfo = array_filter(explode('/', $_SERVER['PATH_INFO']));
             // dump($pathinfo);
             // 必须满足 版本控制器 方法  默认的直接去失败的
-
+            dump(count($pathinfo));
             if (count($pathinfo) >= 4) {
-                // dump(count($pathinfo));
+
                 $APP_LICATION = array_shift($pathinfo);
                 $VERSION = array_shift($pathinfo);
                 $controller = array_shift($pathinfo);
