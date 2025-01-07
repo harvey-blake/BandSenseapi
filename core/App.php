@@ -44,10 +44,8 @@ class App
         // 控制器实例化
         // $users =  Db::table('dex_TAGS')->field('*')->select();
         // dump($users);
-        define('SECRETKEY', '93a1c3a4b6e9f0d1e4b0f78a9cd7b0d1a78d9b0e4b0e');
-        //! 阿里云密钥
-        define('ACCESSKEYID', 'LTAI5tJiVust5rLQNu3biMFb');
-        define('ACCESSKEYSECRET', 'EzJbyG3q4h73GOUmMe3x1OurE5ztps');
+
+
         $controller =  new $controller();
         // 调用控制器中的方法,并传入指定的参数,完成页面的渲染
 
