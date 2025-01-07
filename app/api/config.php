@@ -28,7 +28,7 @@ return [
         'host' => '127.0.0.1',
 
         // 默认数据库
-        'dbname' => 'dapp',
+        'dbname' => 'bandsenseapi_dex',
 
         // 默认端口
         'port' => '3006',
@@ -37,9 +37,9 @@ return [
         'charset' => 'utf8',
 
         // 默认用户名
-        'username' => 'tgdapp',
+        'username' => 'BandSenseapi_dex',
 
         // 默认用户密码
-        'password' => 'pYbBf4SX5ePb7hW7'
+        'password' => 'eeAW7fpcy3LMsLAi'
     ]
 ];

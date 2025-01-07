@@ -11,6 +11,12 @@ class  DeleteController
 {
     public function index()
     {
-        dump('开始');
+
+        $arr =  Db::table('cex_user')->field('*')->select();
+        if ($arr) {
+            echo json_encode(retur('成功',  $arr));
+        } else {
+            echo json_encode(retur('失败', $arr, 422));
+        }
     }
 }
