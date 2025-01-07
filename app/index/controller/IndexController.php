@@ -23,10 +23,5 @@ class IndexController extends Controller
         $users =  Db::table('user')->field('*')->select();
 
         dump('hello wrod!');
-
-        // var_dump([$params, $params1]);
-        // $this->view->render(null, [1, 2]);
-        // return '进入枯了';
-        // echo 'fanhui';
     }
 }

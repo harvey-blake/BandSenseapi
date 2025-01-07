@@ -9,7 +9,7 @@ class IndexController extends Controller
 {
     public function index()
     {
-        chaxun();
+
         // return '进入枯了';
         // echo 'fanhui';
     }
