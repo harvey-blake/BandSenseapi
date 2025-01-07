@@ -24,5 +24,4 @@ return array(
     '6ca3f08a814c4fd9d5830fc6808a9488' => $vendorDir . '/fukuball/jieba-php/src/vendor/multi-array/MultiArray.php',
     '4d5ee3c1cc66ee941937c247fe6b7d6e' => $vendorDir . '/fukuball/jieba-php/src/vendor/multi-array/Factory/MultiArrayFactory.php',
     'e39a8b23c42d4e1452234d762b03835a' => $vendorDir . '/ramsey/uuid/src/functions.php',
-    '5eae9b89b67c13cdd0a28504e2da1b5c' => $baseDir . '/common/tgmessages.php',
 );

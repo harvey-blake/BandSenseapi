@@ -25,7 +25,6 @@ class ComposerStaticInit6bef86f4d53bb11ff54fc7a7dfa3498f
         '6ca3f08a814c4fd9d5830fc6808a9488' => __DIR__ . '/..' . '/fukuball/jieba-php/src/vendor/multi-array/MultiArray.php',
         '4d5ee3c1cc66ee941937c247fe6b7d6e' => __DIR__ . '/..' . '/fukuball/jieba-php/src/vendor/multi-array/Factory/MultiArrayFactory.php',
         'e39a8b23c42d4e1452234d762b03835a' => __DIR__ . '/..' . '/ramsey/uuid/src/functions.php',
-        '5eae9b89b67c13cdd0a28504e2da1b5c' => __DIR__ . '/../..' . '/common/tgmessages.php',
     );
 
     public static $prefixLengthsPsr4 = array (
