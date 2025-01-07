@@ -21,13 +21,10 @@ use Lcobucci\JWT\Validation\Constraint\SignedWith;
 class Controller
 {
     // 视图对象
-    protected View $view;
     protected  $myCallback;
     // 构造器
-    public function __construct(View $view)
+    public function __construct()
     {
-
-        $this->view = $view;
         $this->myCallback = new CallbackController();
     }
     // 这是公共的控制器  可以写  所有都用的函数 不管哪个版本 都可以访问
@@ -36,63 +33,6 @@ class Controller
 
 
         chaxun();
-    }
-    // 根据用户授权码  获取用户信息
-    public  function getUserInfoFromGitHub($code)
-    {
-        // 您的 GitHub OAuth 应用程序的 Client ID 和 Client Secret
-        $clientID = '0282aacf69050a9690fb';
-        $clientSecret = 'f12abe03cadf96bc2b1058b873d4b6d431d282db';
-
-        // 指定重定向 URI
-        $redirectUri = 'http://localhost:8080/login';
-
-        // 使用授权码交换访问令牌
-        $accessTokenUrl = 'https://github.com/login/oauth/access_token';
-        $data = array(
-            'client_id' => $clientID,
-            'client_secret' => $clientSecret,
-            'code' => $code,
-
-        );
-
-        $options = array(
-            'http' => array(
-                'method' => 'POST',
-                'header' => "Content-Type: application/x-www-form-urlencoded\r\n" .
-                    "Accept: application/json\r\n", // 添加 Accept 标头
-                'content' => http_build_query($data)
-            )
-        );
-
-        $context = stream_context_create($options);
-        $response = file_get_contents($accessTokenUrl, false, $context);
-        $params = json_decode($response, true);
-
-        // 检查是否成功获取访问令牌
-        if (isset($params['access_token'])) {
-            // 获取到了访问令牌，授权码有效，可以通过访问令牌调用 GitHub API 获取用户信息
-            $accessToken = $params['access_token'];
-
-            // 使用访问令牌获取用户信息
-            $userInfoUrl = 'https://api.github.com/user';
-            $options = array(
-                'http' => array(
-                    'method' => 'GET',
-                    'header' => "Authorization: Bearer " . $accessToken . "\r\n" .
-                        "User-Agent: Your-App-Name\r\n" // 替换为您的应用程序名称
-                )
-            );
-
-            $context = stream_context_create($options);
-            $userInfo = file_get_contents($userInfoUrl, false, $context);
-            $userInfo = json_decode($userInfo, true);
-            // 返回用户信息
-            return $userInfo['id'];
-        } else {
-            // 处理获取访问令牌失败的情况
-            return null;
-        }
     }
 
     // 获取JWT  需要测试的
@@ -287,11 +227,6 @@ class Controller
         }
     }
 }
-
-
-
-
-
 
 
 // 通用得到控制器函数都写在这  比如用户登录  注册
