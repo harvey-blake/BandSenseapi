@@ -24,7 +24,7 @@ class Db
 
         // 1. 连接数据库
         $dsn = CONFIG['database']['type'] . ':dbname=' . CONFIG['database']['dbname'] . '; host=' . CONFIG['database']['host'];
-        // dump($dsn);
+        dump($dsn);
         $username = CONFIG['database']['username'];
         $password = CONFIG['database']['password'];
 
