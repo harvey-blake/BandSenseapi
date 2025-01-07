@@ -80,7 +80,7 @@ class App
             $VERSION = array_shift($pathinfo);
             $appConfig =  ROOT_APP_PATH . DIRECTORY_SEPARATOR . $APP_LICATION . DIRECTORY_SEPARATOR . $VERSION . DIRECTORY_SEPARATOR . 'config.php';
         }
-
+        dump($appConfig);
         define('CONFIG', require file_exists($appConfig) ? $appConfig : $defaultConfig);
         // 5. 设置调试开关
         // php.ini
