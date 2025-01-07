@@ -28,7 +28,7 @@ return [
         'host' => '127.0.0.1',
 
         // 默认数据库
-        'dbname' => 'edu_swap_com',
+        'dbname' => 'bandsenseapi_dex',
 
         // 默认端口
         'port' => '3006',
@@ -37,9 +37,9 @@ return [
         'charset' => 'utf8',
 
         // 默认用户名
-        'username' => 'edu_swap_com',
+        'username' => 'BandSenseapi_dex',
 
         // 默认用户密码
-        'password' => 'hsY8PR58maRrsS6e'
+        'password' => 'eeAW7fpcy3LMsLAi'
     ]
 ];
