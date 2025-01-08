@@ -39,7 +39,9 @@ class CreateController extends Controller
         $arr =  Db::table('tokenlist')->field('*')->where(['pair' => $data['pair']])->find();
         if (!$arr) {
             $data['id'] = $user['id'];
+            dump($data);
             $arr =  Db::table('tokenlist')->insert($data);
+            dump($arr);
             echo json_encode(retur('成功', $arr));
         } else {
             echo json_encode(retur('失败', '未知原因', 400));
