@@ -110,7 +110,7 @@ class Controller
     // 验证JWT
     function validateJWT()
     {
-        return 1;
+        return ['id' => 1];
         // 解密
         header('Access-Control-Allow-Headers: Authorization, Content-Type');
         // $headers = getallheaders();
