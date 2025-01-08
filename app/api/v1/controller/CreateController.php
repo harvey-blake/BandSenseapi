@@ -22,22 +22,19 @@ namespace app\api\v1\controller;
 use Db\Db;
 use function common\dump;
 use function common\retur;
-
+use common\Controller;
 // 写入
-class CreateController
+class CreateController extends Controller
 {
 
-    public function index()
-    {
-        dump('成功');
-    }
+
 
     public function tokenlist()
     {
 
 
         $data = json_decode(file_get_contents('php://input'), true);
-        $user =   self::validateJWT();
+        $user = self::validateJWT();
 
         $arr =  Db::table('tokenlist')->field('*')->where(['pair' => $data['pair']])->find();
         if (!$arr) {
