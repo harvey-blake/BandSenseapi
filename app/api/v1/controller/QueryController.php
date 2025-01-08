@@ -5,12 +5,21 @@ namespace app\api\v1\controller;
 
 
 use Db\Db;
-use function common\tgverification;
 use function common\dump;
-use function common\mute_member;
-use function common\send_unmute_button;
-use function common\unmute_member;
-use function common\edit_message;
+use function common\retur;
 
 
-class QueryController {}
+class QueryController
+{
+    public function tokenlist()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $user = self::validateJWT();
+        $arr =  Db::table('tokenlist')->where(['id' => $user['id']])->select();
+        if ($arr) {
+            echo json_encode(retur('成功',  $arr));
+        } else {
+            echo json_encode(retur('失败', $arr, 422));
+        }
+    }
+}
