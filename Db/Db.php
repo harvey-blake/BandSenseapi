@@ -15,7 +15,7 @@ class Db
     // 连接数据库, 创建PDO对象
     protected static function connect(string $dsn, string $username, string $password)
     {
-        // dump([$dsn, $username, $password]);
+
         self::$db =   new PDO($dsn, $username, $password);
     }
 
@@ -24,7 +24,7 @@ class Db
 
         // 1. 连接数据库
         $dsn = CONFIG['database']['type'] . ':dbname=' . CONFIG['database']['dbname'] . '; host=' . CONFIG['database']['host'];
-        dump($dsn);
+
         $username = CONFIG['database']['username'];
         $password = CONFIG['database']['password'];
 

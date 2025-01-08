@@ -155,7 +155,7 @@ class Query
             $str .= $key . " = '" . $value . "', ";
         }
         $sql = 'INSERT ' . $this->table . ' SET ' . rtrim($str, ', ');
-        dump($sql);
+        // dump($sql);
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
         return $stmt->rowCount();

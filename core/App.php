@@ -43,7 +43,7 @@ class App
         // $controller = 'app\\' .  $APP_LICATION . '\\'  . VERSION . '\\controller\\' . $controller;
         // 控制器实例化
         // $users =  Db::table('dex_TAGS')->field('*')->select();
-        dump($controller);
+
 
 
         $controller =  new $controller();
@@ -72,7 +72,7 @@ class App
         $defaultConfig =  ROOT_PATH . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'config.php';;
 
         $pathinfo = array_filter(explode('/', $_SERVER['PATH_INFO']));
-        // dump($pathinfo);
+
         // 必须满足 版本控制器 方法  默认的直接去失败的
         $appConfig = '';
         if (count($pathinfo) >= 2) {
@@ -80,7 +80,7 @@ class App
             $VERSION = array_shift($pathinfo);
             $appConfig =  ROOT_APP_PATH . DIRECTORY_SEPARATOR . $APP_LICATION . DIRECTORY_SEPARATOR . $VERSION . DIRECTORY_SEPARATOR . 'config.php';
         }
-        dump($appConfig);
+
         define('CONFIG', require file_exists($appConfig) ? $appConfig : $defaultConfig);
         // 5. 设置调试开关
         // php.ini
@@ -92,7 +92,7 @@ class App
     {
         // 类文件的命名空间,应该与类文件所在的路径存在一一对应关系
         $file = ROOT_PATH . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
-        dump($file);
+
         // dump(CONFIG['app']['debug']);
         if (file_exists($file)) {
             require $file;
