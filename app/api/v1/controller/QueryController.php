@@ -7,9 +7,9 @@ namespace app\api\v1\controller;
 use Db\Db;
 use function common\dump;
 use function common\retur;
+use common\Controller;
 
-
-class QueryController
+class QueryController extends Controller
 {
     public function tokenlist()
     {
