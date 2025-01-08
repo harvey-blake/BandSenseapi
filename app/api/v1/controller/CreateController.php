@@ -44,7 +44,7 @@ class CreateController extends Controller
                 echo json_encode(retur('失败', '添加失败请查看参数', 422));
             }
         } else {
-            echo json_encode(retur('失败', '未知原因', 400));
+            echo json_encode(retur('失败', '交易对已经存在', 409));
         }
     }
 }
