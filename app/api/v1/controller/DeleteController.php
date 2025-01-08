@@ -9,14 +9,15 @@ use function common\retur;
 
 class  DeleteController
 {
-    public function index()
+    public function tokenlist()
     {
-
-        $arr =  Db::table('cex_user')->field('*')->select();
-        if ($arr) {
-            echo json_encode(retur('成功',  $arr));
+        $data = json_decode(file_get_contents('php://input'), true);
+        $user = self::validateJWT();
+        $arr =  Db::table('tokenlist')->where(['id' => $user['id'], 'pair' => $data['token']])->delete();
+        if ($arr > 0) {
+            echo json_encode(retur('成功', $arr));
         } else {
-            echo json_encode(retur('失败', $arr, 422));
+            echo json_encode(retur('失败', '没删除任何数据', 404));
         }
     }
 }
