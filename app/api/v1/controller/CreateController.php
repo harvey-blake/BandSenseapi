@@ -31,18 +31,18 @@ class CreateController extends Controller
 
     public function tokenlist()
     {
-
-
         $data = json_decode(file_get_contents('php://input'), true);
         $user = self::validateJWT();
-
         $arr =  Db::table('tokenlist')->field('*')->where(['pair' => $data['pair']])->find();
         if (!$arr) {
             $data['id'] = $user['id'];
-            dump($data);
+
             $arr =  Db::table('tokenlist')->insert($data);
-            dump($arr);
-            echo json_encode(retur('成功', $arr));
+            if ($arr > 0) {
+                echo json_encode(retur('成功', $arr));
+            } else {
+                echo json_encode(retur('失败', '添加失败请查看参数', 422));
+            }
         } else {
             echo json_encode(retur('失败', '未知原因', 400));
         }
