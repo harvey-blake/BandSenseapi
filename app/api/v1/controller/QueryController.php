@@ -15,11 +15,15 @@ class QueryController extends Controller
     {
         $data = json_decode(file_get_contents('php://input'), true);
         $user = self::validateJWT();
-        $arr =  Db::table('tokenlist')->where(['id' => $user['id']])->select();
-        if ($arr) {
-            echo json_encode(retur('成功',  $arr));
+
+
+
+        $arr =  Db::table('tokenlist')->where(['id' => $user['id']])->order('time', 'desc')->limit(5)->page($data['page'])->select();
+        $count =  Db::table('tokenlist')->where(['id' => $user['id']])->count();
+        if (count($arr) > 0) {
+            echo json_encode(retur($count, $arr));
         } else {
-            echo json_encode(retur('失败', $arr, 422));
+            echo json_encode(retur($count, $arr, 422));
         }
     }
 }
