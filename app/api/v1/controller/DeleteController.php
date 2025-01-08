@@ -6,8 +6,9 @@ namespace app\api\v1\controller;
 use Db\Db;
 use function common\dump;
 use function common\retur;
+use common\Controller;
 
-class  DeleteController
+class  DeleteController extends Controller
 {
     public function tokenlist()
     {
