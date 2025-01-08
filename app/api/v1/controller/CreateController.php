@@ -19,9 +19,9 @@
 // 客户端请求存在问题：400
 namespace app\api\v1\controller;
 
-
 use Db\Db;
 use function common\dump;
+use function common\retur;
 
 // 写入
 class CreateController
@@ -30,5 +30,22 @@ class CreateController
     public function index()
     {
         dump('成功');
+    }
+
+    public function tokenlist()
+    {
+
+
+        $data = json_decode(file_get_contents('php://input'), true);
+        $user =   self::validateJWT();
+
+        $arr =  Db::table('tokenlist')->field('*')->where(['pair' => $data['pair']])->find();
+        if (!$arr) {
+            $data['id'] = $user['id'];
+            $arr =  Db::table('tokenlist')->insert($data);
+            echo json_encode(retur('成功', $arr));
+        } else {
+            echo json_encode(retur('失败', '未知原因', 400));
+        }
     }
 }

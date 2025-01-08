@@ -20,7 +20,6 @@ function dump(...$data)
     }
 }
 
-
 // 返回参数 就是用的比较多的
 function retur($massage = '', $data = '', $code = '')
 {   // 什么都不传 表示成功   但是不返回CODE以外的数据
@@ -30,4 +29,19 @@ function retur($massage = '', $data = '', $code = '')
     } else {
         return    ['code' => $code, 'data' => $data, 'massage' => $massage, 'state' => 'error'];
     }
+}
+//加密
+function encryptData($data)
+{
+    define('SECRETKEY', '93a1c3a4b6e9f0d1e4b0f78a9cd7b0d1a78d9b0e4b0e');
+    $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length('aes-256-cbc'));
+    $encrypted = openssl_encrypt(json_encode($data), 'aes-256-cbc', SECRETKEY, 0, $iv);
+    return base64_encode($encrypted . '::' . $iv);
+}
+
+// 解密
+function decryptData($encryptedData)
+{
+    list($encryptedData, $iv) = explode('::', base64_decode($encryptedData), 2);
+    return json_decode(openssl_decrypt($encryptedData, 'aes-256-cbc', SECRETKEY, 0, $iv), true);
 }
