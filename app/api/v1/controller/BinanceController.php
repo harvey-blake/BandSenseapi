@@ -21,6 +21,6 @@ class BinanceController extends Controller
         $secret = 'FKEYTbtFUWKyoIrdeaGEsM1LYximNToGWGhyG5hWgWQOSEqGN4wxCE7h5eCzGqOE';
         $client = new Spot(['key' => $key, 'secret' => $secret]);;
         $response = $client->account();
-        echo $response;
+        echo dump($response);
     }
 }
