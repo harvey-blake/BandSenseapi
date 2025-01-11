@@ -74,6 +74,8 @@ class BinanceController extends Controller
         if (count($arr) > 0) {
             foreach ($arr as $key => $value) {
                 $arr[$key]['Balance'] = json_decode(stripslashes($arr[$key]['Balance']), true);
+                $arr[$key]['APIKey'] = substr($arr[$key]['APIKey'], 0, 4) . '...' . substr($arr[$key]['APIKey'], -5);
+                unset($arr[$key]['SecretKey']);
                 # code...
             }
 
