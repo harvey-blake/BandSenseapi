@@ -21,9 +21,9 @@ class BinanceController extends Controller
         $secret = 'FKEYTbtFUWKyoIrdeaGEsM1LYximNToGWGhyG5hWgWQOSEqGN4wxCE7h5eCzGqOE';
         $client = new Spot(['key' => $key, 'secret' => $secret]);;
         $response = $client->account();
-        //
+        //uid   是否允许交易   账户类型
+        echo ($response);
 
-
-        echo dump($response);
+        echo dump($response->uid, $response->canTrade, $response->accountType);
     }
 }
