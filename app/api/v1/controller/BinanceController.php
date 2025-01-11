@@ -31,12 +31,12 @@ class BinanceController extends Controller
             dump(get_class($th)); // 打印异常的完整类名
             dump($th->getMessage()); // 打印异常消息
 
-            // 获取并解析响应体的 JSON 错误信息
-            $errorBody = $th->getMessage();
+            // 获取响应体并解析错误的 JSON 数据
+            $errorBody = $th->getResponse()->getBody()->getContents();
             $errorData = json_decode($errorBody, true);
 
-            // 输出错误信息
-            dump($errorData);
+            // 打印解析后的错误数据
+            dump($errorData);  // 输出 {"code": -2014, "msg": "API-key format invalid."}
         }
     }
 }
