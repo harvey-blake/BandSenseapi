@@ -26,17 +26,17 @@ class BinanceController extends Controller
             echo ($response);
 
             // echo dump($response->uid, $response->canTrade, $response->accountType);
-        } catch (\Throwable $th) {
-            // 打印出异常的消息
-            dump(get_class($th));
-            dump($th->getMessage());
+        } catch (\Binance\Exception\ClientException $th) {
+            // 打印异常的类型和消息
+            dump(get_class($th)); // 打印异常的完整类名
+            dump($th->getMessage()); // 打印异常消息
 
-            // 如果是客户端异常，获取完整的错误信息
-            if ($th instanceof \GuzzleHttp\Exception\ClientException) {
-                // 获取响应体内容
-                $errorBody = $th->getResponse()->getBody()->getContents();
-                dump($errorBody);  // 输出错误的 JSON 响应体
-            }
+            // 获取并解析响应体的 JSON 错误信息
+            $errorBody = $th->getResponse()->getBody()->getContents();
+            $errorData = json_decode($errorBody, true);
+
+            // 输出错误信息
+            dump($errorData);
         }
     }
 }
