@@ -17,10 +17,13 @@ class BinanceController extends Controller
     {
         $data = json_decode(file_get_contents('php://input'), true);
         $user = self::validateJWT();
-        $key = '466SioaRMJGXfKESRF8mdGzICXDN4bv21TP2KzFYqx6AFMq3TNCiYNYY9TV6Aq32';
+        $key = '466SioaRMJGXfKESRF8mdGzICXDN4bv21TP2KzFYqx6AFMq3TNCiYNYY9TV6Aq32y';
         $secret = 'FKEYTbtFUWKyoIrdeaGEsM1LYximNToGWGhyG5hWgWQOSEqGN4wxCE7h5eCzGqOE';
         $client = new Spot(['key' => $key, 'secret' => $secret]);;
         $response = $client->account();
+        //
+
+
         echo dump($response);
     }
 }
