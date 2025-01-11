@@ -9,7 +9,6 @@ use function common\dump;
 use function common\retur;
 use Binance\Spot;
 use common\Controller;
-use GuzzleHttp\Exception\ClientException;
 
 class BinanceController extends Controller
 {
@@ -27,13 +26,16 @@ class BinanceController extends Controller
             echo ($response);
 
             // echo dump($response->uid, $response->canTrade, $response->accountType);
-        } catch (ClientException $e) {
+        } catch (\Throwable $th) {
+            // 打印出异常的消息
+            dump($th->getMessage());
 
-            $errorBody = $e->getResponse()->getBody()->getContents();
-
-            // 输出错误信息的 JSON
-
-            dump($errorBody);
+            // 如果是客户端异常，获取完整的错误信息
+            if ($th instanceof \GuzzleHttp\Exception\ClientException) {
+                // 获取响应体内容
+                $errorBody = $th->getResponse()->getBody()->getContents();
+                dump($errorBody);  // 输出错误的 JSON 响应体
+            }
         }
     }
 }
