@@ -25,7 +25,11 @@ class BinanceController extends Controller
             //uid   是否允许交易   账户类型
             dump($response);
 
-            echo dump($response->uid, $response->canTrade, $response->accountType);
+            echo dump(
+                $response['uid'],
+                $response['canTrade'],
+                $response['accountType']
+            );
         } catch (\Binance\Exception\ClientException $th) {
 
             // dump($th->getMessage()); // 打印异常消息
