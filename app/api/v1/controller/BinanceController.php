@@ -28,6 +28,7 @@ class BinanceController extends Controller
             // echo dump($response->uid, $response->canTrade, $response->accountType);
         } catch (\Throwable $th) {
             // 打印出异常的消息
+            dump(get_class($th));
             dump($th->getMessage());
 
             // 如果是客户端异常，获取完整的错误信息
