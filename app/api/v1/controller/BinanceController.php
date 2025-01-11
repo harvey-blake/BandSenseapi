@@ -27,7 +27,7 @@ class BinanceController extends Controller
 
             echo dump($response->uid, $response->canTrade, $response->accountType);
         } catch (\Throwable $th) {
-            dump($th->message);
+            dump($th->getMessage());
         }
     }
 }
