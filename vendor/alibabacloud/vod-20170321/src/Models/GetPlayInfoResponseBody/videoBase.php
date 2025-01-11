@@ -66,6 +66,25 @@ class videoBase extends Model
     public $status;
 
     /**
+     * @description The storage class of the audio file. Valid values:
+     *
+     *   **Standard**: All media resources are stored as Standard objects.
+     *   **IA**: All media resources are stored as IA objects.
+     *   **Archive**: All media resources are stored as Archive objects.
+     *   **ColdArchive**: All media resources are stored as Cold Archive objects.
+     *   **SourceIA**: Only the source files are IA objects.
+     *   **SourceArchive**: Only the source files are Archive objects.
+     *   **SourceColdArchive**: Only the source file is stored as a Cold Archive object.
+     *   **Changing**: The storage class of the video file is being changed.
+     *   **SourceChanging**: The storage class of the source file is being changed.
+     *
+     * @example Standard
+     *
+     * @var string
+     */
+    public $storageClass;
+
+    /**
      * @description The title of the audio or video file.
      *
      * @example ApsaraVideo VOD
@@ -89,6 +108,7 @@ class videoBase extends Model
         'duration'     => 'Duration',
         'mediaType'    => 'MediaType',
         'status'       => 'Status',
+        'storageClass' => 'StorageClass',
         'title'        => 'Title',
         'videoId'      => 'VideoId',
     ];
@@ -117,6 +137,9 @@ class videoBase extends Model
         }
         if (null !== $this->status) {
             $res['Status'] = $this->status;
+        }
+        if (null !== $this->storageClass) {
+            $res['StorageClass'] = $this->storageClass;
         }
         if (null !== $this->title) {
             $res['Title'] = $this->title;
@@ -153,6 +176,9 @@ class videoBase extends Model
         }
         if (isset($map['Status'])) {
             $model->status = $map['Status'];
+        }
+        if (isset($map['StorageClass'])) {
+            $model->storageClass = $map['StorageClass'];
         }
         if (isset($map['Title'])) {
             $model->title = $map['Title'];

@@ -9,6 +9,15 @@ use AlibabaCloud\Tea\Model;
 class DescribeVodTranscodeDataRequest extends Model
 {
     /**
+     * @description The ID of the application. You can specify this parameter to query the transcoding statistics of a specific application. By default, the transcoding statistics of all applications is returned. You can obtain the application ID from the `AppId` parameter in the response to the [CreateAppInfo](~~CreateAppInfo~~) operation.
+     *
+     * @example app-1000001
+     *
+     * @var string
+     */
+    public $appId;
+
+    /**
      * @description The end of the time range to query. The end time must be later than the start time. Specify the time in the ISO 8601 standard in the *yyyy-MM-dd*T*HH:mm:ss*Z format. The time must be in UTC.
      *
      * @example 2019-02-01T15:59:00Z
@@ -79,6 +88,7 @@ class DescribeVodTranscodeDataRequest extends Model
      */
     public $storage;
     protected $_name = [
+        'appId'         => 'AppId',
         'endTime'       => 'EndTime',
         'interval'      => 'Interval',
         'ownerId'       => 'OwnerId',
@@ -95,6 +105,9 @@ class DescribeVodTranscodeDataRequest extends Model
     public function toMap()
     {
         $res = [];
+        if (null !== $this->appId) {
+            $res['AppId'] = $this->appId;
+        }
         if (null !== $this->endTime) {
             $res['EndTime'] = $this->endTime;
         }
@@ -128,6 +141,9 @@ class DescribeVodTranscodeDataRequest extends Model
     public static function fromMap($map = [])
     {
         $model = new self();
+        if (isset($map['AppId'])) {
+            $model->appId = $map['AppId'];
+        }
         if (isset($map['EndTime'])) {
             $model->endTime = $map['EndTime'];
         }

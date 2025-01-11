@@ -1,3 +1,59 @@
+2024-04-25 Version: 2.22.0
+- Support API DescribeVodDomainRealTimeDetailData.
+
+
+2024-04-25 Version: 2.21.0
+- Support API DescribeVodDomainBpsDataByLayer.
+- Support API DescribeVodDomainHitRateData.
+- Support API DescribeVodDomainRealTimeBpsData.
+- Support API DescribeVodDomainRealTimeByteHitRateData.
+- Support API DescribeVodDomainRealTimeHttpCodeData.
+- Support API DescribeVodDomainRealTimeQpsData.
+- Support API DescribeVodDomainRealTimeReqHitRateData.
+- Support API DescribeVodDomainRealTimeTrafficData.
+- Support API DescribeVodDomainReqHitRateData.
+- Support API DescribeVodRangeDataByLocateAndIspService.
+
+
+2024-04-11 Version: 2.20.0
+- Support API DescribeVodMediaPlayData.
+- Update API DeleteAttachedMedia: update param MediaIds.
+- Update API DescribeVodStorageData: update param Storage.
+- Update API DescribeVodStorageData: update param StorageType.
+- Update API DescribeVodTranscodeData: update param Specification.
+- Update API DescribeVodTranscodeData: update param Storage.
+- Update API RefreshVodObjectCaches: add param Force.
+- Update API RestoreMedia: update param MediaIds.
+
+
+2024-04-11 Version: 2.20.0
+- Support API DescribeVodMediaPlayData.
+- Update API DeleteAttachedMedia: update param MediaIds.
+- Update API DescribeVodStorageData: update param Storage.
+- Update API DescribeVodStorageData: update param StorageType.
+- Update API DescribeVodTranscodeData: update param Specification.
+- Update API DescribeVodTranscodeData: update param Storage.
+- Update API RefreshVodObjectCaches: add param Force.
+- Update API RestoreMedia: update param MediaIds.
+
+
+2024-03-26 Version: 2.19.2
+- Update API DescribeVodDomainUsageData: update response param.
+- Update API DescribeVodTranscodeData: add param AppId.
+
+
+2024-01-05 Version: 2.19.1
+- Generated php 2017-03-21 for vod.
+
+2024-01-04 Version: 2.19.0
+- Generated php 2017-03-21 for vod.
+
+2023-12-15 Version: 2.18.1
+- Generated php 2017-03-21 for vod.
+
+2023-12-13 Version: 2.18.0
+- Generated php 2017-03-21 for vod.
+
 2023-11-03 Version: 2.17.1
 - Generated php 2017-03-21 for vod.
 

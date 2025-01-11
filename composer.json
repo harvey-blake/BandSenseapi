@@ -20,7 +20,7 @@
     "phpmailer/phpmailer": "^6.8",
     "kornrunner/secp256k1": "^0.2.0",
     "simplito/elliptic-php": "^1.0",
-    "workerman/workerman": "^4.1"
+    "workerman/workerman": "^4.1",
+    "binance/binance-connector-php": "^1.7"
   }
 }
-

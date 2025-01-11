@@ -17,12 +17,16 @@ class GetAppInfosResponseBody extends Model
     public $appInfoList;
 
     /**
+     * @description The HTTP status code that is returned.
+     *
+     * @example 200
+     *
      * @var string
      */
     public $code;
 
     /**
-     * @description The ID of the application that was not found.
+     * @description The IDs of applications that do not exist.
      *
      * @var string[]
      */

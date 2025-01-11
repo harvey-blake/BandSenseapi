@@ -9,6 +9,19 @@ use AlibabaCloud\Tea\Model;
 class UpdateMediaStorageClassRequest extends Model
 {
     /**
+     * @description Specifies whether to change the storage class of a media asset that is stored for less than the minimum storage duration. Valid values:
+     *
+     *   **true**
+     *   **false**
+     *
+     * >  If you forcibly change the storage class of a media asset that is stored for less than the minimum storage duration, additional data retrieval fees are incurred.
+     * @example false
+     *
+     * @var bool
+     */
+    public $allowUpdateWithoutTimeLimit;
+
+    /**
      * @description The media asset ID. You can specify a maximum of 20 IDs. Separate multiple IDs with commas (,). You can use one of the following methods to obtain the ID:
      *
      *   Log on to the [ApsaraVideo VOD](https://vod.console.aliyun.com) console. In the left-side navigation pane, choose **Media Files** > **Audio/Video**. On the Video and Audio page, you can view the ID of the media asset. This method is applicable to files that are uploaded by using the ApsaraVideo VOD console.
@@ -47,7 +60,7 @@ class UpdateMediaStorageClassRequest extends Model
     public $scope;
 
     /**
-     * @description The storage class to which you want to modify. Valid values:
+     * @description The storage class. Valid values:
      *
      *   **Standard**
      *   **IA**
@@ -60,10 +73,11 @@ class UpdateMediaStorageClassRequest extends Model
      */
     public $storageClass;
     protected $_name = [
-        'mediaIds'     => 'MediaIds',
-        'restoreTier'  => 'RestoreTier',
-        'scope'        => 'Scope',
-        'storageClass' => 'StorageClass',
+        'allowUpdateWithoutTimeLimit' => 'AllowUpdateWithoutTimeLimit',
+        'mediaIds'                    => 'MediaIds',
+        'restoreTier'                 => 'RestoreTier',
+        'scope'                       => 'Scope',
+        'storageClass'                => 'StorageClass',
     ];
 
     public function validate()
@@ -73,6 +87,9 @@ class UpdateMediaStorageClassRequest extends Model
     public function toMap()
     {
         $res = [];
+        if (null !== $this->allowUpdateWithoutTimeLimit) {
+            $res['AllowUpdateWithoutTimeLimit'] = $this->allowUpdateWithoutTimeLimit;
+        }
         if (null !== $this->mediaIds) {
             $res['MediaIds'] = $this->mediaIds;
         }
@@ -97,6 +114,9 @@ class UpdateMediaStorageClassRequest extends Model
     public static function fromMap($map = [])
     {
         $model = new self();
+        if (isset($map['AllowUpdateWithoutTimeLimit'])) {
+            $model->allowUpdateWithoutTimeLimit = $map['AllowUpdateWithoutTimeLimit'];
+        }
         if (isset($map['MediaIds'])) {
             $model->mediaIds = $map['MediaIds'];
         }

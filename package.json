@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "push": "git add . && git commit -m \"Upload changes\" && git push origin main"
+    "push": "git add . && git commit -m \"Upload changes\" && git push origin main",
+    "up":"composer dump-autoload"
   },
 
   "keywords": [],

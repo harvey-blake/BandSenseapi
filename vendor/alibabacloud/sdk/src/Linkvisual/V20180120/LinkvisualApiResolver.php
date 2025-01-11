@@ -14,16 +14,21 @@ use AlibabaCloud\Client\Resolver\ApiResolver;
  * @method AddFaceUserPicture addFaceUserPicture(array $options = [])
  * @method AddFaceUserToUserGroup addFaceUserToUserGroup(array $options = [])
  * @method AddRecordPlanDevice addRecordPlanDevice(array $options = [])
+ * @method BatchQueryVisionDeviceInfo batchQueryVisionDeviceInfo(array $options = [])
  * @method BindPictureSearchAppWithDevices bindPictureSearchAppWithDevices(array $options = [])
  * @method CheckFaceUserDoExistOnDevice checkFaceUserDoExistOnDevice(array $options = [])
  * @method ClearFaceDeviceDB clearFaceDeviceDB(array $options = [])
  * @method CreateEventRecordPlan createEventRecordPlan(array $options = [])
+ * @method CreateGbDevice createGbDevice(array $options = [])
  * @method CreateLocalFileUploadJob createLocalFileUploadJob(array $options = [])
  * @method CreateLocalRecordDownloadByTimeJob createLocalRecordDownloadByTimeJob(array $options = [])
  * @method CreatePictureSearchApp createPictureSearchApp(array $options = [])
  * @method CreatePictureSearchJob createPictureSearchJob(array $options = [])
  * @method CreateRecordDownloadByTimeJob createRecordDownloadByTimeJob(array $options = [])
  * @method CreateRecordPlan createRecordPlan(array $options = [])
+ * @method CreateRtmpDevice createRtmpDevice(array $options = [])
+ * @method CreateStreamPushJob createStreamPushJob(array $options = [])
+ * @method CreateStreamSnapshotJob createStreamSnapshotJob(array $options = [])
  * @method CreateTimeTemplate createTimeTemplate(array $options = [])
  * @method DeleteEventRecordPlan deleteEventRecordPlan(array $options = [])
  * @method DeleteEventRecordPlanDevice deleteEventRecordPlanDevice(array $options = [])
@@ -32,13 +37,19 @@ use AlibabaCloud\Client\Resolver\ApiResolver;
  * @method DeleteFaceUserGroup deleteFaceUserGroup(array $options = [])
  * @method DeleteFaceUserGroupAndDeviceGroupRelation deleteFaceUserGroupAndDeviceGroupRelation(array $options = [])
  * @method DeleteFaceUserPicture deleteFaceUserPicture(array $options = [])
+ * @method DeleteGbDevice deleteGbDevice(array $options = [])
  * @method DeleteLocalFileUploadJob deleteLocalFileUploadJob(array $options = [])
  * @method DeletePicture deletePicture(array $options = [])
  * @method DeleteRecord deleteRecord(array $options = [])
  * @method DeleteRecordPlan deleteRecordPlan(array $options = [])
  * @method DeleteRecordPlanDevice deleteRecordPlanDevice(array $options = [])
+ * @method DeleteRtmpDevice deleteRtmpDevice(array $options = [])
+ * @method DeleteRtmpKey deleteRtmpKey(array $options = [])
+ * @method DeleteStreamPushJob deleteStreamPushJob(array $options = [])
+ * @method DeleteStreamSnapshotJob deleteStreamSnapshotJob(array $options = [])
  * @method DeleteTimeTemplate deleteTimeTemplate(array $options = [])
  * @method DetectUserFaceByUrl detectUserFaceByUrl(array $options = [])
+ * @method EnableGbSubDevice enableGbSubDevice(array $options = [])
  * @method GetPictureSearchJobStatus getPictureSearchJobStatus(array $options = [])
  * @method PictureSearchPicture pictureSearchPicture(array $options = [])
  * @method QueryCarProcessEvents queryCarProcessEvents(array $options = [])
@@ -67,6 +78,7 @@ use AlibabaCloud\Client\Resolver\ApiResolver;
  * @method QueryFaceUserGroup queryFaceUserGroup(array $options = [])
  * @method QueryFaceUserGroupAndDeviceGroupRelation queryFaceUserGroupAndDeviceGroupRelation(array $options = [])
  * @method QueryFaceUserIdByCustomUserId queryFaceUserIdByCustomUserId(array $options = [])
+ * @method QueryGbSubDeviceList queryGbSubDeviceList(array $options = [])
  * @method QueryLiveStreaming queryLiveStreaming(array $options = [])
  * @method QueryLocalFileUploadJob queryLocalFileUploadJob(array $options = [])
  * @method QueryMonthRecord queryMonthRecord(array $options = [])
@@ -87,9 +99,15 @@ use AlibabaCloud\Client\Resolver\ApiResolver;
  * @method QueryRecordPlans queryRecordPlans(array $options = [])
  * @method QueryRecordUrl queryRecordUrl(array $options = [])
  * @method QueryRecordUrlByTime queryRecordUrlByTime(array $options = [])
+ * @method QueryRtmpKey queryRtmpKey(array $options = [])
+ * @method QueryStreamPushJob queryStreamPushJob(array $options = [])
+ * @method QueryStreamPushJobList queryStreamPushJobList(array $options = [])
+ * @method QueryStreamSnapshotJob queryStreamSnapshotJob(array $options = [])
  * @method QueryTimeTemplate queryTimeTemplate(array $options = [])
  * @method QueryTimeTemplateDetail queryTimeTemplateDetail(array $options = [])
+ * @method QueryVisionDeviceInfo queryVisionDeviceInfo(array $options = [])
  * @method QueryVoiceIntercom queryVoiceIntercom(array $options = [])
+ * @method RefreshGbSubDeviceList refreshGbSubDeviceList(array $options = [])
  * @method RemoveFaceDeviceFromDeviceGroup removeFaceDeviceFromDeviceGroup(array $options = [])
  * @method RemoveFaceUserFromUserGroup removeFaceUserFromUserGroup(array $options = [])
  * @method SetDevicePictureLifeCycle setDevicePictureLifeCycle(array $options = [])
@@ -103,9 +121,11 @@ use AlibabaCloud\Client\Resolver\ApiResolver;
  * @method UpdateEventRecordPlan updateEventRecordPlan(array $options = [])
  * @method UpdateFaceUser updateFaceUser(array $options = [])
  * @method UpdateFaceUserGroupAndDeviceGroupRelation updateFaceUserGroupAndDeviceGroupRelation(array $options = [])
+ * @method UpdateGbDevice updateGbDevice(array $options = [])
  * @method UpdateInstanceInternetProtocol updateInstanceInternetProtocol(array $options = [])
  * @method UpdatePictureSearchApp updatePictureSearchApp(array $options = [])
  * @method UpdateRecordPlan updateRecordPlan(array $options = [])
+ * @method UpdateRtmpKey updateRtmpKey(array $options = [])
  * @method UpdateTimeTemplate updateTimeTemplate(array $options = [])
  */
 class LinkvisualApiResolver extends ApiResolver
@@ -508,6 +528,76 @@ class AddRecordPlanDevice extends Rpc
 }
 
 /**
+ * @method array getDeviceNameList()
+ * @method string getIotInstanceId()
+ * @method $this withIotInstanceId($value)
+ * @method array getIotIdList()
+ * @method string getProductKey()
+ * @method $this withProductKey($value)
+ * @method string getApiProduct()
+ * @method string getApiRevision()
+ */
+class BatchQueryVisionDeviceInfo extends Rpc
+{
+
+    /**
+     * @param array $deviceNameList
+     *
+     * @return $this
+     */
+	public function withDeviceNameList(array $deviceNameList)
+	{
+	    $this->data['DeviceNameList'] = $deviceNameList;
+		foreach ($deviceNameList as $i => $iValue) {
+			$this->options['query']['DeviceNameList.' . ($i + 1)] = $iValue;
+		}
+
+		return $this;
+    }
+
+    /**
+     * @param array $iotIdList
+     *
+     * @return $this
+     */
+	public function withIotIdList(array $iotIdList)
+	{
+	    $this->data['IotIdList'] = $iotIdList;
+		foreach ($iotIdList as $i => $iValue) {
+			$this->options['query']['IotIdList.' . ($i + 1)] = $iValue;
+		}
+
+		return $this;
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiProduct($value)
+    {
+        $this->data['ApiProduct'] = $value;
+        $this->options['form_params']['ApiProduct'] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiRevision($value)
+    {
+        $this->data['ApiRevision'] = $value;
+        $this->options['form_params']['ApiRevision'] = $value;
+
+        return $this;
+    }
+}
+
+/**
  * @method string getIotInstanceId()
  * @method $this withIotInstanceId($value)
  * @method array getDeviceIotIds()
@@ -662,6 +752,60 @@ class ClearFaceDeviceDB extends Rpc
  * @method string getApiRevision()
  */
 class CreateEventRecordPlan extends Rpc
+{
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiProduct($value)
+    {
+        $this->data['ApiProduct'] = $value;
+        $this->options['form_params']['ApiProduct'] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiRevision($value)
+    {
+        $this->data['ApiRevision'] = $value;
+        $this->options['form_params']['ApiRevision'] = $value;
+
+        return $this;
+    }
+}
+
+/**
+ * @method string getSubProductKey()
+ * @method $this withSubProductKey($value)
+ * @method string getGbId()
+ * @method $this withGbId($value)
+ * @method string getDescription()
+ * @method $this withDescription($value)
+ * @method string getDeviceType()
+ * @method $this withDeviceType($value)
+ * @method string getPassword()
+ * @method $this withPassword($value)
+ * @method string getIotInstanceId()
+ * @method $this withIotInstanceId($value)
+ * @method string getDeviceProtocol()
+ * @method $this withDeviceProtocol($value)
+ * @method string getProductKey()
+ * @method $this withProductKey($value)
+ * @method string getMediaNetProtocol()
+ * @method $this withMediaNetProtocol($value)
+ * @method string getApiProduct()
+ * @method string getApiRevision()
+ * @method string getDeviceName()
+ * @method $this withDeviceName($value)
+ */
+class CreateGbDevice extends Rpc
 {
 
     /**
@@ -954,6 +1098,152 @@ class CreateRecordDownloadByTimeJob extends Rpc
  * @method string getApiRevision()
  */
 class CreateRecordPlan extends Rpc
+{
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiProduct($value)
+    {
+        $this->data['ApiProduct'] = $value;
+        $this->options['form_params']['ApiProduct'] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiRevision($value)
+    {
+        $this->data['ApiRevision'] = $value;
+        $this->options['form_params']['ApiRevision'] = $value;
+
+        return $this;
+    }
+}
+
+/**
+ * @method string getDescription()
+ * @method $this withDescription($value)
+ * @method string getPushAuthKey()
+ * @method $this withPushAuthKey($value)
+ * @method string getIotInstanceId()
+ * @method $this withIotInstanceId($value)
+ * @method string getPushKeyExpireTime()
+ * @method $this withPushKeyExpireTime($value)
+ * @method string getPullAuthKey()
+ * @method $this withPullAuthKey($value)
+ * @method string getSubStreamName()
+ * @method $this withSubStreamName($value)
+ * @method string getProductKey()
+ * @method $this withProductKey($value)
+ * @method string getApiProduct()
+ * @method string getApiRevision()
+ * @method string getDeviceName()
+ * @method $this withDeviceName($value)
+ * @method string getPullKeyExpireTime()
+ * @method $this withPullKeyExpireTime($value)
+ */
+class CreateRtmpDevice extends Rpc
+{
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiProduct($value)
+    {
+        $this->data['ApiProduct'] = $value;
+        $this->options['form_params']['ApiProduct'] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiRevision($value)
+    {
+        $this->data['ApiRevision'] = $value;
+        $this->options['form_params']['ApiRevision'] = $value;
+
+        return $this;
+    }
+}
+
+/**
+ * @method string getIotId()
+ * @method $this withIotId($value)
+ * @method string getIotInstanceId()
+ * @method $this withIotInstanceId($value)
+ * @method string getStreamType()
+ * @method $this withStreamType($value)
+ * @method string getProductKey()
+ * @method $this withProductKey($value)
+ * @method string getJobType()
+ * @method $this withJobType($value)
+ * @method string getPushUrl()
+ * @method $this withPushUrl($value)
+ * @method string getApiProduct()
+ * @method string getApiRevision()
+ * @method string getDeviceName()
+ * @method $this withDeviceName($value)
+ */
+class CreateStreamPushJob extends Rpc
+{
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiProduct($value)
+    {
+        $this->data['ApiProduct'] = $value;
+        $this->options['form_params']['ApiProduct'] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiRevision($value)
+    {
+        $this->data['ApiRevision'] = $value;
+        $this->options['form_params']['ApiRevision'] = $value;
+
+        return $this;
+    }
+}
+
+/**
+ * @method string getIotId()
+ * @method $this withIotId($value)
+ * @method string getIotInstanceId()
+ * @method $this withIotInstanceId($value)
+ * @method string getStreamType()
+ * @method $this withStreamType($value)
+ * @method string getProductKey()
+ * @method $this withProductKey($value)
+ * @method string getSnapshotInterval()
+ * @method $this withSnapshotInterval($value)
+ * @method string getApiProduct()
+ * @method string getApiRevision()
+ * @method string getDeviceName()
+ * @method $this withDeviceName($value)
+ */
+class CreateStreamSnapshotJob extends Rpc
 {
 
     /**
@@ -1318,6 +1608,48 @@ class DeleteFaceUserPicture extends Rpc
 }
 
 /**
+ * @method string getIotId()
+ * @method $this withIotId($value)
+ * @method string getIotInstanceId()
+ * @method $this withIotInstanceId($value)
+ * @method string getProductKey()
+ * @method $this withProductKey($value)
+ * @method string getApiProduct()
+ * @method string getApiRevision()
+ * @method string getDeviceName()
+ * @method $this withDeviceName($value)
+ */
+class DeleteGbDevice extends Rpc
+{
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiProduct($value)
+    {
+        $this->data['ApiProduct'] = $value;
+        $this->options['form_params']['ApiProduct'] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiRevision($value)
+    {
+        $this->data['ApiRevision'] = $value;
+        $this->options['form_params']['ApiRevision'] = $value;
+
+        return $this;
+    }
+}
+
+/**
  * @method string getJobId()
  * @method $this withJobId($value)
  * @method string getIotInstanceId()
@@ -1552,6 +1884,180 @@ class DeleteRecordPlanDevice extends Rpc
 }
 
 /**
+ * @method string getIotId()
+ * @method $this withIotId($value)
+ * @method string getIotInstanceId()
+ * @method $this withIotInstanceId($value)
+ * @method string getProductKey()
+ * @method $this withProductKey($value)
+ * @method string getApiProduct()
+ * @method string getApiRevision()
+ * @method string getDeviceName()
+ * @method $this withDeviceName($value)
+ */
+class DeleteRtmpDevice extends Rpc
+{
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiProduct($value)
+    {
+        $this->data['ApiProduct'] = $value;
+        $this->options['form_params']['ApiProduct'] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiRevision($value)
+    {
+        $this->data['ApiRevision'] = $value;
+        $this->options['form_params']['ApiRevision'] = $value;
+
+        return $this;
+    }
+}
+
+/**
+ * @method string getType()
+ * @method $this withType($value)
+ * @method string getIotId()
+ * @method $this withIotId($value)
+ * @method string getIotInstanceId()
+ * @method $this withIotInstanceId($value)
+ * @method string getProductKey()
+ * @method $this withProductKey($value)
+ * @method string getApiProduct()
+ * @method string getApiRevision()
+ * @method string getDeviceName()
+ * @method $this withDeviceName($value)
+ */
+class DeleteRtmpKey extends Rpc
+{
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiProduct($value)
+    {
+        $this->data['ApiProduct'] = $value;
+        $this->options['form_params']['ApiProduct'] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiRevision($value)
+    {
+        $this->data['ApiRevision'] = $value;
+        $this->options['form_params']['ApiRevision'] = $value;
+
+        return $this;
+    }
+}
+
+/**
+ * @method string getJobId()
+ * @method $this withJobId($value)
+ * @method string getIotId()
+ * @method $this withIotId($value)
+ * @method string getIotInstanceId()
+ * @method $this withIotInstanceId($value)
+ * @method string getProductKey()
+ * @method $this withProductKey($value)
+ * @method string getApiProduct()
+ * @method string getApiRevision()
+ * @method string getDeviceName()
+ * @method $this withDeviceName($value)
+ */
+class DeleteStreamPushJob extends Rpc
+{
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiProduct($value)
+    {
+        $this->data['ApiProduct'] = $value;
+        $this->options['form_params']['ApiProduct'] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiRevision($value)
+    {
+        $this->data['ApiRevision'] = $value;
+        $this->options['form_params']['ApiRevision'] = $value;
+
+        return $this;
+    }
+}
+
+/**
+ * @method string getIotId()
+ * @method $this withIotId($value)
+ * @method string getIotInstanceId()
+ * @method $this withIotInstanceId($value)
+ * @method string getStreamType()
+ * @method $this withStreamType($value)
+ * @method string getProductKey()
+ * @method $this withProductKey($value)
+ * @method string getApiProduct()
+ * @method string getApiRevision()
+ * @method string getDeviceName()
+ * @method $this withDeviceName($value)
+ */
+class DeleteStreamSnapshotJob extends Rpc
+{
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiProduct($value)
+    {
+        $this->data['ApiProduct'] = $value;
+        $this->options['form_params']['ApiProduct'] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiRevision($value)
+    {
+        $this->data['ApiRevision'] = $value;
+        $this->options['form_params']['ApiRevision'] = $value;
+
+        return $this;
+    }
+}
+
+/**
  * @method string getTemplateId()
  * @method $this withTemplateId($value)
  * @method string getApiProduct()
@@ -1594,6 +2100,50 @@ class DeleteTimeTemplate extends Rpc
  * @method string getApiRevision()
  */
 class DetectUserFaceByUrl extends Rpc
+{
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiProduct($value)
+    {
+        $this->data['ApiProduct'] = $value;
+        $this->options['form_params']['ApiProduct'] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiRevision($value)
+    {
+        $this->data['ApiRevision'] = $value;
+        $this->options['form_params']['ApiRevision'] = $value;
+
+        return $this;
+    }
+}
+
+/**
+ * @method string getIotId()
+ * @method $this withIotId($value)
+ * @method string getIotInstanceId()
+ * @method $this withIotInstanceId($value)
+ * @method string getProductKey()
+ * @method $this withProductKey($value)
+ * @method string getSubDeviceId()
+ * @method $this withSubDeviceId($value)
+ * @method string getApiProduct()
+ * @method string getApiRevision()
+ * @method string getDeviceName()
+ * @method $this withDeviceName($value)
+ */
+class EnableGbSubDevice extends Rpc
 {
 
     /**
@@ -2888,6 +3438,52 @@ class QueryFaceUserIdByCustomUserId extends Rpc
 }
 
 /**
+ * @method string getIotId()
+ * @method $this withIotId($value)
+ * @method string getIotInstanceId()
+ * @method $this withIotInstanceId($value)
+ * @method string getPageSize()
+ * @method $this withPageSize($value)
+ * @method string getProductKey()
+ * @method $this withProductKey($value)
+ * @method string getApiProduct()
+ * @method string getApiRevision()
+ * @method string getDeviceName()
+ * @method $this withDeviceName($value)
+ * @method string getPageStart()
+ * @method $this withPageStart($value)
+ */
+class QueryGbSubDeviceList extends Rpc
+{
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiProduct($value)
+    {
+        $this->data['ApiProduct'] = $value;
+        $this->options['form_params']['ApiProduct'] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiRevision($value)
+    {
+        $this->data['ApiRevision'] = $value;
+        $this->options['form_params']['ApiRevision'] = $value;
+
+        return $this;
+    }
+}
+
+/**
  * @method string getScheme()
  * @method $this withScheme($value)
  * @method string getPlayUnLimited()
@@ -3774,6 +4370,182 @@ class QueryRecordUrlByTime extends Rpc
 }
 
 /**
+ * @method string getIotId()
+ * @method $this withIotId($value)
+ * @method string getIotInstanceId()
+ * @method $this withIotInstanceId($value)
+ * @method string getProductKey()
+ * @method $this withProductKey($value)
+ * @method string getApiProduct()
+ * @method string getApiRevision()
+ * @method string getDeviceName()
+ * @method $this withDeviceName($value)
+ */
+class QueryRtmpKey extends Rpc
+{
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiProduct($value)
+    {
+        $this->data['ApiProduct'] = $value;
+        $this->options['form_params']['ApiProduct'] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiRevision($value)
+    {
+        $this->data['ApiRevision'] = $value;
+        $this->options['form_params']['ApiRevision'] = $value;
+
+        return $this;
+    }
+}
+
+/**
+ * @method string getJobId()
+ * @method $this withJobId($value)
+ * @method string getIotId()
+ * @method $this withIotId($value)
+ * @method string getIotInstanceId()
+ * @method $this withIotInstanceId($value)
+ * @method string getProductKey()
+ * @method $this withProductKey($value)
+ * @method string getApiProduct()
+ * @method string getApiRevision()
+ * @method string getDeviceName()
+ * @method $this withDeviceName($value)
+ */
+class QueryStreamPushJob extends Rpc
+{
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiProduct($value)
+    {
+        $this->data['ApiProduct'] = $value;
+        $this->options['form_params']['ApiProduct'] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiRevision($value)
+    {
+        $this->data['ApiRevision'] = $value;
+        $this->options['form_params']['ApiRevision'] = $value;
+
+        return $this;
+    }
+}
+
+/**
+ * @method string getIotId()
+ * @method $this withIotId($value)
+ * @method string getIotInstanceId()
+ * @method $this withIotInstanceId($value)
+ * @method string getPageSize()
+ * @method $this withPageSize($value)
+ * @method string getCurrentPage()
+ * @method $this withCurrentPage($value)
+ * @method string getProductKey()
+ * @method $this withProductKey($value)
+ * @method string getJobType()
+ * @method $this withJobType($value)
+ * @method string getApiProduct()
+ * @method string getApiRevision()
+ * @method string getDeviceName()
+ * @method $this withDeviceName($value)
+ */
+class QueryStreamPushJobList extends Rpc
+{
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiProduct($value)
+    {
+        $this->data['ApiProduct'] = $value;
+        $this->options['form_params']['ApiProduct'] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiRevision($value)
+    {
+        $this->data['ApiRevision'] = $value;
+        $this->options['form_params']['ApiRevision'] = $value;
+
+        return $this;
+    }
+}
+
+/**
+ * @method string getIotId()
+ * @method $this withIotId($value)
+ * @method string getIotInstanceId()
+ * @method $this withIotInstanceId($value)
+ * @method string getProductKey()
+ * @method $this withProductKey($value)
+ * @method string getApiProduct()
+ * @method string getApiRevision()
+ * @method string getDeviceName()
+ * @method $this withDeviceName($value)
+ */
+class QueryStreamSnapshotJob extends Rpc
+{
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiProduct($value)
+    {
+        $this->data['ApiProduct'] = $value;
+        $this->options['form_params']['ApiProduct'] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiRevision($value)
+    {
+        $this->data['ApiRevision'] = $value;
+        $this->options['form_params']['ApiRevision'] = $value;
+
+        return $this;
+    }
+}
+
+/**
  * @method string getPageSize()
  * @method $this withPageSize($value)
  * @method string getCurrentPage()
@@ -3848,6 +4620,48 @@ class QueryTimeTemplateDetail extends Rpc
 }
 
 /**
+ * @method string getIotId()
+ * @method $this withIotId($value)
+ * @method string getIotInstanceId()
+ * @method $this withIotInstanceId($value)
+ * @method string getProductKey()
+ * @method $this withProductKey($value)
+ * @method string getApiProduct()
+ * @method string getApiRevision()
+ * @method string getDeviceName()
+ * @method $this withDeviceName($value)
+ */
+class QueryVisionDeviceInfo extends Rpc
+{
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiProduct($value)
+    {
+        $this->data['ApiProduct'] = $value;
+        $this->options['form_params']['ApiProduct'] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiRevision($value)
+    {
+        $this->data['ApiRevision'] = $value;
+        $this->options['form_params']['ApiRevision'] = $value;
+
+        return $this;
+    }
+}
+
+/**
  * @method string getScheme()
  * @method $this withScheme($value)
  * @method string getIotId()
@@ -3862,6 +4676,48 @@ class QueryTimeTemplateDetail extends Rpc
  * @method $this withDeviceName($value)
  */
 class QueryVoiceIntercom extends Rpc
+{
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiProduct($value)
+    {
+        $this->data['ApiProduct'] = $value;
+        $this->options['form_params']['ApiProduct'] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiRevision($value)
+    {
+        $this->data['ApiRevision'] = $value;
+        $this->options['form_params']['ApiRevision'] = $value;
+
+        return $this;
+    }
+}
+
+/**
+ * @method string getIotId()
+ * @method $this withIotId($value)
+ * @method string getIotInstanceId()
+ * @method $this withIotInstanceId($value)
+ * @method string getProductKey()
+ * @method $this withProductKey($value)
+ * @method string getApiProduct()
+ * @method string getApiRevision()
+ * @method string getDeviceName()
+ * @method $this withDeviceName($value)
+ */
+class RefreshGbSubDeviceList extends Rpc
 {
 
     /**
@@ -4484,6 +5340,54 @@ class UpdateFaceUserGroupAndDeviceGroupRelation extends Rpc
 }
 
 /**
+ * @method string getGbId()
+ * @method $this withGbId($value)
+ * @method string getDescription()
+ * @method $this withDescription($value)
+ * @method string getPassword()
+ * @method $this withPassword($value)
+ * @method string getIotId()
+ * @method $this withIotId($value)
+ * @method string getIotInstanceId()
+ * @method $this withIotInstanceId($value)
+ * @method string getProductKey()
+ * @method $this withProductKey($value)
+ * @method string getApiProduct()
+ * @method string getApiRevision()
+ * @method string getDeviceName()
+ * @method $this withDeviceName($value)
+ */
+class UpdateGbDevice extends Rpc
+{
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiProduct($value)
+    {
+        $this->data['ApiProduct'] = $value;
+        $this->options['form_params']['ApiProduct'] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiRevision($value)
+    {
+        $this->data['ApiRevision'] = $value;
+        $this->options['form_params']['ApiRevision'] = $value;
+
+        return $this;
+    }
+}
+
+/**
  * @method string getIotInstanceId()
  * @method $this withIotInstanceId($value)
  * @method string getIpVersion()
@@ -4572,6 +5476,56 @@ class UpdatePictureSearchApp extends Rpc
  * @method $this withPlanId($value)
  */
 class UpdateRecordPlan extends Rpc
+{
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiProduct($value)
+    {
+        $this->data['ApiProduct'] = $value;
+        $this->options['form_params']['ApiProduct'] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function withApiRevision($value)
+    {
+        $this->data['ApiRevision'] = $value;
+        $this->options['form_params']['ApiRevision'] = $value;
+
+        return $this;
+    }
+}
+
+/**
+ * @method string getPushAuthKey()
+ * @method $this withPushAuthKey($value)
+ * @method string getIotId()
+ * @method $this withIotId($value)
+ * @method string getIotInstanceId()
+ * @method $this withIotInstanceId($value)
+ * @method string getPushKeyExpireTime()
+ * @method $this withPushKeyExpireTime($value)
+ * @method string getPullAuthKey()
+ * @method $this withPullAuthKey($value)
+ * @method string getProductKey()
+ * @method $this withProductKey($value)
+ * @method string getApiProduct()
+ * @method string getApiRevision()
+ * @method string getDeviceName()
+ * @method $this withDeviceName($value)
+ * @method string getPullKeyExpireTime()
+ * @method $this withPullKeyExpireTime($value)
+ */
+class UpdateRtmpKey extends Rpc
 {
 
     /**

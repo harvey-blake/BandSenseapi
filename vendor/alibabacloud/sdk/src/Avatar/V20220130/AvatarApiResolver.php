@@ -8,7 +8,9 @@ use AlibabaCloud\Client\Resolver\ApiResolver;
  * @method CancelVideoTask cancelVideoTask(array $options = [])
  * @method ClientAuth clientAuth(array $options = [])
  * @method ClientStart clientStart(array $options = [])
+ * @method ClientUnbindDevice clientUnbindDevice(array $options = [])
  * @method CloseTimedResetOperate closeTimedResetOperate(array $options = [])
+ * @method ConfirmAvatar2dTrain confirmAvatar2dTrain(array $options = [])
  * @method Create2dAvatar create2dAvatar(array $options = [])
  * @method DeleteAvatar deleteAvatar(array $options = [])
  * @method DuplexDecision duplexDecision(array $options = [])
@@ -97,6 +99,19 @@ class ClientStart extends Rpc
 }
 
 /**
+ * @method string getTenantId()
+ * @method $this withTenantId($value)
+ * @method string getDeviceId()
+ * @method $this withDeviceId($value)
+ */
+class ClientUnbindDevice extends Rpc
+{
+
+    /** @var string */
+    public $scheme = 'https';
+}
+
+/**
  * @method string getInstanceId()
  * @method $this withInstanceId($value)
  * @method string getTenantId()
@@ -104,6 +119,21 @@ class ClientStart extends Rpc
  */
 class CloseTimedResetOperate extends Rpc
 {
+}
+
+/**
+ * @method string getConfirm()
+ * @method $this withConfirm($value)
+ * @method string getCode()
+ * @method $this withCode($value)
+ * @method string getTenantId()
+ * @method $this withTenantId($value)
+ */
+class ConfirmAvatar2dTrain extends Rpc
+{
+
+    /** @var string */
+    public $scheme = 'https';
 }
 
 /**
@@ -429,6 +459,8 @@ class SendVaml extends Rpc
 /**
  * @method string getApp()
  * @method $this withApp($value)
+ * @method string getTextRequest()
+ * @method $this withTextRequest($value)
  * @method string getTenantId()
  * @method $this withTenantId($value)
  * @method string getBizId()
@@ -467,6 +499,8 @@ class StopInstance extends Rpc
 /**
  * @method string getApp()
  * @method $this withApp($value)
+ * @method string getAudioInfo()
+ * @method $this withAudioInfo($value)
  * @method string getAvatarInfo()
  * @method $this withAvatarInfo($value)
  * @method string getTitle()
@@ -519,6 +553,8 @@ class SubmitAudioTo2DAvatarVideoTask extends Rpc
 /**
  * @method string getApp()
  * @method $this withApp($value)
+ * @method string getAudioInfo()
+ * @method $this withAudioInfo($value)
  * @method string getAvatarInfo()
  * @method $this withAvatarInfo($value)
  * @method string getTitle()
