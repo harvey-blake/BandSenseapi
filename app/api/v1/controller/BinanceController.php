@@ -23,7 +23,7 @@ class BinanceController extends Controller
             $client = new Spot(['key' => $key, 'secret' => $secret]);;
             $response = $client->account();
             //uid   是否允许交易   账户类型
-            echo ($response);
+            dump($response);
 
             echo dump($response->uid, $response->canTrade, $response->accountType);
         } catch (\Binance\Exception\ClientException $th) {
