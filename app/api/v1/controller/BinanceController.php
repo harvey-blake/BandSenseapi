@@ -32,7 +32,7 @@ class BinanceController extends Controller
             dump($th->getMessage()); // 打印异常消息
 
             // 获取并解析响应体的 JSON 错误信息
-            $errorBody = $th->getResponse()->getBody()->getContents();
+            $errorBody = $th->getMessage();
             $errorData = json_decode($errorBody, true);
 
             // 输出错误信息
