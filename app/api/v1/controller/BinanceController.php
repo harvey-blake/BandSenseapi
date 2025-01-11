@@ -13,26 +13,34 @@ use common\Controller;
 class BinanceController extends Controller
 {
     //币安控制器
+
+    // $key = '466SioaRMJGXfKESRF8mdGzICXDN4bv21TP2KzFYqx6AFMq3TNCiYNYY9TV6Aq32';
+    // $secret = 'FKEYTbtFUWKyoIrdeaGEsM1LYximNToGWGhyG5hWgWQOSEqGN4wxCE7h5eCzGqOE';
+
     public function account()
     {
         try {
             $data = json_decode(file_get_contents('php://input'), true);
             $user = self::validateJWT();
-            $key = '466SioaRMJGXfKESRF8mdGzICXDN4bv21TP2KzFYqx6AFMq3TNCiYNYY9TV6Aq32';
-            $secret = 'FKEYTbtFUWKyoIrdeaGEsM1LYximNToGWGhyG5hWgWQOSEqGN4wxCE7h5eCzGqOE';
-            $client = new Spot(['key' => $key, 'secret' => $secret]);;
+
+
+            $client = new Spot(['key' => $data['APIKey'], 'secret' => $data['SecretKey']]);;
             $response = $client->account();
-            //uid   是否允许交易   账户类型
-            dump($response);
 
-            echo dump(
-                $response['uid'],
-                $response['canTrade'],
-                $response['accountType']
-            );
-        } catch (\Binance\Exception\ClientException $th) {
+            $arr =  Db::table('binance_key')->field('*')->where(['uid' => $response['uid']])->find();
+            if (!$arr) {
+                //标签  uid   是否允许交易   账户类型
+                $arr =  Db::table('binance_key')->insert(['userid' => $user['id'], 'APIKey' => $data['APIKey'], 'SecretKey' => $data['SecretKey'], 'Label' => $data['Label'], 'uid' => $response['uid'], 'canTrade' => $response['canTrade'], 'accountType' => $response['accountType'], 'Balance' => $response['balances']]);
 
-            // dump($th->getMessage()); // 打印异常消息
+                if ($arr > 0) {
+                    echo json_encode(retur('成功', $arr));
+                } else {
+                    echo json_encode(retur('失败', '添加失败请查看参数', 422));
+                }
+            } else {
+                echo json_encode(retur('失败', '账户已经存在,请更换子账户', 409));
+            }
+        } catch (\Throwable $th) {
             echo json_encode(retur('失败', '$key或$secret错误', -2014));
         }
     }
