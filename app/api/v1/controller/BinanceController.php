@@ -23,7 +23,7 @@ class BinanceController extends Controller
             $data = json_decode(file_get_contents('php://input'), true);
             $user = self::validateJWT();
 
-
+            dump($data);
             $client = new Spot(['key' => $data['APIKey'], 'secret' => $data['SecretKey']]);;
             $response = $client->account();
 
