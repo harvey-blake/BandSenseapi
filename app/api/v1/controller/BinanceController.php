@@ -7,7 +7,6 @@ namespace app\api\v1\controller;
 use Db\Db;
 use function common\dump;
 use function common\retur;
-use GuzzleHttp\Exception\ClientException;
 use Binance\Spot;
 use common\Controller;
 
@@ -27,10 +26,8 @@ class BinanceController extends Controller
             echo ($response);
 
             echo dump($response->uid, $response->canTrade, $response->accountType);
-        } catch (ClientException $e) {
-            $errorResponse = $e->getResponse();
-            $errorBody = json_decode($errorResponse->getBody(), true);  // 解析 JSON 响应
-            echo json_encode($errorBody);  // 输出错误信息的 JSON
+        } catch (\Throwable $th) {
+            dump($th->getMessage());
         }
     }
 }
