@@ -24,7 +24,7 @@ class BinanceController extends Controller
             $user = self::validateJWT();
 
 
-            $client = new Spot(['key' => $data['APIKey'], 'secret' => $data['SecretKey']]);;
+            $client = new Spot(['key' => $data['APIKey'], 'secret' => $data['SecretKey']]);
             $response = $client->account();
 
             $arr =  Db::table('binance_key')->field('*')->where(['uid' => $response['uid']])->find();
@@ -43,5 +43,40 @@ class BinanceController extends Controller
         } catch (\Throwable $th) {
             echo json_encode(retur('失败', '$key或$secret错误', -2014));
         }
+    }
+    private function updateaccount($userid)
+    {
+        try {
+            $arr =  Db::table('binance_key')->where(['userid' => $userid])->select();
+
+            foreach ($arr as $key => $value) {
+                $client = new Spot(['key' => $value['APIKey'], 'secret' => $value['SecretKey']]);
+                $response = $client->account();
+                $arr =  Db::table('binance_key')->where(['APIKey' => $value['APIKey']])->update(['canTrade' => $response['canTrade'], 'accountType' => $response['accountType'], 'Balance' => $response['balances']]);
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
+
+    // 查询账户
+
+    public function getaccount()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $user = self::validateJWT();
+        // 更新账户
+        self::updateaccount($user['id']);
+
+        $arr =  Db::table('binance_key')->where(['userid' => $user['id']])->order('time', 'desc')->limit($data['perPage'])->page($data['page'])->select();
+
+        $count =  Db::table('binance_key')->where(['userid' => $user['id']])->count();
+        if (count($arr) > 0) {
+            echo json_encode(retur($count, $arr));
+        } else {
+            echo json_encode(retur($count, $arr, 422));
+        }
+        //获取账户
+
     }
 }
