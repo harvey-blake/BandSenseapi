@@ -9,6 +9,7 @@ use function common\dump;
 use function common\retur;
 use Binance\Spot;
 use common\Controller;
+use GuzzleHttp\Exception\ClientException;
 
 class BinanceController extends Controller
 {
@@ -25,9 +26,14 @@ class BinanceController extends Controller
             //uid   是否允许交易   账户类型
             echo ($response);
 
-            echo dump($response->uid, $response->canTrade, $response->accountType);
-        } catch (\Throwable $th) {
-            dump($th->getMessage());
+            // echo dump($response->uid, $response->canTrade, $response->accountType);
+        } catch (ClientException $e) {
+
+            $errorBody = $e->getResponse()->getBody()->getContents();
+
+            // 输出错误信息的 JSON
+
+            dump($errorBody);
         }
     }
 }
