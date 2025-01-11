@@ -72,6 +72,12 @@ class BinanceController extends Controller
 
         $count =  Db::table('binance_key')->where(['userid' => $user['id']])->count();
         if (count($arr) > 0) {
+            foreach ($arr as $key => $value) {
+                $arr[$key]['Balance'] = stripslashes($arr[$key]['Balance']);
+                # code...
+            }
+
+
             echo json_encode(retur($count, $arr));
         } else {
             echo json_encode(retur($count, $arr, 422));
