@@ -26,8 +26,12 @@ class BinanceController extends Controller
             echo ($response);
 
             echo dump($response->uid, $response->canTrade, $response->accountType);
-        } catch (\Throwable $th) {
-            dump($th->getMessage());
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            // 输出 API 错误响应
+            echo $e->getResponse()->getBody()->getContents();
+        } catch (\Exception $e) {
+            // 输出其他错误信息
+            echo $e->getMessage();
         }
     }
 }
