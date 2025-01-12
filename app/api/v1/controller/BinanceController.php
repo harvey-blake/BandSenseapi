@@ -13,7 +13,6 @@ use common\Controller;
 class BinanceController extends Controller
 {
     //币安控制器
-
     // $key = '466SioaRMJGXfKESRF8mdGzICXDN4bv21TP2KzFYqx6AFMq3TNCiYNYY9TV6Aq32';
     // $secret = 'FKEYTbtFUWKyoIrdeaGEsM1LYximNToGWGhyG5hWgWQOSEqGN4wxCE7h5eCzGqOE';
 
@@ -44,6 +43,7 @@ class BinanceController extends Controller
             echo json_encode(retur('失败', '$key或$secret错误', -2014));
         }
     }
+    //更新账户余额
     private function updateaccount($userid)
     {
         try {
