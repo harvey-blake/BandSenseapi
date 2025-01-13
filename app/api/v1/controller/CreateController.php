@@ -52,15 +52,21 @@ class CreateController extends Controller
         $data = json_decode(file_get_contents('php://input'), true);
         $user = self::validateJWT();
         $apikey =  Db::table('binance_key')->field('*')->where(['userid' => $user['id'], 'id' => $data['keyid']])->find();
-        if ($apikey) {
-            $arr =  Db::table('Strategy')->insert(['keyid' => $data['keyid'], 'userid' => $user['id'], 'state' => 1, 'Strategy' => $data['Strategy']]);
-            if ($arr > 0) {
-                echo json_encode(retur('成功', $arr));
-            } else {
-                echo json_encode(retur('失败', '添加失败请查看参数', 422));
-            }
-        } else {
+        if (!$apikey) {
             echo json_encode(retur('失败', '非法访问', 2015));
+            exit;
+        }
+        $Strategy =  Db::table('Strategy')->field('*')->where(['userid' => $user['id'], 'keyid' => $data['keyid']])->find();
+        if ($Strategy) {
+            echo json_encode(retur('失败', '此子账号下已存在其他策略,请删除后添加', 409));
+            exit;
+        }
+
+        $arr =  Db::table('Strategy')->insert(['keyid' => $data['keyid'], 'userid' => $user['id'], 'state' => 1, 'Strategy' => $data['Strategy']]);
+        if ($arr > 0) {
+            echo json_encode(retur('成功', $arr));
+        } else {
+            echo json_encode(retur('失败', '添加失败请查看参数', 422));
         }
     }
 }
