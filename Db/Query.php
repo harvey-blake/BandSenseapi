@@ -104,6 +104,24 @@ class Query
         // 返回符合条件的记录总数
         return $result['total_count'];
     }
+
+    // 求和
+    public function SUM($column)
+    {
+        // 构建 SQL 查询语句，使用 SUM 聚合函数
+        $sql = 'SELECT SUM(' . $column . ') as total_sum FROM ' . $this->table;
+        // 如果有额外的查询条件，拼接上 WHERE 部分
+        $sql .= $this->opt['where'] ?? '';
+        // 准备并执行 SQL 查询
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        // 清空条件
+        $this->opt = [];
+
+        // 获取查询结果并返回求和结果
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total_sum'];
+    }
     // 获取全部数据
     public function select()
     {
