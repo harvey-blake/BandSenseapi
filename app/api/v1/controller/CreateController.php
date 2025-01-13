@@ -47,4 +47,20 @@ class CreateController extends Controller
             echo json_encode(retur('失败', '交易对已经存在', 409));
         }
     }
+    public function addStrategy()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $user = self::validateJWT();
+        $apikey =  Db::table('binance_key')->field('*')->where(['userid' => $user['id'], 'id' => $data['keyid']])->find();
+        if ($apikey) {
+            $arr =  Db::table('Strategy')->insert(['keyid' => $data['keyid'], 'userid' => $user['id'], 'state' => 1, 'Strategy' => $data['Strategy']]);
+            if ($arr > 0) {
+                echo json_encode(retur('成功', $arr));
+            } else {
+                echo json_encode(retur('失败', '添加失败请查看参数', 422));
+            }
+        } else {
+            echo json_encode(retur('失败', '非法访问', 2015));
+        }
+    }
 }
