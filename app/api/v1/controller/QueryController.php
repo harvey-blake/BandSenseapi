@@ -23,4 +23,9 @@ class QueryController extends Controller
             echo json_encode(retur($count, $arr, 422));
         }
     }
+    public function Timestamp()
+    {
+        $currentDateTime = date('Y-m-d H:i:s');
+        dump($currentDateTime);
+    }
 }
