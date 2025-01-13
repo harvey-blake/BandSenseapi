@@ -25,7 +25,7 @@ class QueryController extends Controller
     }
     public function Timestamp()
     {
-        $currentDateTime = time();
+        $currentDateTime = date('Y-m-d H:i:s');
         dump($currentDateTime);
         $count =  Db::table('Strategy')->where(['time <' => $currentDateTime])->select();
         dump($count);
