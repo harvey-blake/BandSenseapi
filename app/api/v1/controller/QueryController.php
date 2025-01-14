@@ -51,11 +51,8 @@ class QueryController extends Controller
             foreach ($arr as $key => $value) {
                 //子账户
                 $arr[$key]['keyname'] =  Db::table('binance_key')->field('Label')->where(['userid' => $user['id'], 'id' => $value['keyid']])->find();
-                $arr[$key]['pastProfit'] =  Db::table('income')->where(['userid' => $user['id'], 'Strategyid' => $arr['id']])->SUM('income') ?? 0;
+                $arr[$key]['pastProfit'] =  Db::table('income')->where(['userid' => $user['id'], 'Strategyid' =>  $value['id']])->SUM('income') ?? 0;
             }
-
-
-
             echo json_encode(retur($count, $arr));
         } else {
             echo json_encode(retur($count, $arr, 422));
