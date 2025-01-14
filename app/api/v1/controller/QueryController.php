@@ -31,9 +31,9 @@ class QueryController extends Controller
             $todayEnd = date('Y-m-d 23:59:59');    // 今日结束时间
             $monthStart = date('Y-m-01 00:00:00');  // 本月开始时间
             $monthEnd = date('Y-m-t 23:59:59');     // 本月结束时间
-            $todasum =  Db::table('Strategy')->where(['userid' => $user['id'], 'time >=' => $todayStart, 'time <=' => $todayEnd])->SUM('unitprice') ?? 0;
-            $monthsum =  Db::table('Strategy')->where(['userid' => $user['id'], 'time >=' => $monthStart, 'time <=' => $monthEnd])->SUM('unitprice') ?? 0;
-            $pastProfit =  Db::table('Strategy')->where(['userid' => $user['id']])->SUM('unitprice') ?? 0;
+            $todasum =  Db::table('income')->where(['userid' => $user['id'], 'time >=' => $todayStart, 'time <=' => $todayEnd])->SUM('income') ?? 0;
+            $monthsum =  Db::table('income')->where(['userid' => $user['id'], 'time >=' => $monthStart, 'time <=' => $monthEnd])->SUM('income') ?? 0;
+            $pastProfit =  Db::table('income')->where(['userid' => $user['id']])->SUM('income') ?? 0;
 
             echo json_encode(retur('成功', ['todasum' => $todasum, 'monthsum' => $monthsum, 'pastProfit' => $pastProfit]));
         } catch (\Throwable $th) {
