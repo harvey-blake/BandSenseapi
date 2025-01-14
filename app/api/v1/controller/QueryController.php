@@ -40,4 +40,25 @@ class QueryController extends Controller
             echo json_encode(retur('失败', '未知错误', 409));
         }
     }
+    //查询策略
+    public function Strategyt()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $user = self::validateJWT();
+        $arr =  Db::table('Strategy')->where(['userid' => $user['id']])->order('time', 'desc')->limit($data['perPage'])->page($data['page'])->select();
+        $count =  Db::table('Strategy')->where(['userid' => $user['id']])->count();
+        if (count($arr) > 0) {
+            foreach ($arr as $key => $value) {
+                //子账户
+                $arr[$key]['keyname'] =  Db::table('binance_key')->field('Label')->where(['userid' => $user['id'], 'id' => $value['keyid']])->find();
+                $arr[$key]['pastProfit'] =  Db::table('income')->where(['userid' => $user['id'], 'Strategyid' => $arr['id']])->SUM('income') ?? 0;
+            }
+
+
+
+            echo json_encode(retur($count, $arr));
+        } else {
+            echo json_encode(retur($count, $arr, 422));
+        }
+    }
 }
