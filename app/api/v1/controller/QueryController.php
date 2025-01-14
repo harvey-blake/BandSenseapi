@@ -31,7 +31,7 @@ class QueryController extends Controller
         dump($count);
         $count =  Db::table('Strategy')->where(['time >' => $currentDateTime])->select();
         dump($count);
-        $count =  Db::table('Strategy')->where(['time >' => $currentDateTime])->SUM('unitprice');
+        $count =  Db::table('Strategy')->where(['time <' => $currentDateTime])->SUM('unitprice');
         dump($count);
     }
 }
