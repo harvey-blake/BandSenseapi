@@ -62,7 +62,7 @@ class CreateController extends Controller
             exit;
         }
 
-        $arr =  Db::table('Strategy')->insert(['keyid' => $data['keyid'], 'userid' => $user['id'], 'state' => 1, 'Strategy' => $data['Strategy']]);
+        $arr =  Db::table('Strategy')->insert(['token' => $data['token'], 'keyid' => $data['keyid'], 'userid' => $user['id'], 'state' => 1, 'Strategy' => $data['Strategy']]);
         if ($arr > 0) {
             echo json_encode(retur('成功', $arr));
         } else {
