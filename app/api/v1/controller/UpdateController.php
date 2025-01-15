@@ -9,8 +9,9 @@ use function common\retur;
 use function common\sendMessage;
 use function common\Message;
 use function common\tgverification;
+use common\Controller;
 
-class  UpdateController
+class  UpdateController extends Controller
 {
     public function Strategystate()
     {
