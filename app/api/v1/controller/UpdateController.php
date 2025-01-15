@@ -27,6 +27,7 @@ class  UpdateController extends Controller
                 echo json_encode(retur('失败', '没更改任何数据', 409));
             }
         } catch (\Throwable $th) {
+            dump($th);
             echo json_encode(retur('失败', '非法访问', 500));
         }
     }
