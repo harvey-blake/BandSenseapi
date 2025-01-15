@@ -10,4 +10,23 @@ use function common\sendMessage;
 use function common\Message;
 use function common\tgverification;
 
-class  UpdateController {}
+class  UpdateController
+{
+    public function Strategystate()
+    {
+        try {
+            $data = json_decode(file_get_contents('php://input'), true);
+            $user = self::validateJWT();
+            $state =  Db::table('Strategy')->field('state')->where(['id' => $data['id'], 'userid' => $user['id']])->find();
+            $state = $state ^ "1";
+            $arr =  Db::table('Strategy')->where(['id' => $data['id'], 'userid' => $user['id']])->update(['state' => $state]);
+            if ($arr > 0) {
+                echo json_encode(retur('成功', $arr));
+            } else {
+                echo json_encode(retur('失败', '没更改任何数据', 409));
+            }
+        } catch (\Throwable $th) {
+            echo json_encode(retur('失败', '非法访问', 500));
+        }
+    }
+}
