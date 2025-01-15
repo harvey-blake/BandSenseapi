@@ -21,4 +21,15 @@ class  DeleteController extends Controller
             echo json_encode(retur('失败', '没删除任何数据', 404));
         }
     }
+    public function Strategy()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $user = self::validateJWT();
+        $arr =  Db::table('Strategy')->where(['id' => $data['id'], 'userid' => $user['id']])->delete();
+        if ($arr > 0) {
+            echo json_encode(retur('成功', $arr));
+        } else {
+            echo json_encode(retur('失败', '没删除任何数据', 404));
+        }
+    }
 }
