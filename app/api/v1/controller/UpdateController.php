@@ -34,15 +34,24 @@ class  UpdateController extends Controller
     public function subscription()
     {
         $data = json_decode(file_get_contents('php://input'), true);
+        $currentTimestamp = time() - 60; //  这个时间
 
-        dump($_SERVER);
         $ip = $_SERVER['REMOTE_ADDR'];
-        $currentTimestamp = time();
-        $arr =  Db::table('Emailrecords')->insert(['mail' => '3005779@qq.com', 'time' => $currentTimestamp, 'AccessIP' => $ip]);
+        $mail = '3005779@qq.com';
+        $state =  Db::table('Emailrecords')->field('*')->where(['mail' => $mail,  'time >' => $currentTimestamp])->find();
+        $states =  Db::table('Emailrecords')->field('*')->where(['AccessIP' => $ip,  'time >' => $currentTimestamp])->find();
+
+        if ($state && $states) {
+            dump('60秒只能获取一次验证码');
+        }
+
+
+        $verificationCode = rand(100000, 999999);
+        $arr =  Db::table('Emailrecords')->insert(['mail' => $mail, 'code' => $verificationCode, 'AccessIP' => $ip]);
         $template_path = __DIR__ . '/../mail/subscription.html'; // 替换为模板文件的实际路径
 
         // 生成一个 6 位数字验证码
-        $verificationCode = rand(100000, 999999);
+
 
         $template_content = file_get_contents($template_path);
 
