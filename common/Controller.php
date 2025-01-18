@@ -91,7 +91,7 @@ class Controller
     {
         try {
             $data =  self::validateJWT();
-            echo json_encode(retur('失败', $data, 9000));
+            echo json_encode(retur('成功', $data));
         } catch (\Throwable $th) {
             echo json_encode(retur('失败', $th, 9000));
         }
