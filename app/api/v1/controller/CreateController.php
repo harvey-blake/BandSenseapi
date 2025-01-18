@@ -30,7 +30,7 @@ class CreateController extends Controller
     {
         $data = json_decode(file_get_contents('php://input'), true);
         $user = self::validateJWT();
-        $arr =  Db::table('tokenlist')->field('*')->where(['pair' => $data['pair']])->find();
+        $arr =  Db::table('tokenlist')->field('*')->where(['id' => $user['id'], 'pair' => $data['pair']])->find();
         if (!$arr) {
             $data['id'] = $user['id'];
 
