@@ -34,10 +34,11 @@ class  UpdateController extends Controller
     public function subscription()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-        $currentTimestamp = time() - 60; //  这个时间
+        $currentTimestamp =  date('Y-m-d H:i:s', time() - 60);
 
         $ip = $_SERVER['REMOTE_ADDR'];
         $mail = '3005779@qq.com';
+        //10    < 10-6
         $state =  Db::table('Emailrecords')->field('*')->where(['mail' => $mail,  'time >' => $currentTimestamp])->find();
         $states =  Db::table('Emailrecords')->field('*')->where(['AccessIP' => $ip,  'time >' => $currentTimestamp])->find();
 
