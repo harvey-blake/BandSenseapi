@@ -5,8 +5,6 @@
 namespace common;
 
 use Db\Db;
-// use common\CallbackController;
-use view\View;
 use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
 use Lcobucci\JWT\Signer\Key\InMemory;
@@ -17,6 +15,8 @@ use Lcobucci\JWT\Encoding\JoseEncoder;
 use Lcobucci\JWT\Token\Parser;
 use Lcobucci\JWT\Validation\Validator;
 use Lcobucci\JWT\Validation\Constraint\SignedWith;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 class Controller
 {
@@ -149,6 +149,38 @@ class Controller
             //账号登陆失效
             echo json_encode(retur('出错了', '授权已过期', 401));
             exit;
+        }
+    }
+
+
+    public function mail($to, $title, $content)
+    {
+        $mail = new PHPMailer();
+        try {
+            $mail = new PHPMailer();
+            // 配置邮件服务器设置
+            // $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+
+            $state =  Db::table('mailsmpt')->field('*')->where(['id' => 1])->find();
+            $mail->isSMTP(); // 使用 SMTP 发送
+            $mail->Host = $state['Host']; // 设置 SMTP 服务器地址
+            $mail->SMTPAuth = true; // 启用 SMTP 认证
+            $mail->Username = $state['Username']; // SMTP 用户名
+            $mail->Password = $state['Password']; // SMTP 密码
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+            $mail->Port = 465; // 设置 SMTP 端口号
+            // 设置字符编码为 UTF-8
+            $mail->CharSet = 'UTF-8';
+            // 设置邮件内容
+            $mail->setFrom('dexcpro@gmail.com', 'DEXC'); // 发件人邮箱和姓名
+            $mail->addAddress($to); // 收件人邮箱和姓名
+            $mail->isHTML(true);
+            $mail->Subject = $title; // 邮件主题
+            $mail->Body =  $content; // 邮件正文
+            return $mail->send();
+        } catch (Exception $e) {
+            return false;
+            // return  $mail->ErrorInfo;
         }
     }
 }
