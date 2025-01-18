@@ -105,13 +105,14 @@ class Controller
         // $headers = getallheaders();
         $data = $_SERVER['HTTP_AUTHORIZATION'];
 
-        dump($_SERVER['HTTP_AUTHORIZATION']);
+        // dump($_SERVER['HTTP_AUTHORIZATION']);
         // $data = $_GET['token'];
         if (!$data) {
             // 账号未登录
             echo json_encode(retur('错误', '账号未登陆', 403));
             exit;
         }
+        $data = str_replace('Bearer ', '', $data);
         $data =  Db::table('LoginKey')->field('*')->where(['keyid' => $data])->find();
 
         // 获取数据库
