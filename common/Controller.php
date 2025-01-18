@@ -96,8 +96,6 @@ class Controller
             echo json_encode(retur('失败', $th, 9000));
         }
     }
-
-
     // 验证JWT
     function validateJWT()
     {
