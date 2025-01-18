@@ -26,9 +26,6 @@ use common\Controller;
 // 写入
 class CreateController extends Controller
 {
-
-
-
     public function tokenlist()
     {
         $data = json_decode(file_get_contents('php://input'), true);
@@ -67,6 +64,24 @@ class CreateController extends Controller
             echo json_encode(retur('成功', $arr));
         } else {
             echo json_encode(retur('失败', '添加失败请查看参数', 422));
+        }
+    }
+
+    public function register()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $arr =  Db::table('cex_user')->field('*')->where(['username' => $data['username']])->find();
+        if ($arr) {
+            echo json_encode(retur('失败', '用户已存在', 409));
+            exit;
+        }
+        //赠送3天小时VIP
+        $timestamp = time() + (3 * 24 * 60 * 60);;
+        $arr =  Db::table('cex_user')->insert(['username' => $data['username'], 'password' => $data['password'], 'Expirationtime' => $timestamp]);
+        if ($arr > 0) {
+            echo json_encode(retur('成功', $arr));
+        } else {
+            echo json_encode(retur('失败', '注册失败', 422));
         }
     }
 }
