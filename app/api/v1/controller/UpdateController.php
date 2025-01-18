@@ -34,6 +34,8 @@ class  UpdateController extends Controller
     public function subscription()
     {
         $data = json_decode(file_get_contents('php://input'), true);
+
+        dump($_SERVER);
         $template_path = __DIR__ . '/../mail/subscription.html'; // 替换为模板文件的实际路径
 
         // 生成一个 6 位数字验证码
@@ -43,7 +45,7 @@ class  UpdateController extends Controller
 
         // 替换模板中的验证码（假设验证码使用 {code} 占位符）
         $htmlContent = str_replace('{code}', $verificationCode, $template_content);
-        self::mail('3005779@qq.com', '恭喜您订阅成功', $htmlContent);
+        // self::mail('3005779@qq.com', '恭喜您订阅成功', $htmlContent);
         // echo json_encode(retur('成功', self::mail($data['mail'], '恭喜您,订阅成功', $template_content)));
     }
 }
