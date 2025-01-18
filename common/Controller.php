@@ -91,8 +91,7 @@ class Controller
     {
         try {
             $data =  self::validateJWT();
-
-            return true;
+            echo json_encode(retur('失败', $data, 9000));
         } catch (\Throwable $th) {
             echo json_encode(retur('失败', $th, 9000));
         }
@@ -102,7 +101,7 @@ class Controller
     // 验证JWT
     function validateJWT()
     {
-        return ['id' => 1];
+
         // 解密
         header('Access-Control-Allow-Headers: Authorization, Content-Type');
         // $headers = getallheaders();
@@ -113,10 +112,11 @@ class Controller
             echo json_encode(retur('错误', '账号未登陆', 403));
             exit;
         }
-        $data =  Db::table('dex_secretKey')->field('secretKey')->where(['id' => $data])->find();
-        $data = $data ? $data['secretKey'] : $data;
+        $data =  Db::table('LoginKey')->field('*')->where(['keyid' => $data])->find();
+
         // 获取数据库
         if ($data) {
+            $data =  $data['token'];
             $data = decryptData($data);
         } else {
             // 这里返回账号在其他地方登陆
@@ -141,8 +141,7 @@ class Controller
             } else {
                 // 考虑验证签名https://lcobucci-jwt.readthedocs.io/en/latest/validating-tokens/
                 // 成功 返回用户账号密码
-                $arr = ['username' => $token->claims()->get('username'), 'password' => $token->claims()->get('password')];
-
+                $arr =   Db::table('cex_user')->field('*')->where(['username' => $token->claims()->get('username')])->find();
                 return $arr;
             }
         } else {
