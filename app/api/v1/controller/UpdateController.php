@@ -30,35 +30,50 @@ class  UpdateController extends Controller
             echo json_encode(retur('失败', '非法访问', 500));
         }
     }
+    public function Retrievepassword()
+    {
 
+        $data = json_decode(file_get_contents('php://input'), true);
+        if ($data['mail'] && !$data['code']) {
+            self::subscription();
+            exit;
+        }
+        if ($data['mail'] && $data['code'] && $data['Password']) {
+            //正式修改密码
+        }
+    }
+
+    // 输入邮箱 获取验证码
+
+
+    //获取验证码
     public function subscription()
     {
         $data = json_decode(file_get_contents('php://input'), true);
         $currentTimestamp =  date('Y-m-d H:i:s', time() - 60);
-
         $ip = $_SERVER['REMOTE_ADDR'];
-        $mail = '3005779@qq.com';
-        //10    < 10-6
+        $mail = $data['mail'];
         $state =  Db::table('Emailrecords')->field('*')->where(['mail' => $mail,  'time >' => $currentTimestamp])->find();
         $states =  Db::table('Emailrecords')->field('*')->where(['AccessIP' => $ip,  'time >' => $currentTimestamp])->find();
-
         if ($state && $states) {
-            dump('60秒只能获取一次验证码');
+            echo json_encode(retur('失败', '60秒只能获取一次验证码', 500));
+            exit;
+        }
+        $verificationCode = rand(100000, 999999);
+        $text = '找回密码';
+        if ($data['type'] == 'reg') {
+            $verificationCode = rand(1000, 9999);
+            $text = '注册';
         }
 
-
-        $verificationCode = rand(100000, 999999);
-        $arr =  Db::table('Emailrecords')->insert(['mail' => $mail, 'code' => $verificationCode, 'AccessIP' => $ip]);
+        Db::table('Emailrecords')->insert(['mail' => $mail, 'code' => $verificationCode, 'AccessIP' => $ip]);
         $template_path = __DIR__ . '/../mail/subscription.html'; // 替换为模板文件的实际路径
-
         // 生成一个 6 位数字验证码
-
-
         $template_content = file_get_contents($template_path);
-
         // 替换模板中的验证码（假设验证码使用 {code} 占位符）
         $htmlContent = str_replace('{code}', $verificationCode, $template_content);
-        // self::mail('3005779@qq.com', '恭喜您订阅成功', $htmlContent);
-        // echo json_encode(retur('成功', self::mail($data['mail'], '恭喜您,订阅成功', $template_content)));
+        $htmlContent = str_replace('{code}', $text, $htmlContent);
+        self::mail($mail, '波段智投[' . $text . ']', $htmlContent);
+        echo json_encode(retur('成功', $verificationCode));
     }
 }
