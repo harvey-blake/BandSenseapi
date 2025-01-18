@@ -33,15 +33,13 @@ function retur($massage = '', $data = '', $code = '')
 //加密
 function encryptData($data)
 {
-    define('SECRETKEY', '93a1c3a4b6e9f0d1e4b0f78a9cd7b0d1a78d9b0e4b0e');
     $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length('aes-256-cbc'));
-    $encrypted = openssl_encrypt(json_encode($data), 'aes-256-cbc', SECRETKEY, 0, $iv);
+    $encrypted = openssl_encrypt(json_encode($data), 'aes-256-cbc', '93a1c3a4b6e9f0d1e4b0f78a9cd7b0d1a78d9b0e4b0e', 0, $iv);
     return base64_encode($encrypted . '::' . $iv);
 }
-
 // 解密
 function decryptData($encryptedData)
 {
     list($encryptedData, $iv) = explode('::', base64_decode($encryptedData), 2);
-    return json_decode(openssl_decrypt($encryptedData, 'aes-256-cbc', SECRETKEY, 0, $iv), true);
+    return json_decode(openssl_decrypt($encryptedData, 'aes-256-cbc', '93a1c3a4b6e9f0d1e4b0f78a9cd7b0d1a78d9b0e4b0e', 0, $iv), true);
 }

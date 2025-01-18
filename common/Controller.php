@@ -34,22 +34,14 @@ class Controller
     {
         try {
             $data = json_decode(file_get_contents('php://input'), true);
-            $arr = false;
-            if (isset($data['username']) && isset($data['password'])) {
-                $arr =  Db::table('dex_user')->field('*')->where($data)->find();
-                // $arr = $this->model->onfetch('*', 'dex_user', 1, $data);
-            } else if (isset($data['code'])) {
-                $token = self::getUserInfoFromGitHub($data['code']);
-                if ($token) {
-                    $arr =  Db::table('dex_user')->field('*')->where(['githubid' => $token])->find();
-                }
-            }
-            $userid = '';
+            // 验证账号 是否存在
+
+            $arr =  Db::table('cex_user')->field('*')->where(['username' => $data['username'], 'password' => $data['password']])->find();
+
             if ($arr) {
 
                 $username = $arr['username'];
                 $password = $arr['password'];
-                $userid = $arr['id'];
                 $expirationTimeInMinutes = 10080;
                 $key = InMemory::plainText($password);
                 $config = Configuration::forSymmetricSigner(
@@ -70,17 +62,17 @@ class Controller
                 $token = encryptData($token->toString());
                 $uniqid = Uuid::uuid4();
                 $uniqid = $uniqid->toString();
-                $arr =  Db::table('dex_secretKey')->field('secretKey')->where(['user' => $username])->find();
+                $arr =  Db::table('LoginKey')->field('*')->where(['username' => $username])->find();
                 if ($arr) {
                     // 修改
-                    $arr =  Db::table('dex_secretKey')->where(['user' => $username])->update(['id' => $uniqid, 'secretKey' => $token]);
+                    $arr =  Db::table('LoginKey')->where(['username' => $username])->update(['username' => $username, 'keyid' => $uniqid, 'token' => $token]);
                 } else {
                     // 添加
-                    $arr =  Db::table('dex_secretKey')->insert(['user' => $username, 'id' => $uniqid, 'secretKey' => $token]);
+                    $arr =  Db::table('LoginKey')->insert(['username' => $username, 'keyid' => $uniqid, 'token' => $token]);
                 }
 
                 if ($arr > 0) {
-                    echo json_encode(retur($userid, $uniqid));
+                    echo json_encode(retur('成功', $uniqid));
                 } else {
                     echo json_encode(retur('失败', '网络拥堵请稍后再试', 9000));
                 }
