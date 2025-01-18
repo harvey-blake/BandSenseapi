@@ -36,6 +36,9 @@ class  UpdateController extends Controller
         $data = json_decode(file_get_contents('php://input'), true);
 
         dump($_SERVER);
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $currentTimestamp = time();
+        $arr =  Db::table('Emailrecords')->insert(['mail' => '3005779@qq.com', 'time' => $currentTimestamp, 'AccessIP' => $ip]);
         $template_path = __DIR__ . '/../mail/subscription.html'; // 替换为模板文件的实际路径
 
         // 生成一个 6 位数字验证码
