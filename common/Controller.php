@@ -104,6 +104,8 @@ class Controller
         header('Access-Control-Allow-Headers: Authorization, Content-Type');
         // $headers = getallheaders();
         $data = $_SERVER['HTTP_AUTHORIZATION'];
+
+        dump($_SERVER['HTTP_AUTHORIZATION']);
         // $data = $_GET['token'];
         if (!$data) {
             // 账号未登录
