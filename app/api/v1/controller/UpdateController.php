@@ -45,6 +45,20 @@ class  UpdateController extends Controller
         }
         if ($data['mail'] && $data['code'] && $data['Password']) {
             //正式修改密码
+            $currentTimestamp =  date('Y-m-d H:i:s', time() - 300);
+
+            $state =  Db::table('Emailrecords')->field('*')->where(['mail' => $data['mail'], "code" => $data['code'], 'time >' => $currentTimestamp])->find();
+            if (!$state) {
+                echo json_encode(retur('失败', '验证码错误或者已过有效期', 409));
+                exit;
+            }
+
+            $arr =  Db::table('cex_user')->where(['username' => $data['mail']])->update(['password' => $data['password']]);
+            if ($arr > 0) {
+                echo json_encode(retur('成功', $arr));
+            } else {
+                echo json_encode(retur('失败', '与上次密码相同', 409));
+            }
         }
     }
 
