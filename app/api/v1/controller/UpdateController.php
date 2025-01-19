@@ -72,7 +72,7 @@ class  UpdateController extends Controller
         $template_content = file_get_contents($template_path);
         // 替换模板中的验证码（假设验证码使用 {code} 占位符）
         $htmlContent = str_replace('{code}', $verificationCode, $template_content);
-        $htmlContent = str_replace('{code}', $text, $htmlContent);
+        $htmlContent = str_replace('{text}', $text, $htmlContent);
         self::mail($mail, '波段智投[' . $text . ']', $htmlContent);
         echo json_encode(retur('成功', $verificationCode));
     }
