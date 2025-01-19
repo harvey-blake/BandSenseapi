@@ -63,7 +63,7 @@ class QueryController extends Controller
     {
 
         $user = self::validateJWT();
-        $arr =  Db::table('Strategy')->where(['userid' => $user['id']])->select();
+        $arr =  Db::table('Strategy')->where(['userid' => $user['id'], 'state' => 1])->select();
 
         if (count($arr) > 0) {
             foreach ($arr as $key => $value) {
