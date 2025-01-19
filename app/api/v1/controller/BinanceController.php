@@ -112,17 +112,12 @@ class BinanceController extends Controller
 
             // 获取完整的错误信息
 
-            dump($e->getMessage());
+            // dump($e->getMessage());
 
 
 
             preg_match('/\{("code":-?\d+,"msg":"[^"]+")\}/', $e->getMessage(), $matches);
-
-            if (isset($matches[1])) {
-                echo "Error JSON: " . $matches[1]; // 输出整个错误JSON
-            } else {
-                echo "No error JSON found.";
-            }
+            dump($matches);
         }
     }
 }
