@@ -117,7 +117,7 @@ class BinanceController extends Controller
 
 
             preg_match('/\{("code":-?\d+,"msg":"[^"]+")\}/', $e->getMessage(), $matches);
-            dump($matches);
+            dump($matches[0]);
         }
     }
 }
