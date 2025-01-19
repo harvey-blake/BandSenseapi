@@ -114,14 +114,15 @@ class BinanceController extends Controller
 
             dump($e->getMessage());
 
-            // 获取异常的错误代码
-            echo "Error Code: " . $e->getCode() . PHP_EOL;  // 获取错误代码，通常与 API 的错误代码相对应
 
-            // 获取请求的内容
-            echo "Request: " . $e->getRequest()->getBody() . PHP_EOL;  // 打印请求体内容
 
-            // 获取响应的内容
-            echo "Response: " . $e->getResponse()->getBody() . PHP_EOL;
+            preg_match('/\{("code":-?\d+,"msg":"[^"]+")\}/', $e->getMessage(), $matches);
+
+            if (isset($matches[1])) {
+                echo "Error JSON: " . $matches[1]; // 输出整个错误JSON
+            } else {
+                echo "No error JSON found.";
+            }
         }
     }
 }
