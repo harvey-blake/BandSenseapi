@@ -34,7 +34,7 @@ class  UpdateController extends Controller
     {
 
         $data = json_decode(file_get_contents('php://input'), true);
-        if ($data['mail'] && !$data['code']) {
+        if ($data['mail'] && !isset($data['code'])) {
             self::subscription();
             exit;
         }
@@ -61,7 +61,7 @@ class  UpdateController extends Controller
         }
         $verificationCode = rand(100000, 999999);
         $text = '找回密码';
-        if ($data['type'] == 'reg') {
+        if (isset($data['type']) && $data['type'] == 'reg') {
             $verificationCode = rand(1000, 9999);
             $text = '注册';
         }
