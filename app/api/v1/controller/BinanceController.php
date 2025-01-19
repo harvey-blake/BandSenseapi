@@ -94,7 +94,11 @@ class BinanceController extends Controller
     {
         // 买入  且计算订单单价
         try {
+            // 允许在客户端断开连接后继续执行
+            ignore_user_abort(true);
 
+            // 设置脚本的最大执行时间，0 表示不限制
+            set_time_limit(0);
 
             $arr = ['APIKey' => '49qTffAJQkRD26Fty8lJZtaODv3tTiR6Kk0LLlaluWsQXapNCxJhJFwH7WkDlfz1', 'SecretKey' => 'fTwaYPIZtaiiA6izC6w4qEnUsdDKSv2NkznNJAqZNcmnuXDG3N7V2pFDHar4gJH2'];
 
