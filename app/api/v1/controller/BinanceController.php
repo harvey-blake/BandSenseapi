@@ -89,19 +89,23 @@ class BinanceController extends Controller
     public function order()
     {
         // 买入  且计算订单单价
-        $arr =  Db::table('binance_key')->field('*')->where(['uid' => 1053882738])->find();
-        //  'baseUri' => 'https://testnet.binance.vision/api'
-        $client = new Spot(['key' => $arr['APIKey'], 'secret' => $arr['SecretKey']]);
+        try {
+            $arr =  Db::table('binance_key')->field('*')->where(['uid' => 1053882738])->find();
+            //  'baseUri' => 'https://testnet.binance.vision/api'
+            $client = new Spot(['key' => $arr['APIKey'], 'secret' => $arr['SecretKey']]);
 
-        $response = $client->newOrder(
-            'BTCUSDT',             // 交易对
-            'BUY',                 // 买入
-            'MARKET',              // 市价单
-            [
-                'quoteOrderQty' => 100, // 使用 100 USDT
-            ]
-        );
+            $response = $client->newOrder(
+                'BTCUSDT',             // 交易对
+                'BUY',                 // 买入
+                'MARKET',              // 市价单
+                [
+                    'quoteOrderQty' => 100, // 使用 100 USDT
+                ]
+            );
 
-        dump($response);
+            dump($response);
+        } catch (\Throwable $th) {
+            dump($th);
+        }
     }
 }
