@@ -104,11 +104,11 @@ class BinanceController extends Controller
             $client = new Spot(['key' => $arr['APIKey'], 'secret' => $arr['SecretKey'], 'baseURL' => 'https://testnet.binance.vision']);
 
             $response = $client->newOrder(
-                'POLSDT',             // 交易对
+                'POLUSDT',             // 交易对
                 'BUY',                 // 买入
                 'MARKET',              // 市价单
                 [
-                    'quoteOrderQty' => 100, // 使用 100 USDT
+                    'quoteOrderQty' => 10, // 使用 100 USDT
                 ]
             );
 
