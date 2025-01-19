@@ -77,7 +77,7 @@ class Controller
                     echo json_encode(retur('失败', '网络拥堵请稍后再试', 9000));
                 }
             } else {
-                echo json_encode(retur('失败', $data, 9000));
+                echo json_encode(retur('失败', '账号或密码错误', 9000));
             }
         } catch (\Throwable $th) {
             $errorMessage = $th->getMessage();
