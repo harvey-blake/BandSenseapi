@@ -74,7 +74,7 @@ class  UpdateController extends Controller
         $mail = $data['mail'];
         $state =  Db::table('Emailrecords')->field('*')->where(['mail' => $mail,  'time >' => $currentTimestamp])->find();
         $states =  Db::table('Emailrecords')->field('*')->where(['AccessIP' => $ip,  'time >' => $currentTimestamp])->find();
-        if ($state && $states) {
+        if ($state || $states) {
             echo json_encode(retur('失败', '60秒只能获取一次验证码', 500));
             exit;
         }
