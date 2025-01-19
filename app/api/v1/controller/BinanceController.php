@@ -108,13 +108,13 @@ class BinanceController extends Controller
             );
 
             dump($response);
-        } catch (GuzzleClientException $e) {
+        } catch (ClientException $e) {
 
             // 获取完整的错误信息
 
 
 
-            dump($e->getMessage());
+            dump(gettype($e->getMessage()));
         }
     }
 }
