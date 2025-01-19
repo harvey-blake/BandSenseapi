@@ -107,7 +107,7 @@ class BinanceController extends Controller
             );
 
             dump($response);
-        } catch (GuzzleClientException $e) {
+        } catch (ClientException $e) {
 
             dump($e->getMessage());
         }
