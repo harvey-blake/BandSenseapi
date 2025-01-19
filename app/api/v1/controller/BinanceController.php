@@ -78,13 +78,27 @@ class BinanceController extends Controller
                 unset($arr[$key]['SecretKey']);
                 # code...
             }
-
-
             echo json_encode(retur($count, $arr));
         } else {
             echo json_encode(retur($count, $arr, 422));
         }
         //获取账户
 
+    }
+
+    public function order()
+    {
+        // 买入  且计算订单单价
+        $arr =  Db::table('binance_key')->field('*')->where(['uid' => 1053882738])->find();
+        $client = new Spot(['key' => $arr['APIKey'], 'secret' => $arr['SecretKey']]);
+        $params = [
+            'symbol' => 'BTCUSDT',        // 交易对
+            'side' => 'BUY',             // 交易方向
+            'type' => 'MARKET',          // 市价单
+            'quoteOrderQty' => 100,      // 使用 100 USDT 买入 BTC
+            'timestamp' => round(microtime(true) * 1000), // 时间戳（毫秒）
+        ];
+        $response = $client->order($params);
+        dump($response);
     }
 }
