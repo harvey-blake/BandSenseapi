@@ -94,9 +94,14 @@ class BinanceController extends Controller
     {
         // 买入  且计算订单单价
         try {
+
+
+            $arr = ['APIKey' => '49qTffAJQkRD26Fty8lJZtaODv3tTiR6Kk0LLlaluWsQXapNCxJhJFwH7WkDlfz1', 'SecretKey' => 'fTwaYPIZtaiiA6izC6w4qEnUsdDKSv2NkznNJAqZNcmnuXDG3N7V2pFDHar4gJH2'];
+
             $arr =  Db::table('binance_key')->field('*')->where(['uid' => 1053882738])->find();
+            $arr = ['APIKey' => '49qTffAJQkRD26Fty8lJZtaODv3tTiR6Kk0LLlaluWsQXapNCxJhJFwH7WkDlfz1', 'SecretKey' => 'fTwaYPIZtaiiA6izC6w4qEnUsdDKSv2NkznNJAqZNcmnuXDG3N7V2pFDHar4gJH2'];
             //  'baseUri' => 'https://testnet.binance.vision/api'
-            $client = new Spot(['key' => $arr['APIKey'], 'secret' => $arr['SecretKey']]);
+            $client = new Spot(['key' => $arr['APIKey'], 'secret' => $arr['SecretKey'], 'baseUri' => 'https://testnet.binance.vision/api']);
 
             $response = $client->newOrder(
                 'BTCUSDT',             // 交易对
