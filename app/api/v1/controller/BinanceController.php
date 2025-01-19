@@ -8,8 +8,6 @@ use Db\Db;
 use function common\dump;
 use function common\retur;
 use Binance\Spot;
-//测试网
-use Binance\Spot\Trade;
 use common\Controller;
 
 class BinanceController extends Controller
@@ -92,7 +90,7 @@ class BinanceController extends Controller
     {
         // 买入  且计算订单单价
         $arr =  Db::table('binance_key')->field('*')->where(['uid' => 1053882738])->find();
-        $client = new Trade(['key' => $arr['APIKey'], 'secret' => $arr['SecretKey']]);
+        $client = new Spot(['key' => $arr['APIKey'], 'secret' => $arr['SecretKey'],   'baseUri' => 'https://testnet.binance.vision/api']);
 
         $response = $client->newOrder(
             'BTCUSDT',             // 交易对
@@ -102,6 +100,7 @@ class BinanceController extends Controller
                 'quoteOrderQty' => 100, // 使用 100 USDT
             ]
         );
+
         dump($response);
     }
 }
