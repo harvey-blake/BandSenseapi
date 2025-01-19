@@ -68,7 +68,7 @@ class QueryController extends Controller
         if (count($arr) > 0) {
             foreach ($arr as $key => $value) {
                 //子账户
-                $arr[$key]['keyname'] =  Db::table('binance_key')->field('Label')->where(['userid' => $user['id'], 'id' => $value['keyid']])->find();
+                $arr[$key]['keyname'] =  Db::table('binance_key')->field('Label')->where(['userid' => $user['id'], 'id' => $value['keyid']])->find()['Label'];
             }
             echo json_encode(retur('成功', $arr));
         } else {
