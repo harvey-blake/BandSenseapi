@@ -34,6 +34,11 @@ class  UpdateController extends Controller
     {
 
         $data = json_decode(file_get_contents('php://input'), true);
+        $arr =  Db::table('cex_user')->field('*')->where(['username' => $data['mail']])->find();
+        if (!$arr) {
+            echo json_encode(retur('失败', '用户不存在', 409));
+            exit;
+        }
         if ($data['mail'] && !isset($data['code'])) {
             self::subscription();
             exit;
