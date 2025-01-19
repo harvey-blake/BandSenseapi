@@ -8,6 +8,8 @@ use Db\Db;
 use function common\dump;
 use function common\retur;
 use Binance\Spot;
+//测试网
+use Binance\Spot\Trade;
 use common\Controller;
 
 class BinanceController extends Controller
@@ -90,15 +92,16 @@ class BinanceController extends Controller
     {
         // 买入  且计算订单单价
         $arr =  Db::table('binance_key')->field('*')->where(['uid' => 1053882738])->find();
-        $client = new Spot(['key' => $arr['APIKey'], 'secret' => $arr['SecretKey']]);
-        $params = [
-            'symbol' => 'BTCUSDT',        // 交易对
-            'side' => 'BUY',             // 交易方向
-            'type' => 'MARKET',          // 市价单
-            'quoteOrderQty' => 100,      // 使用 100 USDT 买入 BTC
-            'timestamp' => round(microtime(true) * 1000), // 时间戳（毫秒）
-        ];
-        $response = $client->order($params);
+        $client = new Trade(['key' => $arr['APIKey'], 'secret' => $arr['SecretKey']]);
+
+        $response = $client->newOrder(
+            'BTCUSDT',             // 交易对
+            'BUY',                 // 买入
+            'MARKET',              // 市价单
+            [
+                'quoteOrderQty' => 100, // 使用 100 USDT
+            ]
+        );
         dump($response);
     }
 }
