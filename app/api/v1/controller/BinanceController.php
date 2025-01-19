@@ -112,9 +112,9 @@ class BinanceController extends Controller
 
             // 获取完整的错误信息
 
+            dump($e);
 
-
-            dump(gettype($e->getMessage()));
+            dump(gettype($e));
         }
     }
 }
