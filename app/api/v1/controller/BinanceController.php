@@ -112,7 +112,7 @@ class BinanceController extends Controller
 
             // 获取完整的错误信息
 
-            dump(json_decode(json_encode($e), true));
+            dump(json_decode($e, true));
 
             dump(gettype($e));
         }
