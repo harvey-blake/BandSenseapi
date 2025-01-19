@@ -9,6 +9,8 @@ use function common\dump;
 use function common\retur;
 use Binance\Spot;
 use common\Controller;
+use Binance\Exception\ClientException;
+use GuzzleHttp\Exception\ClientException as GuzzleClientException;
 
 class BinanceController extends Controller
 {
@@ -104,8 +106,12 @@ class BinanceController extends Controller
             );
 
             dump($response);
-        } catch (\Throwable $th) {
-            dump($th);
+        } catch (ClientException $e) {
+
+            dump($e);
+        } catch (GuzzleClientException $e) {
+
+            dump($e);
         }
     }
 }
