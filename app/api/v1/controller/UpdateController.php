@@ -53,7 +53,7 @@ class  UpdateController extends Controller
                 exit;
             }
 
-            $arr =  Db::table('cex_user')->where(['username' => $data['mail']])->update(['password' => $data['password']]);
+            $arr =  Db::table('cex_user')->where(['username' => $data['mail']])->update(['password' => $data['Password']]);
             if ($arr > 0) {
                 echo json_encode(retur('成功', $arr));
             } else {
