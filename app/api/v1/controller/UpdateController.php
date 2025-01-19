@@ -93,6 +93,6 @@ class  UpdateController extends Controller
         $htmlContent = str_replace('{code}', $verificationCode, $template_content);
         $htmlContent = str_replace('{text}', $text, $htmlContent);
         self::mail($mail, '波段智投[' . $text . ']', $htmlContent);
-        echo json_encode(retur('成功', $verificationCode));
+        echo json_encode(retur('成功', '获取成功'));
     }
 }
