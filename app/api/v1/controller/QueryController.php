@@ -58,6 +58,25 @@ class QueryController extends Controller
             echo json_encode(retur($count, $arr, 422));
         }
     }
+
+    public function allStrategyt()
+    {
+
+        $user = self::validateJWT();
+        $arr =  Db::table('Strategy')->where(['userid' => $user['id']])->select();
+
+        if (count($arr) > 0) {
+            foreach ($arr as $key => $value) {
+                //子账户
+                $arr[$key]['keyname'] =  Db::table('binance_key')->field('Label')->where(['userid' => $user['id'], 'id' => $value['keyid']])->find();
+            }
+            echo json_encode(retur('成功', $arr));
+        } else {
+            echo json_encode(retur('失败', $arr, 422));
+        }
+    }
+
+
     //验证码验证
     public function iscode()
     {

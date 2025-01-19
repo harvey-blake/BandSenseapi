@@ -37,7 +37,7 @@ class BinanceController extends Controller
                     echo json_encode(retur('失败', '添加失败请查看参数', 422));
                 }
             } else {
-                echo json_encode(retur('失败', '账户已经存在,请更换子账户', 409));
+                echo json_encode(retur('失败', 'APIKey已经存在,请勿重复添加', 409));
             }
         } catch (\Throwable $th) {
             echo json_encode(retur('失败', '$key或$secret错误', -2014));
