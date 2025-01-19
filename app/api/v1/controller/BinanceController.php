@@ -12,6 +12,7 @@ use common\Controller;
 use Binance\Exception\ClientException;
 use GuzzleHttp\Exception\ClientException as GuzzleClientException;
 
+
 class BinanceController extends Controller
 {
     //币安控制器
@@ -106,9 +107,6 @@ class BinanceController extends Controller
             );
 
             dump($response);
-        } catch (ClientException $e) {
-
-            dump($e->getMessage());
         } catch (GuzzleClientException $e) {
 
             dump($e->getMessage());
