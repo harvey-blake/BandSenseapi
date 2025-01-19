@@ -75,6 +75,13 @@ class CreateController extends Controller
             echo json_encode(retur('失败', '用户已存在', 409));
             exit;
         }
+        $currentTimestamp =  date('Y-m-d H:i:s', time() - 300);
+
+        $state =  Db::table('Emailrecords')->field('*')->where(['mail' => $data['username'], "code" => $data['code'], 'time >' => $currentTimestamp])->find();
+        if (!$state) {
+            echo json_encode(retur('失败', '验证码过期', 409));
+            exit;
+        }
         //赠送3天小时VIP
         $timestamp = time() + (3 * 24 * 60 * 60);;
         $arr =  Db::table('cex_user')->insert(['username' => $data['username'], 'password' => $data['password'], 'Expirationtime' => $timestamp]);
