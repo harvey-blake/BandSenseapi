@@ -109,6 +109,21 @@ class BinanceController extends Controller
             dump($response);
         } catch (ClientException $e) {
 
+            // 获取完整的错误信息
+            $response = $e->getResponse();
+
+            // 输出错误信息
+            echo "Error message: " . $e->getMessage() . "\n";
+            echo "Error response body: " . $response->getBody()->getContents() . "\n";
+
+            // 解析 JSON 错误信息
+            $errorData = json_decode($response->getBody()->getContents(), true);
+            if (isset($errorData['code']) && isset($errorData['msg'])) {
+                echo "Binance API error code: " . $errorData['code'] . "\n";
+                echo "Binance API error message: " . $errorData['msg'] . "\n";
+            }
+
+
             dump($e->getMessage());
         }
     }
