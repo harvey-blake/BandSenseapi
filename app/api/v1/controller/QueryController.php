@@ -58,4 +58,17 @@ class QueryController extends Controller
             echo json_encode(retur($count, $arr, 422));
         }
     }
+    //验证码验证
+    public function iscode()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $currentTimestamp =  date('Y-m-d H:i:s', time() - 300);
+
+        $state =  Db::table('Emailrecords')->field('*')->where(['mail' => $data['mail'], "code" => $data['code'], 'time >' => $currentTimestamp])->find();
+        if ($state) {
+            echo json_encode(retur('成功', '成功'));
+        } else {
+            echo json_encode(retur('失败', '验证码已过期或不存在', 422));
+        }
+    }
 }
