@@ -108,7 +108,7 @@ class BinanceController extends Controller
                 'BUY',                 // 买入
                 'MARKET',              // 市价单
                 [
-                    'quoteOrderQty' => 10, // 使用 100 USDT
+                    'quoteOrderQty' => 1000, // 使用 100 USDT
                 ]
             );
 
