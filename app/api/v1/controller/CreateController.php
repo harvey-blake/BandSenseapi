@@ -79,7 +79,7 @@ class CreateController extends Controller
 
         $state =  Db::table('Emailrecords')->field('*')->where(['mail' => $data['username'], "code" => $data['code'], 'time >' => $currentTimestamp])->find();
         if (!$state) {
-            echo json_encode(retur('失败', '验证码过期', 409));
+            echo json_encode(retur('失败', '验证码过期', 410));
             exit;
         }
         //赠送3天小时VIP
