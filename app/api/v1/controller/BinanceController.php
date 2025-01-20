@@ -128,6 +128,8 @@ class BinanceController extends Controller
                     'quoteOrderQty' => $goumaicelue[count($Historicalorders)]['amout'], // 使用 100 USDT
                 ]
             );
+            Db::table('Strategy')->where(['id' => $data['Strategyid'], 'userid' => $user['id']])->update(['lumpsum' => $Strategy['lumpsum'] + $goumaicelue[count($Historicalorders)]['amout']]);
+
             //计算单价
             $totalNetQty = 0; // 本次总净数量
             foreach ($response['fills'] as $fill) {
@@ -190,9 +192,91 @@ class BinanceController extends Controller
                     'quantity' => truncateToPrecision($Historicalorders[count($Historicalorders) - 1]['origQty'], 8)  // 使用 100 USDT
                 ]
             );
-            //卖出得到多少钱  然后减去手续费  最终得到的金额  减去 购买的金额   就等于利润
-            //然后 历史的购买金额 去掉最后一个  减去利润 除以数量  得到最新的均价
+
+            //计算获得的实际U
+            $totacommissiony = 0; // 本次总净数量
+            foreach ($response['fills'] as $fill) {
+
+                $commission = (float)$fill['commission']; // 手续费
+                // 计算净数量和净花费
+
+                // 累加净数量和净花费
+                $totacommissiony +=  $commission;
+            }
+            $dedao =      $response['cummulativeQuoteQty'] - $totacommissiony;
+            $lirun = $dedao - $Historicalorders[count($Historicalorders) - 1]['cummulativeQuoteQty']; //利润
+            //记录本次利润
+            Db::table('income')->insert(['userid' => $user['id'], 'keyid' => $key['id'], 'Strategyid' => $Strategy['id'], 'income' => $lirun]);
+
+            //更新购买总金额
+            $lumsum = $Strategy['lumpsum'] - $dedao; //总金额
+
+            Db::table('Strategy')->where(['id' => $data['Strategyid'], 'userid' => $user['id']])->update(['lumpsum' => $lumsum]);
+
+            array_pop($Historicalorders);  // 删除最后一个元素
+            $HistoricalordersQty = array_sum(array_column($Historicalorders, 'origQty')); //总数量
+            $Overallaverageprice =   $lumsum / $HistoricalordersQty;
+
+            Db::table('Strategy')->where(['userid' => $user['id'], 'id' => $data['Strategyid']])->update(['unitprice' => $Overallaverageprice]);
+
+            //最新的金额  除以  数量  就等于最新的均价
             dump($response);
+        } catch (ClientException $e) {
+            preg_match('/\{("code":-?\d+,"msg":"[^"]+")\}/', $e->getMessage(), $matches);
+            dump(json_decode($matches[0]));
+        }
+    }
+
+    public function ordersell()
+    {
+        // 买入  且计算订单单价
+        try {
+            // 允许在客户端断开连接后继续执行
+            //传入策略ID
+            ignore_user_abort(true);
+            // 设置脚本的最大执行时间，0 表示不限制
+            set_time_limit(0);
+            // $data = json_decode(file_get_contents('php://input'), true);
+            // $user = self::validateJWT();
+            $data = ['Strategyid' => 1, 'keyid' => 1];
+
+            $user = ['id' => 1];
+            $Strategy = Db::table('Strategy')->field('*')->where(['id' => $data['Strategyid'], 'userid' => $user['id']])->find();
+            $key =  Db::table('binance_key')->field('*')->where(['id' => $Strategy['keyid'], 'userid' => $user['id']])->find();
+
+            //  'baseUri' => 'https://testnet.binance.vision/api'
+            $client = new Spot(['key' => $key['APIKey'], 'secret' => $key['SecretKey'], 'baseURL' => 'https://testnet.binance.vision']);
+
+            $Historicalorders =  Db::table('bnorder')->where(['userid' => $user['id'], 'Strategyid' => $data['Strategyid'], 'state' => 1])->select();
+            $HistoricalordersQty = array_sum(array_column($Historicalorders, 'origQty')); //总数量
+
+            //卖出
+            $response = $client->newOrder(
+                $Strategy['token'],             // 交易对
+                'SELL',                 // 买入
+                'MARKET',              // 市价单
+                [
+                    'quantity' => truncateToPrecision($HistoricalordersQty, 8)  // 使用 100 USDT
+                ]
+            );
+
+            //计算获得的实际U
+            $totacommissiony = 0; // 本次总净数量
+            foreach ($response['fills'] as $fill) {
+
+                $commission = (float)$fill['commission']; // 手续费
+                // 计算净数量和净花费
+
+                // 累加净数量和净花费
+                $totacommissiony +=  $commission;
+            }
+            $dedao =      $response['cummulativeQuoteQty'] - $totacommissiony;
+            $cummulHistorQty = array_sum(array_column($Historicalorders, 'cummulativeQuoteQty'));
+            $lirun = $dedao - $cummulHistorQty; //利润可能是负数
+            //记录利润
+            Db::table('income')->insert(['userid' => $user['id'], 'keyid' => $key['id'], 'Strategyid' => $Strategy['id'], 'income' => $lirun]);
+
+            Db::table('bnorder')->where(['userid' => $user['id'], 'Strategyid' => $data['Strategyid'], 'state' => 1])->update(['state' => 0]);
         } catch (ClientException $e) {
             preg_match('/\{("code":-?\d+,"msg":"[^"]+")\}/', $e->getMessage(), $matches);
             dump(json_decode($matches[0]));
