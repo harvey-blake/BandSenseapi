@@ -149,17 +149,18 @@ class BinanceController extends Controller
                 $cummulHistorQty += (float)$value['cummulativeQuoteQty'];
             }
 
-
+            dump([$HistoricalordersQty, $cummulHistorQty]);
             //总均价
+
             $Overallaverageprice =  ($HistoricalordersQty + $response['cummulativeQuoteQty']) / ($cummulHistorQty + $totalNetQty);
             $arr =  Db::table('Strategy')->where(['userid' => $user['id'], 'id' => $data['Strategyid']])->update(['unitprice' => $Overallaverageprice]);
 
             // 计算本单均价
             $actualAveragePrice = $totalNetQty > 0 ? $response['cummulativeQuoteQty'] / $totalNetQty : 0;
-            dump(['Strategyid' => $data['Strategyid'], 'userid' => $user['id'], 'orderId' => $response['orderId'], 'price' => $actualAveragePrice, 'cummulativeQuoteQty' => $response['cummulativeQuoteQty'], 'orderinfo' => $response, 'origQty' => $totalNetQty, 'side' => 'buy', 'state' => 1]);
+
             $arr =  Db::table('bnorder')->insert(['Strategyid' => $data['Strategyid'], 'userid' => $user['id'], 'orderId' => $response['orderId'], 'price' => $actualAveragePrice, 'cummulativeQuoteQty' => $response['cummulativeQuoteQty'], 'orderinfo' => $response, 'origQty' => $totalNetQty, 'side' => 'buy', 'state' => 1]);
 
-            dump($response);
+            // dump($response);
         } catch (ClientException $e) {
 
             // 获取完整的错误信息
