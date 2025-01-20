@@ -93,66 +93,101 @@ class BinanceController extends Controller
 
     public function order()
     {
-        // 买入  且计算订单单价
+        // 买入并计算订单单价
         try {
-            // 允许在客户端断开连接后继续执行
-            //传入策略ID
+            // 设置脚本允许在客户端断开连接后继续执行
             ignore_user_abort(true);
             // 设置脚本的最大执行时间，0 表示不限制
             set_time_limit(0);
-            // $data = json_decode(file_get_contents('php://input'), true);
-            // $user = self::validateJWT();
+
+            // 模拟数据，用于获取策略ID和密钥ID
             $data = ['Strategyid' => 1, 'keyid' => 1];
-
             $user = ['id' => 1];
+
+            // 获取用户的策略信息
             $Strategy = Db::table('Strategy')->field('*')->where(['id' => $data['Strategyid'], 'userid' => $user['id']])->find();
-            $key =  Db::table('binance_key')->field('*')->where(['id' => $Strategy['keyid'], 'userid' => $user['id']])->find();
+            // 获取用户的API密钥信息
+            $key = Db::table('binance_key')->field('*')->where(['id' => $Strategy['keyid'], 'userid' => $user['id']])->find();
 
-            //  'baseUri' => 'https://testnet.binance.vision/api'
-            $client = new Spot(['key' => $key['APIKey'], 'secret' => $key['SecretKey'], 'baseURL' => 'https://testnet.binance.vision']);
+            // 初始化 Binance 客户端
+            $client = new Spot([
+                'key' => $key['APIKey'],
+                'secret' => $key['SecretKey'],
+                'baseURL' => 'https://testnet.binance.vision'
+            ]);
 
-            $Historicalorders =  Db::table('bnorder')->where(['userid' => $user['id'], 'Strategyid' => $data['Strategyid'], 'state' => 1])->select();
-            //获取购买金额
-            //获取策略
+            // 查询该策略的历史订单
+            $Historicalorders = Db::table('bnorder')->where(['userid' => $user['id'], 'Strategyid' => $data['Strategyid'], 'state' => 1])->select();
 
-
+            // 从策略中获取当前的购买设置
             $goumaicelue = json_decode(stripslashes($Strategy['Strategy']), true);
             dump($goumaicelue[count($Historicalorders)]);
-            //买入
+
+            // 创建一个市价买单
             $response = $client->newOrder(
-                $Strategy['token'],             // 交易对
-                'BUY',                 // 买入
-                'MARKET',              // 市价单
+                $Strategy['token'], // 交易对
+                'BUY',              // 买入
+                'MARKET',           // 市价单
                 [
-                    'quoteOrderQty' => $goumaicelue[count($Historicalorders)]['amout'], // 使用 100 USDT
+                    'quoteOrderQty' => $goumaicelue[count($Historicalorders)]['amout'], // 使用指定金额
                 ]
             );
-            //计算单价
-            $totalNetQty = 0; // 本次总净数量
-            foreach ($response['fills'] as $fill) {
-                $qty = (float)$fill['qty']; // 成交数量
-                $commission = (float)$fill['commission']; // 手续费
-                // 计算净数量和净花费
-                $netQty = $qty - $commission; // 减去手续费后的净数量
-                // 累加净数量和净花费
-                $totalNetQty += $netQty;
-            }
-            //计算历史数量和金额
-            $HistoricalordersQty = array_sum(array_column($Historicalorders, 'origQty'));
-            $cummulHistorQty = array_sum(array_column($Historicalorders, 'cummulativeQuoteQty'));
 
-            dump([$HistoricalordersQty, $cummulHistorQty]);
-            //总均价
-            $Overallaverageprice =  ($cummulHistorQty + $response['cummulativeQuoteQty']) / ($HistoricalordersQty + $totalNetQty);
-            $arr =  Db::table('Strategy')->where(['userid' => $user['id'], 'id' => $data['Strategyid']])->update(['unitprice' => $Overallaverageprice, 'lumpsum' => $Strategy['lumpsum'] +  $response['cummulativeQuoteQty']]);
-            // 计算本单均价
-            $actualAveragePrice = $totalNetQty > 0 ? $response['cummulativeQuoteQty'] / $totalNetQty : 0;
-            $arr =  Db::table('bnorder')->insert(['Strategyid' => $data['Strategyid'], 'userid' => $user['id'], 'orderId' => $response['orderId'], 'price' => $actualAveragePrice, 'cummulativeQuoteQty' => $response['cummulativeQuoteQty'], 'orderinfo' => $response, 'origQty' => $totalNetQty, 'side' => 'buy', 'state' => 1]);
+            // 计算本次订单的净数量（使用 BCMath）
+            $totalNetQty = '0';
+            foreach ($response['fills'] as $fill) {
+                $qty = $fill['qty'];             // 成交数量（字符串格式）
+                $commission = $fill['commission']; // 手续费（字符串格式）
+                $netQty = bcsub($qty, $commission, 8); // 计算净数量，保留8位小数
+                $totalNetQty = bcadd($totalNetQty, $netQty, 8); // 累加净数量
+            }
+
+            // 计算历史订单的总数量和总金额（使用 BCMath）
+            $HistoricalordersQty = '0';
+            $cummulHistorQty = '0';
+            foreach ($Historicalorders as $order) {
+                $HistoricalordersQty = bcadd($HistoricalordersQty, $order['origQty'], 8);
+                $cummulHistorQty = bcadd($cummulHistorQty, $order['cummulativeQuoteQty'], 8);
+            }
+
+            // 计算总平均价格（使用 BCMath）
+            $Overallaverageprice = bcdiv(
+                bcadd($cummulHistorQty, $response['cummulativeQuoteQty'], 8),
+                bcadd($HistoricalordersQty, $totalNetQty, 8),
+                8
+            );
+
+            // 更新策略信息，包括总金额和总均价
+            Db::table('Strategy')->where(['userid' => $user['id'], 'id' => $data['Strategyid']])
+                ->update([
+                    'unitprice' => $Overallaverageprice,
+                    'lumpsum' => bcadd($Strategy['lumpsum'], $response['cummulativeQuoteQty'], 8)
+                ]);
+
+            // 计算本单的实际平均价格（使用 BCMath）
+            $actualAveragePrice = bccomp($totalNetQty, '0', 8) > 0
+                ? bcdiv($response['cummulativeQuoteQty'], $totalNetQty, 8)
+                : '0';
+
+            // 插入订单信息
+            Db::table('bnorder')->insert([
+                'Strategyid' => $data['Strategyid'],
+                'userid' => $user['id'],
+                'orderId' => $response['orderId'],
+                'price' => $actualAveragePrice,
+                'cummulativeQuoteQty' => $response['cummulativeQuoteQty'],
+                'orderinfo' => $response,
+                'origQty' => $totalNetQty,
+                'side' => 'buy',
+                'state' => 1
+            ]);
         } catch (ClientException $e) {
             preg_match('/\{("code":-?\d+,"msg":"[^"]+")\}/', $e->getMessage(), $matches);
             dump(json_decode($matches[0]));
         }
     }
+
+
 
     public function orderT()
     {
@@ -207,13 +242,12 @@ class BinanceController extends Controller
             //更新购买总金额
             $lumsum = $Strategy['lumpsum'] - $dedao; //总金额
 
-            Db::table('Strategy')->where(['id' => $data['Strategyid'], 'userid' => $user['id']])->update(['lumpsum' => $lumsum]);
             Db::table('bnorder')->where(['userid' => $user['id'], 'id' => $Historicalorders[count($Historicalorders) - 1]['id'], 'state' => 1])->update(['state' => 0]);
             array_pop($Historicalorders);  // 删除最后一个元素
             $HistoricalordersQty = array_sum(array_column($Historicalorders, 'origQty')); //总数量
             $Overallaverageprice =   $lumsum / $HistoricalordersQty;
 
-            Db::table('Strategy')->where(['userid' => $user['id'], 'id' => $data['Strategyid']])->update(['unitprice' => $Overallaverageprice]);
+            Db::table('Strategy')->where(['userid' => $user['id'], 'id' => $data['Strategyid']])->update(['unitprice' => $Overallaverageprice, 'lumpsum' => $lumsum]);
 
             //最新的金额  除以  数量  就等于最新的均价
             dump($response);
@@ -271,7 +305,6 @@ class BinanceController extends Controller
             $lirun = $dedao - $cummulHistorQty; //利润可能是负数
             //记录利润
             Db::table('income')->insert(['userid' => $user['id'], 'keyid' => $key['id'], 'Strategyid' => $Strategy['id'], 'income' => $lirun]);
-
             Db::table('bnorder')->where(['userid' => $user['id'], 'Strategyid' => $data['Strategyid'], 'state' => 1])->update(['state' => '0']);
             Db::table('Strategy')->where(['id' => $data['Strategyid'], 'userid' => $user['id']])->update(['unitprice' => '0', 'lumpsum' => '0']);
         } catch (ClientException $e) {
