@@ -112,7 +112,6 @@ class BinanceController extends Controller
             $client = new Spot(['key' => $key['APIKey'], 'secret' => $key['SecretKey'], 'baseURL' => 'https://testnet.binance.vision']);
 
             $Historicalorders =  Db::table('bnorder')->where(['userid' => $user['id'], 'Strategyid' => $data['Strategyid'], 'state' => 1])->select();
-
             //获取购买金额
             //获取策略
 
@@ -128,8 +127,6 @@ class BinanceController extends Controller
                     'quoteOrderQty' => $goumaicelue[count($Historicalorders)]['amout'], // 使用 100 USDT
                 ]
             );
-            Db::table('Strategy')->where(['id' => $data['Strategyid'], 'userid' => $user['id']])->update(['lumpsum' => $Strategy['lumpsum'] + $goumaicelue[count($Historicalorders)]['amout']]);
-
             //计算单价
             $totalNetQty = 0; // 本次总净数量
             foreach ($response['fills'] as $fill) {
@@ -140,7 +137,6 @@ class BinanceController extends Controller
                 // 累加净数量和净花费
                 $totalNetQty += $netQty;
             }
-            $Historicalorders =  Db::table('bnorder')->where(['userid' => $user['id'], 'Strategyid' => $data['Strategyid'], 'state' => 1])->select();
             //计算历史数量和金额
             $HistoricalordersQty = array_sum(array_column($Historicalorders, 'origQty'));
             $cummulHistorQty = array_sum(array_column($Historicalorders, 'cummulativeQuoteQty'));
@@ -148,7 +144,7 @@ class BinanceController extends Controller
             dump([$HistoricalordersQty, $cummulHistorQty]);
             //总均价
             $Overallaverageprice =  ($cummulHistorQty + $response['cummulativeQuoteQty']) / ($HistoricalordersQty + $totalNetQty);
-            $arr =  Db::table('Strategy')->where(['userid' => $user['id'], 'id' => $data['Strategyid']])->update(['unitprice' => $Overallaverageprice]);
+            $arr =  Db::table('Strategy')->where(['userid' => $user['id'], 'id' => $data['Strategyid']])->update(['unitprice' => $Overallaverageprice, 'lumpsum' => $Strategy['lumpsum'] +  $response['cummulativeQuoteQty']]);
             // 计算本单均价
             $actualAveragePrice = $totalNetQty > 0 ? $response['cummulativeQuoteQty'] / $totalNetQty : 0;
             $arr =  Db::table('bnorder')->insert(['Strategyid' => $data['Strategyid'], 'userid' => $user['id'], 'orderId' => $response['orderId'], 'price' => $actualAveragePrice, 'cummulativeQuoteQty' => $response['cummulativeQuoteQty'], 'orderinfo' => $response, 'origQty' => $totalNetQty, 'side' => 'buy', 'state' => 1]);
@@ -203,7 +199,7 @@ class BinanceController extends Controller
                 // 累加净数量和净花费
                 $totacommissiony +=  $commission;
             }
-            $dedao =      $response['cummulativeQuoteQty'] - $totacommissiony;
+            $dedao = $response['cummulativeQuoteQty'] - $totacommissiony;
             $lirun = $dedao - $Historicalorders[count($Historicalorders) - 1]['cummulativeQuoteQty']; //利润
             //记录本次利润
             Db::table('income')->insert(['userid' => $user['id'], 'keyid' => $key['id'], 'Strategyid' => $Strategy['id'], 'income' => $lirun]);
@@ -212,7 +208,7 @@ class BinanceController extends Controller
             $lumsum = $Strategy['lumpsum'] - $dedao; //总金额
 
             Db::table('Strategy')->where(['id' => $data['Strategyid'], 'userid' => $user['id']])->update(['lumpsum' => $lumsum]);
-
+            Db::table('bnorder')->where(['userid' => $user['id'], 'id' => $Historicalorders[count($Historicalorders) - 1]['id'], 'state' => 1])->update(['state' => 0]);
             array_pop($Historicalorders);  // 删除最后一个元素
             $HistoricalordersQty = array_sum(array_column($Historicalorders, 'origQty')); //总数量
             $Overallaverageprice =   $lumsum / $HistoricalordersQty;
@@ -276,7 +272,8 @@ class BinanceController extends Controller
             //记录利润
             Db::table('income')->insert(['userid' => $user['id'], 'keyid' => $key['id'], 'Strategyid' => $Strategy['id'], 'income' => $lirun]);
 
-            Db::table('bnorder')->where(['userid' => $user['id'], 'Strategyid' => $data['Strategyid'], 'state' => 1])->update(['state' => 0]);
+            Db::table('bnorder')->where(['userid' => $user['id'], 'Strategyid' => $data['Strategyid'], 'state' => 1])->update(['state' => '0']);
+            Db::table('Strategy')->where(['id' => $data['Strategyid'], 'userid' => $user['id']])->update(['lumpsum' => '0']);
         } catch (ClientException $e) {
             preg_match('/\{("code":-?\d+,"msg":"[^"]+")\}/', $e->getMessage(), $matches);
             dump(json_decode($matches[0]));
