@@ -95,17 +95,26 @@ class BinanceController extends Controller
         // 买入  且计算订单单价
         try {
             // 允许在客户端断开连接后继续执行
+
+            //传入策略ID
             ignore_user_abort(true);
 
             // 设置脚本的最大执行时间，0 表示不限制
             set_time_limit(0);
 
-            $arr = ['APIKey' => '49qTffAJQkRD26Fty8lJZtaODv3tTiR6Kk0LLlaluWsQXapNCxJhJFwH7WkDlfz1', 'SecretKey' => 'fTwaYPIZtaiiA6izC6w4qEnUsdDKSv2NkznNJAqZNcmnuXDG3N7V2pFDHar4gJH2'];
+            // $data = json_decode(file_get_contents('php://input'), true);
+            // $user = self::validateJWT();
 
+            $data = ['Strategyid' => 1];
+
+            $user = ['id' => 1];
             // $arr =  Db::table('binance_key')->field('*')->where(['uid' => 1053882738])->find();
             $arr = ['APIKey' => '49qTffAJQkRD26Fty8lJZtaODv3tTiR6Kk0LLlaluWsQXapNCxJhJFwH7WkDlfz1', 'SecretKey' => 'fTwaYPIZtaiiA6izC6w4qEnUsdDKSv2NkznNJAqZNcmnuXDG3N7V2pFDHar4gJH2'];
             //  'baseUri' => 'https://testnet.binance.vision/api'
             $client = new Spot(['key' => $arr['APIKey'], 'secret' => $arr['SecretKey'], 'baseURL' => 'https://testnet.binance.vision']);
+
+
+            //买入
 
             $response = $client->newOrder(
                 'POLUSDT',             // 交易对
@@ -115,6 +124,39 @@ class BinanceController extends Controller
                     'quoteOrderQty' => 1000, // 使用 100 USDT
                 ]
             );
+
+            //计算单价
+
+            $totalNetQty = 0; // 本次总净数量
+
+            foreach ($response['fills'] as $fill) {
+                $qty = (float)$fill['qty']; // 成交数量
+                $commission = (float)$fill['commission']; // 手续费
+
+                // 计算净数量和净花费
+                $netQty = $qty - $commission; // 减去手续费后的净数量
+                // 累加净数量和净花费
+                $totalNetQty += $netQty;
+            }
+
+
+            $Historicalorders =  Db::table('bnorder')->where(['userid' => $user['id'], 'Strategyid' => $data['Strategyid'], 'state' => 1])->select();
+            $HistoricalordersQty = 0; //历史金额
+            $cummulHistorQty = 0; //历史数量
+            foreach ($Historicalorders as $key => $value) {
+                # code...
+                $HistoricalordersQty += (float)$value['origQty'];
+                $cummulHistorQty += (float)$value['cummulativeQuoteQty'];
+            }
+
+
+            //总均价
+            $Overallaverageprice =  ($HistoricalordersQty + $response['cummulativeQuoteQty']) / ($cummulHistorQty + $totalNetQty);
+            $arr =  Db::table('Strategy')->where(['userid' => $user['id'], 'id' => $data['Strategyid']])->update(['unitprice' => $Overallaverageprice]);
+
+            // 计算本单均价
+            $actualAveragePrice = $totalNetQty > 0 ? $response['cummulativeQuoteQty'] / $totalNetQty : 0;
+            $arr =  Db::table('bnorder')->insert(['Strategyid' => $data['Strategyid'], 'userid' => $user['id'], 'orderId' => $response['orderId'], 'price' => $actualAveragePrice, 'cummulativeQuoteQty' => $response['cummulativeQuoteQty'], 'orderinfo' => $response, 'origQty' => $totalNetQty, 'side' => 'buy', 'state' => 1]);
 
             dump($response);
         } catch (ClientException $e) {
