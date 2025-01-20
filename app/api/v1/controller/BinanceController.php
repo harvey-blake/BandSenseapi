@@ -104,8 +104,8 @@ class BinanceController extends Controller
             $data = ['Strategyid' => 1, 'keyid' => 1];
 
             $user = ['id' => 1];
-
-            $key =  Db::table('binance_key')->field('*')->where(['id' => $data['id'], 'userid' => $user['id']])->find();
+            $Strategy = Db::table('Strategy')->field('*')->where(['id' => $data['Strategyid'], 'userid' => $user['id']])->find();
+            $key =  Db::table('binance_key')->field('*')->where(['id' => $Strategy['keyid'], 'userid' => $user['id']])->find();
 
             //  'baseUri' => 'https://testnet.binance.vision/api'
             $client = new Spot(['key' => $key['APIKey'], 'secret' => $key['SecretKey'], 'baseURL' => 'https://testnet.binance.vision']);
@@ -114,7 +114,7 @@ class BinanceController extends Controller
 
             //获取购买金额
             //获取策略
-            $Strategy = Db::table('Strategy')->field('*')->where(['id' => $data['Strategyid'], 'userid' => $user['id']])->find();
+
 
             $goumaicelue = json_decode(stripslashes($Strategy['Strategy']), true);
             dump($goumaicelue[count($Historicalorders)]);
@@ -124,7 +124,7 @@ class BinanceController extends Controller
                 'BUY',                 // 买入
                 'MARKET',              // 市价单
                 [
-                    'quoteOrderQty' => $goumaicelue[count($Historicalorders)], // 使用 100 USDT
+                    'quoteOrderQty' => $goumaicelue[count($Historicalorders)]['amout'], // 使用 100 USDT
                 ]
             );
             //计算单价
