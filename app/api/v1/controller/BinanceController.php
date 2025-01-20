@@ -6,6 +6,7 @@ namespace app\api\v1\controller;
 
 use Db\Db;
 use function common\dump;
+use function common\truncateToPrecision;
 use function common\retur;
 use Binance\Spot;
 use common\Controller;
@@ -186,7 +187,7 @@ class BinanceController extends Controller
                 'SELL',                 // 买入
                 'MARKET',              // 市价单
                 [
-                    'quoteOrderQty' => $Historicalorders[count($Historicalorders) - 1]['origQty'], // 使用 100 USDT
+                    'quoteOrderQty' => truncateToPrecision($Historicalorders[count($Historicalorders) - 1]['origQty'], 8)  // 使用 100 USDT
                 ]
             );
             //卖出得到多少钱  然后减去手续费  最终得到的金额  减去 购买的金额   就等于利润

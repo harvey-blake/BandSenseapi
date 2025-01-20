@@ -43,3 +43,9 @@ function decryptData($encryptedData)
     list($encryptedData, $iv) = explode('::', base64_decode($encryptedData), 2);
     return json_decode(openssl_decrypt($encryptedData, 'aes-256-cbc', '93a1c3a4b6e9f0d1e4b0f78a9cd7b0d1a78d9b0e4b0e', 0, $iv), true);
 }
+//精度处理
+function truncateToPrecision($value, $precision)
+{
+    $factor = pow(10, $precision);
+    return floor($value * $factor) / $factor;
+}
