@@ -21,6 +21,17 @@ class BinanceController extends Controller
     // $key = '466SioaRMJGXfKESRF8mdGzICXDN4bv21TP2KzFYqx6AFMq3TNCiYNYY9TV6Aq32';
     // $secret = 'FKEYTbtFUWKyoIrdeaGEsM1LYximNToGWGhyG5hWgWQOSEqGN4wxCE7h5eCzGqOE';
 
+    private function getClient($APIKey, $SecretKey)
+    {
+        try {
+            return new Spot(['key' => $APIKey, 'secret' => $SecretKey, 'baseURL' => 'https://testnet.binance.vision']);
+        } catch (\Throwable $th) {
+            return null;
+        }
+    }
+
+
+
     public function account()
     {
         try {
@@ -109,11 +120,12 @@ class BinanceController extends Controller
             $key = Db::table('binance_key')->field('*')->where(['id' => $Strategy['keyid'], 'userid' => $user['id']])->find();
 
             // 初始化 Binance 客户端
-            $client = new Spot([
-                'key' => $key['APIKey'],
-                'secret' => $key['SecretKey'],
-                'baseURL' => 'https://testnet.binance.vision'
-            ]);
+            $client = self::getClient($key['APIKey'], $key['SecretKey']);
+            // $client = new Spot([
+            //     'key' => $key['APIKey'],
+            //     'secret' => $key['SecretKey'],
+            //     'baseURL' => 'https://testnet.binance.vision'
+            // ]);
 
             // 查询该策略的历史订单
             $Historicalorders = Db::table('bnorder')->where(['userid' => $user['id'], 'Strategyid' => $data['Strategyid'], 'state' => 1])->select();
@@ -308,9 +320,7 @@ class BinanceController extends Controller
             ]);
 
             // 获取该策略的所有历史订单
-            $Historicalorders = Db::table('bnorder')
-                ->where(['userid' => $user['id'], 'Strategyid' => $data['Strategyid'], 'state' => 1])
-                ->select();
+            $Historicalorders = Db::table('bnorder')->where(['userid' => $user['id'], 'Strategyid' => $data['Strategyid'], 'state' => 1])->select();
 
             // 计算所有历史订单的总交易数量
             $HistoricalordersQty = array_sum(array_column($Historicalorders, 'origQty'));
@@ -342,22 +352,13 @@ class BinanceController extends Controller
             $lirun = $dedao - $cummulHistorQty;
 
             // 将本次利润记录到数据库
-            Db::table('income')->insert([
-                'userid' => $user['id'],
-                'keyid' => $key['id'],
-                'Strategyid' => $Strategy['id'],
-                'income' => $lirun,
-            ]);
+            Db::table('income')->insert(['userid' => $user['id'], 'keyid' => $key['id'], 'Strategyid' => $Strategy['id'], 'income' => $lirun,]);
 
             // 更新所有历史订单的状态为已完成（state = 0）
-            Db::table('bnorder')
-                ->where(['userid' => $user['id'], 'Strategyid' => $data['Strategyid'], 'state' => 1])
-                ->update(['state' => '0']);
+            Db::table('bnorder')->where(['userid' => $user['id'], 'Strategyid' => $data['Strategyid'], 'state' => 1])->update(['state' => '0']);
 
             // 重置策略的总金额和平均单价为0
-            Db::table('Strategy')
-                ->where(['id' => $data['Strategyid'], 'userid' => $user['id']])
-                ->update(['unitprice' => '0', 'lumpsum' => '0']);
+            Db::table('Strategy')->where(['id' => $data['Strategyid'], 'userid' => $user['id']])->update(['unitprice' => '0', 'lumpsum' => '0']);
         } catch (ClientException $e) {
             // 捕获客户端异常，解析错误信息并输出
             preg_match('/\{("code":-?\d+,"msg":"[^"]+")\}/', $e->getMessage(), $matches);
