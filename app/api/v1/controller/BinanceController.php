@@ -273,7 +273,7 @@ class BinanceController extends Controller
             Db::table('income')->insert(['userid' => $user['id'], 'keyid' => $key['id'], 'Strategyid' => $Strategy['id'], 'income' => $lirun]);
 
             Db::table('bnorder')->where(['userid' => $user['id'], 'Strategyid' => $data['Strategyid'], 'state' => 1])->update(['state' => '0']);
-            Db::table('Strategy')->where(['id' => $data['Strategyid'], 'userid' => $user['id']])->update(['lumpsum' => '0']);
+            Db::table('Strategy')->where(['id' => $data['Strategyid'], 'userid' => $user['id']])->update(['unitprice' => '0', 'lumpsum' => '0']);
         } catch (ClientException $e) {
             preg_match('/\{("code":-?\d+,"msg":"[^"]+")\}/', $e->getMessage(), $matches);
             dump(json_decode($matches[0]));
