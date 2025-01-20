@@ -187,7 +187,7 @@ class BinanceController extends Controller
                 'SELL',                 // 买入
                 'MARKET',              // 市价单
                 [
-                    'quoteOrderQty' => truncateToPrecision($Historicalorders[count($Historicalorders) - 1]['origQty'], 8)  // 使用 100 USDT
+                    'quantity' => truncateToPrecision($Historicalorders[count($Historicalorders) - 1]['origQty'], 8)  // 使用 100 USDT
                 ]
             );
             //卖出得到多少钱  然后减去手续费  最终得到的金额  减去 购买的金额   就等于利润
