@@ -154,4 +154,47 @@ class BinanceController extends Controller
             dump(json_decode($matches[0]));
         }
     }
+
+    public function orderT()
+    {
+        // 买入  且计算订单单价
+        try {
+            // 允许在客户端断开连接后继续执行
+            //传入策略ID
+            ignore_user_abort(true);
+            // 设置脚本的最大执行时间，0 表示不限制
+            set_time_limit(0);
+            // $data = json_decode(file_get_contents('php://input'), true);
+            // $user = self::validateJWT();
+            $data = ['Strategyid' => 1, 'keyid' => 1];
+
+            $user = ['id' => 1];
+            $Strategy = Db::table('Strategy')->field('*')->where(['id' => $data['Strategyid'], 'userid' => $user['id']])->find();
+            $key =  Db::table('binance_key')->field('*')->where(['id' => $Strategy['keyid'], 'userid' => $user['id']])->find();
+
+            //  'baseUri' => 'https://testnet.binance.vision/api'
+            $client = new Spot(['key' => $key['APIKey'], 'secret' => $key['SecretKey'], 'baseURL' => 'https://testnet.binance.vision']);
+
+            $Historicalorders =  Db::table('bnorder')->where(['userid' => $user['id'], 'Strategyid' => $data['Strategyid'], 'state' => 1])->select();
+
+            //卖出最后一个
+
+            dump($Historicalorders[count($Historicalorders) - 1]);
+            //卖出
+            $response = $client->newOrder(
+                $Strategy['token'],             // 交易对
+                'SELL',                 // 买入
+                'MARKET',              // 市价单
+                [
+                    'quoteOrderQty' => $Historicalorders[count($Historicalorders) - 1]['origQty'], // 使用 100 USDT
+                ]
+            );
+            //卖出得到多少钱  然后减去手续费  最终得到的金额  减去 购买的金额   就等于利润
+            //然后 历史的购买金额 去掉最后一个  减去利润 除以数量  得到最新的均价
+            dump($response);
+        } catch (ClientException $e) {
+            preg_match('/\{("code":-?\d+,"msg":"[^"]+")\}/', $e->getMessage(), $matches);
+            dump(json_decode($matches[0]));
+        }
+    }
 }
