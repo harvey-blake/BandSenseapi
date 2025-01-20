@@ -141,8 +141,8 @@ class BinanceController extends Controller
 
 
             $Historicalorders =  Db::table('bnorder')->where(['userid' => $user['id'], 'Strategyid' => $data['Strategyid'], 'state' => 1])->select();
-            $HistoricalordersQty = 0; //历史金额
-            $cummulHistorQty = 0; //历史数量
+            $HistoricalordersQty = 0; //历史数量
+            $cummulHistorQty = 0; //历史金额
             foreach ($Historicalorders as $key => $value) {
                 # code...
                 $HistoricalordersQty += (float)$value['origQty'];
@@ -152,7 +152,7 @@ class BinanceController extends Controller
             dump([$HistoricalordersQty, $cummulHistorQty]);
             //总均价
 
-            $Overallaverageprice =  ($HistoricalordersQty + $response['cummulativeQuoteQty']) / ($cummulHistorQty + $totalNetQty);
+            $Overallaverageprice =  ($cummulHistorQty + $response['cummulativeQuoteQty']) / ($HistoricalordersQty + $totalNetQty);
             $arr =  Db::table('Strategy')->where(['userid' => $user['id'], 'id' => $data['Strategyid']])->update(['unitprice' => $Overallaverageprice]);
 
             // 计算本单均价
