@@ -69,6 +69,7 @@ class QueryController extends Controller
             foreach ($arr as $key => $value) {
                 //子账户
                 $arr[$key]['keyname'] =  Db::table('binance_key')->field('Label')->where(['userid' => $user['id'], 'id' => $value['keyid']])->find()['Label'];
+                $arr[$key]['Strategy'] = json_decode(stripslashes($arr[$key]['Strategy']), true);
             }
             echo json_encode(retur('成功', $arr));
         } else {
