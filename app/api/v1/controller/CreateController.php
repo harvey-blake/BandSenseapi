@@ -53,11 +53,11 @@ class CreateController extends Controller
             echo json_encode(retur('失败', '非法访问', 2015));
             exit;
         }
-        $Strategy =  Db::table('Strategy')->field('*')->where(['userid' => $user['id'], 'keyid' => $data['keyid']])->find();
-        if ($Strategy) {
-            echo json_encode(retur('失败', '此子账号下已存在其他策略,请删除后添加', 409));
-            exit;
-        }
+        // $Strategy =  Db::table('Strategy')->field('*')->where(['userid' => $user['id'], 'keyid' => $data['keyid']])->find();
+        // if ($Strategy) {
+        //     echo json_encode(retur('失败', '此子账号下已存在其他策略,请删除后添加', 409));
+        //     exit;
+        // }
 
         $arr =  Db::table('Strategy')->insert(['token' => $data['token'], 'keyid' => $data['keyid'], 'userid' => $user['id'], 'state' => 1, 'Strategy' => $data['Strategy']]);
         if ($arr > 0) {
