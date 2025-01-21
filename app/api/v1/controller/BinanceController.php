@@ -29,9 +29,6 @@ class BinanceController extends Controller
             return null;
         }
     }
-
-
-
     public function account()
     {
         try {
