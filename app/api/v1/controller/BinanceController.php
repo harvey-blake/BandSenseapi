@@ -39,7 +39,7 @@ class BinanceController extends Controller
             // $client = new Spot(['key' => $data['APIKey'], 'secret' => $data['SecretKey']]);
             $response = $client->account();
 
-            $arr =  Db::table('binance_key')->field('*')->where(['uid' => $response['uid']])->find();
+            $arr =  Db::table('binance_key')->field('*')->where(['APIKey' => $data['APIKey']])->find();
             if (!$arr) {
                 //标签  uid   是否允许交易   账户类型
                 $arr =  Db::table('binance_key')->insert(['userid' => $user['id'], 'APIKey' => $data['APIKey'], 'SecretKey' => $data['SecretKey'], 'Label' => $data['Label'], 'uid' => $response['uid'], 'canTrade' => $response['canTrade'], 'accountType' => $response['accountType'], 'Balance' => $response['balances']]);
