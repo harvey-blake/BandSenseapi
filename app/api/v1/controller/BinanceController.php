@@ -38,8 +38,8 @@ class BinanceController extends Controller
             $data = json_decode(file_get_contents('php://input'), true);
             $user = self::validateJWT();
 
-
-            $client = new Spot(['key' => $data['APIKey'], 'secret' => $data['SecretKey']]);
+            $client = self::getClient($data['APIKey'], $data['SecretKey']);
+            // $client = new Spot(['key' => $data['APIKey'], 'secret' => $data['SecretKey']]);
             $response = $client->account();
 
             $arr =  Db::table('binance_key')->field('*')->where(['uid' => $response['uid']])->find();
@@ -66,7 +66,8 @@ class BinanceController extends Controller
             $arr =  Db::table('binance_key')->where(['userid' => $userid])->select();
 
             foreach ($arr as $key => $value) {
-                $client = new Spot(['key' => $value['APIKey'], 'secret' => $value['SecretKey']]);
+                $client = self::getClient($value['APIKey'], $value['SecretKey']);
+
                 $response = $client->account();
                 $arr =  Db::table('binance_key')->where(['APIKey' => $value['APIKey']])->update(['canTrade' => $response['canTrade'], 'accountType' => $response['accountType'], 'Balance' => $response['balances']]);
             }
@@ -217,7 +218,7 @@ class BinanceController extends Controller
             $key = Db::table('binance_key')->field('*')->where(['id' => $Strategy['keyid'], 'userid' => $user['id']])->find();
 
             // 初始化 Binance 客户端
-            $client = new Spot(['key' => $key['APIKey'], 'secret' => $key['SecretKey'], 'baseURL' => 'https://testnet.binance.vision']);
+            $client = self::getClient($key['APIKey'], $key['SecretKey']);
 
             // 获取该策略下的历史订单
             $Historicalorders = Db::table('bnorder')->where(['userid' => $user['id'], 'Strategyid' => $data['Strategyid'], 'state' => 1])->select();
@@ -313,11 +314,7 @@ class BinanceController extends Controller
                 ->find();
 
             // 初始化 Binance 客户端
-            $client = new Spot([
-                'key' => $key['APIKey'],
-                'secret' => $key['SecretKey'],
-                'baseURL' => 'https://testnet.binance.vision',
-            ]);
+            $client = self::getClient($key['APIKey'], $key['SecretKey']);
 
             // 获取该策略的所有历史订单
             $Historicalorders = Db::table('bnorder')->where(['userid' => $user['id'], 'Strategyid' => $data['Strategyid'], 'state' => 1])->select();
