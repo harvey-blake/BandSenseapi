@@ -93,23 +93,19 @@ class QueryController extends Controller
     //获取订单
     public function bnorder()
     {
-        $data = json_decode(file_get_contents('php://input'), true);
-        $user = self::validateJWT();
-        $state =  Db::table('bnorder')->field('*')->where(['Strategyid' => $data['id'], "userid" => $user['id'], 'state >' => 1])->select();
 
-
-        // $arr[$key]['Balance'] = json_decode(stripslashes($arr[$key]['Balance']), true);
-
-
-
-        if ($state) {
-
-            foreach ($state as $key => $value) {
-                $state[$key]['orderinfo'] = json_decode(stripslashes($state[$key]['orderinfo']), true);
+        try {
+            $data = json_decode(file_get_contents('php://input'), true);
+            $user = self::validateJWT();
+            $state =  Db::table('bnorder')->field('*')->where(['Strategyid' => $data['id'], "userid" => $user['id'], 'state >' => 1])->select();
+            if ($state) {
+                foreach ($state as $key => $value) {
+                    $state[$key]['orderinfo'] = json_decode(stripslashes($state[$key]['orderinfo']), true);
+                }
             }
             echo json_encode(retur('成功', $state));
-        } else {
-            echo json_encode(retur('失败', '验证码已过期或不存在', 422));
+        } catch (\Throwable $th) {
+            echo json_encode(retur('失败', '未知错误', 422));
         }
     }
 }
