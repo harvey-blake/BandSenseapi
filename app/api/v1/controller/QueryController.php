@@ -98,7 +98,7 @@ class QueryController extends Controller
         try {
             $data = json_decode(file_get_contents('php://input'), true);
             $user = self::validateJWT();
-            $state =  Db::table('bnorder')->field('*')->where(['Strategyid' => $data['id'], "userid" => $user['id'], 'state >' => 1])->select();
+            $state =  Db::table('bnorder')->field('*')->where(['Strategyid' => $data['id'], "userid" => $user['id'], 'state' => 1])->select();
             if ($state) {
                 foreach ($state as $key => $value) {
                     $state[$key]['orderinfo'] = json_decode(stripslashes($state[$key]['orderinfo']), true);
