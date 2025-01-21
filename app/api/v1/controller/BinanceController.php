@@ -262,7 +262,8 @@ class BinanceController extends Controller
             $HistoricalordersQty = array_sum(array_column($Historicalorders, 'origQty'));
 
             // 计算新的总平均价格（总金额 / 总数量）
-            $Overallaverageprice = $lumsum / $HistoricalordersQty;
+            $Overallaverageprice = $HistoricalordersQty != 0 ? $lumsum / $HistoricalordersQty : '0';
+            $lumsum = $HistoricalordersQty ?: 0;
 
             // 更新策略的总均价和总金额
             Db::table('Strategy')->where(['userid' => $user['id'], 'id' => $data['Strategyid']])->update([
