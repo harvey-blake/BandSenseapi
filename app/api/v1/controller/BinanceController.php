@@ -133,6 +133,7 @@ class BinanceController extends Controller
                 'MARKET',           // 市价单
                 [
                     'quoteOrderQty' => $goumaicelue[count($Historicalorders)]['amout'], // 使用指定金额
+                    'timeInForce' => 'GTC'
                 ]
             );
 
@@ -225,7 +226,8 @@ class BinanceController extends Controller
                 'SELL',             // 卖出
                 'MARKET',           // 市价单
                 [
-                    'quantity' => truncateToPrecision($lastOrder['origQty'], 8) // 卖出的数量，保留8位精度
+                    'quantity' => truncateToPrecision($lastOrder['origQty'], 8), // 卖出的数量，保留8位精度
+                    'timeInForce' => 'GTC'
                 ]
             );
 
@@ -316,6 +318,7 @@ class BinanceController extends Controller
                 'MARKET',           // 市价单
                 [
                     'quantity' => truncateToPrecision($HistoricalordersQty, 8), // 卖出的总数量，保留8位精度
+                    'timeInForce' => 'GTC'
                 ]
             );
 
