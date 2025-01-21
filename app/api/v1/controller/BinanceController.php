@@ -105,12 +105,13 @@ class BinanceController extends Controller
         // 买入并计算订单单价
         try {
             // 设置脚本允许在客户端断开连接后继续执行
+            $data = json_decode(file_get_contents('php://input'), true);
+            $user = self::validateJWT();
             ignore_user_abort(true);
             // 设置脚本的最大执行时间，0 表示不限制
             set_time_limit(0);
             // 模拟数据，用于获取策略ID和密钥ID
-            $data = ['Strategyid' => 1, 'keyid' => 1];
-            $user = ['id' => 1];
+
 
             // 获取用户的策略信息
             $Strategy = Db::table('Strategy')->field('*')->where(['id' => $data['Strategyid'], 'userid' => $user['id']])->find();
@@ -119,13 +120,7 @@ class BinanceController extends Controller
 
             // 初始化 Binance 客户端
             $client = self::getClient($key['APIKey'], $key['SecretKey']);
-            // $client = new Spot([
-            //     'key' => $key['APIKey'],
-            //     'secret' => $key['SecretKey'],
-            //     'baseURL' => 'https://testnet.binance.vision'
-            // ]);
 
-            // 查询该策略的历史订单
             $Historicalorders = Db::table('bnorder')->where(['userid' => $user['id'], 'Strategyid' => $data['Strategyid'], 'state' => 1])->select();
 
             // 从策略中获取当前的购买设置
@@ -188,9 +183,10 @@ class BinanceController extends Controller
                 'side' => 'buy',
                 'state' => 1
             ]);
+            echo json_encode(retur('成功', '成功'));
         } catch (ClientException $e) {
             preg_match('/\{("code":-?\d+,"msg":"[^"]+")\}/', $e->getMessage(), $matches);
-            dump(json_decode($matches[0]));
+            echo json_encode(retur('失败', json_decode($matches[0]), 2015));
         }
     }
 
@@ -200,14 +196,13 @@ class BinanceController extends Controller
     {
         try {
             // 设置脚本允许在客户端断开连接后继续执行
+            $data = json_decode(file_get_contents('php://input'), true);
+            $user = self::validateJWT();
             ignore_user_abort(true);
             // 设置脚本的最大执行时间为无限制
             set_time_limit(0);
 
-            // 模拟传入的策略ID和密钥ID
-            $data = ['Strategyid' => 1, 'keyid' => 1];
-            // 模拟用户数据
-            $user = ['id' => 1];
+
 
             // 从数据库中获取策略信息
             $Strategy = Db::table('Strategy')->field('*')->where(['id' => $data['Strategyid'], 'userid' => $user['id']])->find();
@@ -222,7 +217,6 @@ class BinanceController extends Controller
 
             // 获取最后一个历史订单（准备卖出）
             $lastOrder = $Historicalorders[count($Historicalorders) - 1];
-            dump($lastOrder);
 
             // 创建一个市价卖单
             $response = $client->newOrder(
@@ -275,28 +269,22 @@ class BinanceController extends Controller
                 'unitprice' => $Overallaverageprice,
                 'lumpsum' => $lumsum
             ]);
-
-            // 输出卖单响应结果
-            dump($response);
+            echo json_encode(retur('成功', '成功'));
         } catch (ClientException $e) {
-            // 捕获客户端异常，解析错误信息并输出
             preg_match('/\{("code":-?\d+,"msg":"[^"]+")\}/', $e->getMessage(), $matches);
-            dump(json_decode($matches[0]));
+            echo json_encode(retur('失败', json_decode($matches[0]), 2015));
         }
     }
 
     public function ordersell()
     {
         try {
+            $data = json_decode(file_get_contents('php://input'), true);
+            $user = self::validateJWT();
             // 设置脚本允许在客户端断开连接后继续执行
             ignore_user_abort(true);
             // 设置脚本的最大执行时间为无限制
             set_time_limit(0);
-
-            // 模拟传入的策略ID和密钥ID
-            $data = ['Strategyid' => 1, 'keyid' => 1];
-            // 模拟用户信息
-            $user = ['id' => 1];
 
             // 从数据库中获取策略信息
             $Strategy = Db::table('Strategy')
@@ -353,10 +341,10 @@ class BinanceController extends Controller
 
             // 重置策略的总金额和平均单价为0
             Db::table('Strategy')->where(['id' => $data['Strategyid'], 'userid' => $user['id']])->update(['unitprice' => '0', 'lumpsum' => '0']);
+            echo json_encode(retur('成功', '成功'));
         } catch (ClientException $e) {
-            // 捕获客户端异常，解析错误信息并输出
             preg_match('/\{("code":-?\d+,"msg":"[^"]+")\}/', $e->getMessage(), $matches);
-            dump(json_decode($matches[0]));
+            echo json_encode(retur('失败', json_decode($matches[0]), 2015));
         }
     }
 }
