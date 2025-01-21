@@ -325,6 +325,7 @@ class BinanceController extends Controller
                 $commission = (float)$fill['commission']; // 单笔成交的手续费
                 $totalCommission += $commission;         // 累加手续费
             }
+            //出现的问题 可能根本没卖完 这个要解决  买入 也是
 
             // 计算实际获得的金额（扣除手续费）
             $dedao = $response['cummulativeQuoteQty'] - $totalCommission;
