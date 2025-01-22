@@ -126,7 +126,6 @@ class BinanceController extends Controller
                 echo json_encode(retur('失败', '调用频率过高', 2015));
                 exit;
             }
-            Db::table('binance_key')->where(['id' => $Strategy['keyid'], 'userid' => $user['id']])->update(['lasttime' => $timestamp]);
 
             // 初始化 Binance 客户端
             $client = self::getClient($key['APIKey'], $key['SecretKey']);
@@ -194,6 +193,8 @@ class BinanceController extends Controller
                 'side' => 'buy',
                 'state' => 1
             ]);
+            Db::table('binance_key')->where(['id' => $Strategy['keyid'], 'userid' => $user['id']])->update(['lasttime' => $timestamp]);
+
             echo json_encode(retur('成功', '成功'));
         } catch (ClientException $e) {
             preg_match('/\{("code":-?\d+,"msg":"[^"]+")\}/', $e->getMessage(), $matches);
@@ -226,8 +227,6 @@ class BinanceController extends Controller
                 echo json_encode(retur('失败', '调用频率过高', 2015));
                 exit;
             }
-            Db::table('binance_key')->where(['id' => $Strategy['keyid'], 'userid' => $user['id']])->update(['lasttime' => $timestamp]);
-
 
 
             // 初始化 Binance 客户端
@@ -292,6 +291,9 @@ class BinanceController extends Controller
                 'unitprice' => $Overallaverageprice,
                 'lumpsum' => $lumsum
             ]);
+            Db::table('binance_key')->where(['id' => $Strategy['keyid'], 'userid' => $user['id']])->update(['lasttime' => $timestamp]);
+
+
             echo json_encode(retur('成功', '成功'));
         } catch (ClientException $e) {
             preg_match('/\{("code":-?\d+,"msg":"[^"]+")\}/', $e->getMessage(), $matches);
@@ -329,7 +331,6 @@ class BinanceController extends Controller
                 echo json_encode(retur('失败', '调用频率过高', 2015));
                 exit;
             }
-            Db::table('binance_key')->where(['id' => $Strategy['keyid'], 'userid' => $user['id']])->update(['lasttime' => $timestamp]);
 
             // 初始化 Binance 客户端
             $client = self::getClient($key['APIKey'], $key['SecretKey']);
@@ -376,6 +377,8 @@ class BinanceController extends Controller
 
             // 重置策略的总金额和平均单价为0
             Db::table('Strategy')->where(['id' => $data['Strategyid'], 'userid' => $user['id']])->update(['unitprice' => '0', 'lumpsum' => '0']);
+            Db::table('binance_key')->where(['id' => $Strategy['keyid'], 'userid' => $user['id']])->update(['lasttime' => $timestamp]);
+
             echo json_encode(retur('成功', '成功'));
         } catch (ClientException $e) {
             preg_match('/\{("code":-?\d+,"msg":"[^"]+")\}/', $e->getMessage(), $matches);
