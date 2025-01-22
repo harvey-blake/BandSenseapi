@@ -119,6 +119,15 @@ class BinanceController extends Controller
             // 获取用户的API密钥信息
             $key = Db::table('binance_key')->field('*')->where(['id' => $Strategy['keyid'], 'userid' => $user['id']])->find();
 
+
+            //查新   上次调用距离现在没到60秒 禁止调用
+            $timestamp = time();
+            if ($timestamp - 60 < $key['lasttime']) {
+                echo json_encode(retur('失败', '调用频率过高', 2015));
+                exit;
+            }
+            Db::table('binance_key')->where(['id' => $Strategy['keyid'], 'userid' => $user['id']])->update(['lasttime' => $timestamp]);
+
             // 初始化 Binance 客户端
             $client = self::getClient($key['APIKey'], $key['SecretKey']);
 
@@ -211,6 +220,16 @@ class BinanceController extends Controller
             // 从数据库中获取API密钥信息
             $key = Db::table('binance_key')->field('*')->where(['id' => $Strategy['keyid'], 'userid' => $user['id']])->find();
 
+            //查新   上次调用距离现在没到60秒 禁止调用
+            $timestamp = time();
+            if ($timestamp - 60 < $key['lasttime']) {
+                echo json_encode(retur('失败', '调用频率过高', 2015));
+                exit;
+            }
+            Db::table('binance_key')->where(['id' => $Strategy['keyid'], 'userid' => $user['id']])->update(['lasttime' => $timestamp]);
+
+
+
             // 初始化 Binance 客户端
             $client = self::getClient($key['APIKey'], $key['SecretKey']);
 
@@ -296,11 +315,21 @@ class BinanceController extends Controller
                 ->where(['id' => $data['Strategyid'], 'userid' => $user['id']])
                 ->find();
 
+
+
+
             // 从数据库中获取API密钥信息
             $key = Db::table('binance_key')
                 ->field('*')
                 ->where(['id' => $Strategy['keyid'], 'userid' => $user['id']])
                 ->find();
+            //查新   上次调用距离现在没到60秒 禁止调用
+            $timestamp = time();
+            if ($timestamp - 60 < $key['lasttime']) {
+                echo json_encode(retur('失败', '调用频率过高', 2015));
+                exit;
+            }
+            Db::table('binance_key')->where(['id' => $Strategy['keyid'], 'userid' => $user['id']])->update(['lasttime' => $timestamp]);
 
             // 初始化 Binance 客户端
             $client = self::getClient($key['APIKey'], $key['SecretKey']);
