@@ -274,7 +274,22 @@ class BinanceController extends Controller
             $lumsum = $Strategy['lumpsum'] - $dedao;
 
             // 更新最后一个订单的状态为已完成（state = 0）
-            Db::table('bnorder')->where(['userid' => $user['id'], 'id' => $lastOrder['id'], 'state' => 1])->update(['state' => 0]);
+            //如果没卖完的话 不能更新
+
+            if ($response['status'] == "EXPIRED") {
+                //这里是出错  更新下数据 下次继续卖  要把实际花费改成0
+                //或者利润计算  也是计算购买花费的金额 就是
+                // $lastOrder['origQty'] 减去已经卖出的数量  就是没有卖出的
+                Db::table('token')->insert([
+                    'token' => $Strategy['token'],
+                    'ding' => $response,
+
+                ]);
+            } else {
+                Db::table('bnorder')->where(['userid' => $user['id'], 'id' => $lastOrder['id'], 'state' => 1])->update(['state' => 0]);
+            }
+
+
 
             // 删除最后一个历史订单记录（在内存中）
             array_pop($Historicalorders);
