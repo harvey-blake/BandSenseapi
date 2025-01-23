@@ -90,6 +90,7 @@ class BinanceController extends Controller
             foreach ($arr as $key => $value) {
                 $arr[$key]['Balance'] = json_decode(stripslashes($arr[$key]['Balance']), true);
                 $arr[$key]['APIKey'] = substr($arr[$key]['APIKey'], 0, 10) . '...' . substr($arr[$key]['APIKey'], -15);
+                $arr[$key]['income'] = Db::table('income')->where(['keyid' => $value['id']])->SUM('income');
                 unset($arr[$key]['SecretKey']);
                 # code...
             }
