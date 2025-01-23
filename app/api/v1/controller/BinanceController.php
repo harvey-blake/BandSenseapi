@@ -266,7 +266,7 @@ class BinanceController extends Controller
             $profit = 0;
             if ($response['status'] == "EXPIRED") {
 
-                //失败$response[executedQty] 实际卖出数量 *本单均价$lastOrder['price']
+                //计算利润
                 $profit = $actualgain - $response['executedQty'] * $lastOrder['price'];
             } else {
                 $profit = $actualgain - $lastOrder['cummulativeQuoteQty'];
@@ -282,7 +282,7 @@ class BinanceController extends Controller
                 'income' => $profit
             ]);
 
-            // 更新策略的总金额（扣除卖出的金额）
+            // 更新策略的总金额（扣除卖出的金额）  有问题
             $lumsum = $Strategy['lumpsum'] - $actualgain;
 
             // 更新最后一个订单的状态为已完成（state = 0）
@@ -314,7 +314,7 @@ class BinanceController extends Controller
 
             // 计算新的总平均价格（总金额 / 总数量）
             $Overallaverageprice = $HistoricalordersQty != 0 ? $lumsum / $HistoricalordersQty : '0';
-            $lumsum = $HistoricalordersQty ?: 0;
+            $lumsum = $lumsum ?: 0;
 
             // 更新策略的总均价和总金额
             Db::table('Strategy')->where(['userid' => $user['id'], 'id' => $data['Strategyid']])->update([
