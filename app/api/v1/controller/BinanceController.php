@@ -122,7 +122,7 @@ class BinanceController extends Controller
 
             //查新   上次调用距离现在没到60秒 禁止调用
             $timestamp = time();
-            if ($timestamp - 60 < $key['lasttime']) {
+            if ($timestamp - 20 < $key['lasttime']) {
                 echo json_encode(retur('失败', '调用频率过高', 2015));
                 exit;
             }
@@ -257,21 +257,31 @@ class BinanceController extends Controller
             }
 
             // 计算实际获得的金额（扣除手续费）
-            $dedao = $response['cummulativeQuoteQty'] - $totalCommission;
+            $actualgain = $response['cummulativeQuoteQty'] - $totalCommission;
 
             // 计算本次交易的利润（实际获得金额 - 最后一个订单的累计花费）
-            $lirun = $dedao - $lastOrder['cummulativeQuoteQty'];
+            // 利润计算修改
+            $profit = 0;
+            if ($response['status'] == "EXPIRED") {
+
+                //失败$response[executedQty] 实际卖出数量 *本单均价$lastOrder['price']
+                $profit = $actualgain - $response['executedQty'] * $lastOrder['price'];
+            } else {
+                $profit = $actualgain - $lastOrder['cummulativeQuoteQty'];
+            }
+
+
 
             // 将本次利润记录到数据库
             Db::table('income')->insert([
                 'userid' => $user['id'],
                 'keyid' => $key['id'],
                 'Strategyid' => $Strategy['id'],
-                'income' => $lirun
+                'income' => $profit
             ]);
 
             // 更新策略的总金额（扣除卖出的金额）
-            $lumsum = $Strategy['lumpsum'] - $dedao;
+            $lumsum = $Strategy['lumpsum'] - $actualgain;
 
             // 更新最后一个订单的状态为已完成（state = 0）
             //如果没卖完的话 不能更新
@@ -280,6 +290,13 @@ class BinanceController extends Controller
                 //这里是出错  更新下数据 下次继续卖  要把实际花费改成0
                 //或者利润计算  也是计算购买花费的金额 就是
                 // $lastOrder['origQty'] 减去已经卖出的数量  就是没有卖出的
+                //修改剩余数量
+                //修改购买金额
+
+                Db::table('bnorder')->where(['userid' => $user['id'], 'id' => $lastOrder['id'], 'state' => 1])->update(['origQty' => $lastOrder['origQty'] - $response['executedQty'], 'cummulativeQuoteQty' => $lastOrder['cummulativeQuoteQty'] - $response['executedQty'] * $lastOrder['price']]);
+
+                $Historicalorders = Db::table('bnorder')->where(['userid' => $user['id'], 'Strategyid' => $data['Strategyid'], 'state' => 1])->select();
+
                 Db::table('token')->insert([
                     'token' => $Strategy['token'],
                     'ding' => $response,
@@ -287,12 +304,8 @@ class BinanceController extends Controller
                 ]);
             } else {
                 Db::table('bnorder')->where(['userid' => $user['id'], 'id' => $lastOrder['id'], 'state' => 1])->update(['state' => 0]);
+                array_pop($Historicalorders);
             }
-
-
-
-            // 删除最后一个历史订单记录（在内存中）
-            array_pop($Historicalorders);
 
             // 计算剩余历史订单的总数量
             $HistoricalordersQty = array_sum(array_column($Historicalorders, 'origQty'));
@@ -342,7 +355,7 @@ class BinanceController extends Controller
                 ->find();
             //查新   上次调用距离现在没到60秒 禁止调用
             $timestamp = time();
-            if ($timestamp - 60 < $key['lasttime']) {
+            if ($timestamp - 20 < $key['lasttime']) {
                 echo json_encode(retur('失败', '调用频率过高', 2015));
                 exit;
             }
@@ -376,16 +389,19 @@ class BinanceController extends Controller
             //出现的问题 可能根本没卖完 这个要解决  买入 也是
 
             // 计算实际获得的金额（扣除手续费）
-            $dedao = $response['cummulativeQuoteQty'] - $totalCommission;
+            $actualgain = $response['cummulativeQuoteQty'] - $totalCommission;
 
             // 计算历史订单累计的总花费
             $cummulHistorQty = array_sum(array_column($Historicalorders, 'cummulativeQuoteQty'));
 
+            //这里开始判断
+
+
             // 计算利润（实际获得金额 - 历史订单累计花费），利润可能为负数
-            $lirun = $dedao - $cummulHistorQty;
+            $profit = $actualgain - $cummulHistorQty;
 
             // 将本次利润记录到数据库
-            Db::table('income')->insert(['userid' => $user['id'], 'keyid' => $key['id'], 'Strategyid' => $Strategy['id'], 'income' => $lirun,]);
+            Db::table('income')->insert(['userid' => $user['id'], 'keyid' => $key['id'], 'Strategyid' => $Strategy['id'], 'income' => $profit,]);
 
             // 更新所有历史订单的状态为已完成（state = 0）
             Db::table('bnorder')->where(['userid' => $user['id'], 'Strategyid' => $data['Strategyid'], 'state' => 1])->update(['state' => '0']);
