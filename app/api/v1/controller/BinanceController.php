@@ -299,7 +299,7 @@ class BinanceController extends Controller
 
                 $Historicalorders = Db::table('bnorder')->where(['userid' => $user['id'], 'Strategyid' => $data['Strategyid'], 'state' => 1])->select();
 
-                Db::table('token')->insert([
+                Db::table('bnsell')->insert([
                     'token' => $Strategy['token'],
                     'ding' => $response,
 
