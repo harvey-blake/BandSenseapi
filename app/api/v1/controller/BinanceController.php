@@ -412,7 +412,7 @@ class BinanceController extends Controller
 
             // 创建市价卖单（卖出总数量）
             $response = $client->newOrder(
-                'BTCUSDT', // 交易对
+                'ETHUSDT', // 交易对
                 'SELL',             // 卖出
                 'MARKET',           // 市价单
                 [
