@@ -262,6 +262,7 @@ class BinanceController extends Controller
 
             // 计算本次交易的利润（实际获得金额 - 最后一个订单的累计花费）
             // 利润计算修改
+
             $profit = 0;
             if ($response['status'] == "EXPIRED") {
 
