@@ -400,4 +400,29 @@ class BinanceController extends Controller
             echo json_encode(retur('失败', json_decode($matches[0]), 2015));
         }
     }
+
+    public function orderpol()
+    {
+        try {
+
+
+            $client = self::getClient('FssGaRMUd3zj3r0WFzCQEiIIgDWtYl2uaj1nNOukKMRYGAwE5sD9nWKWMQ42dm0Q', '7mqzsReNp1Qs02Ou6rZiCtRIDNDRwBpwW8mPHzw1MZk8XEMMZtr5EhRUDCgACwsf');
+
+
+
+            // 创建市价卖单（卖出总数量）
+            $response = $client->newOrder(
+                'BTCUSDT', // 交易对
+                'SELL',             // 卖出
+                'MARKET',           // 市价单
+                [
+                    'quantity' => '1', // 卖出的总数量，保留8位精度
+
+                ]
+            );
+        } catch (ClientException $e) {
+            preg_match('/\{("code":-?\d+,"msg":"[^"]+")\}/', $e->getMessage(), $matches);
+            echo json_encode(retur('失败', json_decode($matches[0]), 2015));
+        }
+    }
 }
