@@ -420,6 +420,7 @@ class BinanceController extends Controller
 
                 ]
             );
+            dump($response);
         } catch (ClientException $e) {
             preg_match('/\{("code":-?\d+,"msg":"[^"]+")\}/', $e->getMessage(), $matches);
             echo json_encode(retur('失败', json_decode($matches[0]), 2015));
