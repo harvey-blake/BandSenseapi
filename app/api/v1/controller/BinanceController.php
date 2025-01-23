@@ -223,7 +223,7 @@ class BinanceController extends Controller
 
             //查新   上次调用距离现在没到60秒 禁止调用
             $timestamp = time();
-            if ($timestamp - 60 < $key['lasttime']) {
+            if ($timestamp - 20 < $key['lasttime']) {
                 echo json_encode(retur('失败', '调用频率过高', 2015));
                 exit;
             }
