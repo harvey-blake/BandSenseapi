@@ -246,7 +246,8 @@ class BinanceController extends Controller
             //可只传这一个
             $lastOrder = $Historicalorders[count($Historicalorders) - 1];
             $response = $client->exchangeInfo(['symbol' => 'BTCUSDT']);
-            $lotSize = array_filter($response['symbols'][0]['filters'], fn($filter) => $filter['filterType'] === 'LOT_SIZE')[0];
+            $lotSize = array_filter($response['symbols'][0]['filters'], fn($filter) => $filter['filterType'] === 'LOT_SIZE');
+            dump($lotSize);
             $adjustedQuantity = self::adjustQuantity(truncateToPrecision($lastOrder['origQty'], 8),  $lotSize['stepSize']);
             // 创建一个市价卖单
             $response = $client->newOrder(
