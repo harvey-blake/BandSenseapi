@@ -203,10 +203,9 @@ class BinanceController extends Controller
         }
     }
 
-
-
-    public function orderT()
+    private function sell($lastOrder)
     {
+
         try {
             // 设置脚本允许在客户端断开连接后继续执行
             $data = json_decode(file_get_contents('php://input'), true);
@@ -214,9 +213,6 @@ class BinanceController extends Controller
             ignore_user_abort(true);
             // 设置脚本的最大执行时间为无限制
             set_time_limit(0);
-
-
-
             // 从数据库中获取策略信息
             $Strategy = Db::table('Strategy')->field('*')->where(['id' => $data['Strategyid'], 'userid' => $user['id']])->find();
             // 从数据库中获取API密钥信息
@@ -237,6 +233,8 @@ class BinanceController extends Controller
             $Historicalorders = Db::table('bnorder')->where(['userid' => $user['id'], 'Strategyid' => $data['Strategyid'], 'state' => 1])->select();
 
             // 获取最后一个历史订单（准备卖出）
+            //可只传这一个
+
             $lastOrder = $Historicalorders[count($Historicalorders) - 1];
 
             // 创建一个市价卖单
@@ -321,9 +319,37 @@ class BinanceController extends Controller
                 'unitprice' => $Overallaverageprice,
                 'lumpsum' => $lumsum
             ]);
+        } catch (ClientException $e) {
+            preg_match('/\{("code":-?\d+,"msg":"[^"]+")\}/', $e->getMessage(), $matches);
+            echo json_encode(retur('失败', json_decode($matches[0]), 2015));
+            exit;
+        }
+    }
+
+
+    public function orderT()
+    {
+        try {
+            // 设置脚本允许在客户端断开连接后继续执行
+            $data = json_decode(file_get_contents('php://input'), true);
+            $user = self::validateJWT();
+            ignore_user_abort(true);
+            // 设置脚本的最大执行时间为无限制
+            set_time_limit(0);
+
+            $Strategy = Db::table('Strategy')
+                ->field('*')
+                ->where(['id' => $data['Strategyid'], 'userid' => $user['id']])
+                ->find();
+            // 获取该策略下的历史订单
+            $Historicalorders = Db::table('bnorder')->where(['userid' => $user['id'], 'Strategyid' => $data['Strategyid'], 'state' => 1])->select();
+
+            // 获取最后一个历史订单（准备卖出）
+            //可只传这一个
+            $lastOrder = $Historicalorders[count($Historicalorders) - 1];
+            self::sell($lastOrder);
+            $timestamp = time();
             Db::table('binance_key')->where(['id' => $Strategy['keyid'], 'userid' => $user['id']])->update(['lasttime' => $timestamp]);
-
-
             echo json_encode(retur('成功', '成功'));
         } catch (ClientException $e) {
             preg_match('/\{("code":-?\d+,"msg":"[^"]+")\}/', $e->getMessage(), $matches);
@@ -334,98 +360,35 @@ class BinanceController extends Controller
     public function ordersell()
     {
         try {
+            // 设置脚本允许在客户端断开连接后继续执行
             $data = json_decode(file_get_contents('php://input'), true);
             $user = self::validateJWT();
-            // 设置脚本允许在客户端断开连接后继续执行
             ignore_user_abort(true);
             // 设置脚本的最大执行时间为无限制
             set_time_limit(0);
 
-            // 从数据库中获取策略信息
             $Strategy = Db::table('Strategy')
                 ->field('*')
                 ->where(['id' => $data['Strategyid'], 'userid' => $user['id']])
                 ->find();
-
-
-
-
-            // 从数据库中获取API密钥信息
-            $key = Db::table('binance_key')
-                ->field('*')
-                ->where(['id' => $Strategy['keyid'], 'userid' => $user['id']])
-                ->find();
-            //查新   上次调用距离现在没到60秒 禁止调用
-            $timestamp = time();
-            if ($timestamp - 2 < $key['lasttime']) {
-                echo json_encode(retur('失败', '调用频率过高', 2015));
-                exit;
-            }
-
-            // 初始化 Binance 客户端
-            $client = self::getClient($key['APIKey'], $key['SecretKey']);
-
-            // 获取该策略的所有历史订单
+            // 获取该策略下的历史订单
             $Historicalorders = Db::table('bnorder')->where(['userid' => $user['id'], 'Strategyid' => $data['Strategyid'], 'state' => 1])->select();
 
-            // 计算所有历史订单的总交易数量
-            $HistoricalordersQty = array_sum(array_column($Historicalorders, 'origQty'));
-
-            // 创建市价卖单（卖出总数量）
-            $response = $client->newOrder(
-                $Strategy['token'], // 交易对
-                'SELL',             // 卖出
-                'MARKET',           // 市价单
-                [
-                    'quantity' => truncateToPrecision($HistoricalordersQty, 8), // 卖出的总数量，保留8位精度
-
-                ]
-            );
-
-
-            if ($response['status'] == "EXPIRED") {
-
-                Db::table('bnsell')->insert([
-                    'token' => $Strategy['token'],
-                    'ding' => $response,
-
-                ]);
+            // 获取最后一个历史订单（准备卖出）
+            //可只传这一个
+            foreach ($Historicalorders as $key => $value) {
+                self::sell($value);
             }
 
-            // 计算本次交易的手续费总额
-            $totalCommission = 0;
-            foreach ($response['fills'] as $fill) {
-                $commission = (float)$fill['commission']; // 单笔成交的手续费
-                $totalCommission += $commission;         // 累加手续费
+
+
+            $newHistoricalorders = Db::table('bnorder')->where(['userid' => $user['id'], 'Strategyid' => $data['Strategyid'], 'state' => 1])->select();
+            // 如果没有le重置策略的总金额和平均单价为0
+            if (!$newHistoricalorders) {
+                Db::table('Strategy')->where(['id' => $data['Strategyid'], 'userid' => $user['id']])->update(['unitprice' => '0', 'lumpsum' => '0']);
             }
-            //出现的问题 可能根本没卖完 这个要解决  买入 也是
 
-            // 计算实际获得的金额（扣除手续费）
-            $actualgain = $response['cummulativeQuoteQty'] - $totalCommission;
-
-            // 计算历史订单累计的总花费
-            $cummulHistorQty = array_sum(array_column($Historicalorders, 'cummulativeQuoteQty'));
-
-            //这里开始判断
-
-
-            // 计算利润（实际获得金额 - 历史订单累计花费），利润可能为负数
-            $profit = $actualgain - $cummulHistorQty;
-
-            // 将本次利润记录到数据库
-            Db::table('income')->insert([
-                'userid' => $user['id'],
-                'keyid' => $key['id'],
-                'Strategyid' => $Strategy['id'],
-                'income' => $profit
-            ]);
-
-
-            // 更新所有历史订单的状态为已完成（state = 0）
-            Db::table('bnorder')->where(['userid' => $user['id'], 'Strategyid' => $data['Strategyid'], 'state' => 1])->update(['state' => '0']);
-
-            // 重置策略的总金额和平均单价为0
-            Db::table('Strategy')->where(['id' => $data['Strategyid'], 'userid' => $user['id']])->update(['unitprice' => '0', 'lumpsum' => '0']);
+            $timestamp = time();
             Db::table('binance_key')->where(['id' => $Strategy['keyid'], 'userid' => $user['id']])->update(['lasttime' => $timestamp]);
 
             echo json_encode(retur('成功', '成功'));
@@ -434,6 +397,8 @@ class BinanceController extends Controller
             echo json_encode(retur('失败', json_decode($matches[0]), 2015));
         }
     }
+
+
 
     public function orderpol()
     {
