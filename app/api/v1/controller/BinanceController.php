@@ -257,12 +257,9 @@ class BinanceController extends Controller
             dump($lotSize[0]['stepSize']);
 
             $adjustedQuantity = self::adjustQuantity(truncateToPrecision($lastOrder['origQty'], 8), $lotSize[0]['stepSize']);
+
+            dump($lastOrder['origQty'], $adjustedQuantity);
             // 创建一个市价卖单
-
-
-            // $cleanAmount = str_replace(',', '', $adjustedQuantity); // 去掉逗号
-            // $floatAmount = (float)$cleanAmount;
-            dump($adjustedQuantity);
             $response = $client->newOrder(
                 $Strategy['token'], // 交易对
                 'SELL',             // 卖出
