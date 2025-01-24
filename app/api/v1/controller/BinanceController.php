@@ -249,7 +249,7 @@ class BinanceController extends Controller
             $lotSize = array_filter($response['symbols'][0]['filters'], fn($filter) => $filter['filterType'] === 'LOT_SIZE');
 
             $lotSize = array_values($lotSize); // 获取第一个匹配的过滤器
-            dump($lotSize[0]);
+            dump($lotSize[0]['stepSize']);
 
             $adjustedQuantity = self::adjustQuantity(truncateToPrecision($lastOrder['origQty'], 8),  $lotSize['stepSize']);
             // 创建一个市价卖单
