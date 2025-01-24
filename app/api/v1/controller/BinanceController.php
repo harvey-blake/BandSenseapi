@@ -403,13 +403,14 @@ class BinanceController extends Controller
     public function orderpol()
     {
 
-        dump($_SERVER);
-        // try {
+        // dump($_SERVER);
+        // // try {
 
 
-        //     $client = self::getClient('FssGaRMUd3zj3r0WFzCQEiIIgDWtYl2uaj1nNOukKMRYGAwE5sD9nWKWMQ42dm0Q', '7mqzsReNp1Qs02Ou6rZiCtRIDNDRwBpwW8mPHzw1MZk8XEMMZtr5EhRUDCgACwsf');
+        $client = self::getClient('FssGaRMUd3zj3r0WFzCQEiIIgDWtYl2uaj1nNOukKMRYGAwE5sD9nWKWMQ42dm0Q', '7mqzsReNp1Qs02Ou6rZiCtRIDNDRwBpwW8mPHzw1MZk8XEMMZtr5EhRUDCgACwsf');
 
-
+        $response = $client->exchangeInfo(['symbol' => 'BTCUSDT']);
+        dump($response);
 
         //     // 创建市价卖单（卖出总数量）
         //     $response = $client->newOrder(
