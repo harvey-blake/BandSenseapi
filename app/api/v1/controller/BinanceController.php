@@ -413,13 +413,13 @@ class BinanceController extends Controller
             $profit = $actualgain - $cummulHistorQty;
 
             // 将本次利润记录到数据库
-            Db::table('income')->insert([
+            $lirun =   Db::table('income')->insert([
                 'userid' => $user['id'],
                 'keyid' => $key['id'],
                 'Strategyid' => $Strategy['id'],
                 'income' => $profit
             ]);
-
+            dump($lirun);
 
             // 更新所有历史订单的状态为已完成（state = 0）
             Db::table('bnorder')->where(['userid' => $user['id'], 'Strategyid' => $data['Strategyid'], 'state' => 1])->update(['state' => '0']);
