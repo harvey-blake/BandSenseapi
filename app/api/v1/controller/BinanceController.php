@@ -248,6 +248,10 @@ class BinanceController extends Controller
             $response = $client->exchangeInfo(['symbol' => 'BTCUSDT']);
             $lotSize = array_filter($response['symbols'][0]['filters'], fn($filter) => $filter['filterType'] === 'LOT_SIZE');
             dump($lotSize);
+            $lotSize = array_values($lotSize)[0]; // 获取第一个匹配的过滤器
+
+
+
             $adjustedQuantity = self::adjustQuantity(truncateToPrecision($lastOrder['origQty'], 8),  $lotSize['stepSize']);
             // 创建一个市价卖单
             $response = $client->newOrder(
