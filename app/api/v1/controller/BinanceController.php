@@ -205,16 +205,19 @@ class BinanceController extends Controller
     private function adjustQuantity($quantity, $stepSize)
     {
         // 确保步长为浮点数
-
-
         $stepSize = (float)$stepSize;
         $quantity = (float)$quantity;
 
         // 调整数量，确保符合步长
         $adjustedQuantity = floor($quantity / $stepSize) * $stepSize;
 
-        return number_format($adjustedQuantity, strlen(explode('.', $stepSize)[1]));
+        // 获取步长的小数部分的位数
+        $decimalPlaces = strlen(explode('.', (string)$stepSize)[1]);
+
+        // 使用 number_format 并确保不添加千位分隔符
+        return number_format($adjustedQuantity, $decimalPlaces, '.', '');
     }
+
     private function sell($lastOrder)
     {
 
@@ -257,15 +260,15 @@ class BinanceController extends Controller
             // 创建一个市价卖单
 
 
-            $cleanAmount = str_replace(',', '', $adjustedQuantity); // 去掉逗号
-            $floatAmount = (float)$cleanAmount;
-            dump($floatAmount);
+            // $cleanAmount = str_replace(',', '', $adjustedQuantity); // 去掉逗号
+            // $floatAmount = (float)$cleanAmount;
+            dump($adjustedQuantity);
             $response = $client->newOrder(
                 $Strategy['token'], // 交易对
                 'SELL',             // 卖出
                 'MARKET',           // 市价单
                 [
-                    'quantity' => $floatAmount, // 卖出的数量，保留8位精度
+                    'quantity' => $adjustedQuantity, // 卖出的数量，保留8位精度
 
                 ]
             );
