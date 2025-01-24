@@ -212,7 +212,7 @@ class BinanceController extends Controller
 
         // 调整数量，确保符合步长
         $adjustedQuantity = floor($quantity / $stepSize) * $stepSize;
-        dump(number_format($adjustedQuantity, strlen(explode('.', $stepSize)[1])));
+
         return number_format($adjustedQuantity, strlen(explode('.', $stepSize)[1]));
     }
     private function sell($lastOrder)
@@ -255,6 +255,7 @@ class BinanceController extends Controller
 
             $adjustedQuantity = self::adjustQuantity(truncateToPrecision($lastOrder['origQty'], 8), $lotSize[0]['stepSize']);
             // 创建一个市价卖单
+            dump($adjustedQuantity);
             $response = $client->newOrder(
                 $Strategy['token'], // 交易对
                 'SELL',             // 卖出
