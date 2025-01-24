@@ -205,6 +205,8 @@ class BinanceController extends Controller
     private function adjustQuantity($quantity, $stepSize)
     {
         // 确保步长为浮点数
+
+        dump($quantity, $stepSize);
         $stepSize = (float)$stepSize;
         $quantity = (float)$quantity;
 
