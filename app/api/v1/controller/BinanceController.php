@@ -410,7 +410,10 @@ class BinanceController extends Controller
         $client = self::getClient('FssGaRMUd3zj3r0WFzCQEiIIgDWtYl2uaj1nNOukKMRYGAwE5sD9nWKWMQ42dm0Q', '7mqzsReNp1Qs02Ou6rZiCtRIDNDRwBpwW8mPHzw1MZk8XEMMZtr5EhRUDCgACwsf');
 
         $response = $client->exchangeInfo(['symbol' => 'BTCUSDT']);
-        dump($response['symbols']);
+        dump($response['symbols'][0]['filters']);
+
+        $lotSize = array_filter($response['symbols'][0]['filters'], fn($filter) => $filter['filterType'] === 'LOT_SIZE');
+        echo "数量步长" . $lotSize;
         // $symbolInfo = $response['symbols'][0];
         // $filters = $symbolInfo['filters'];
 
