@@ -206,13 +206,13 @@ class BinanceController extends Controller
     {
         // 确保步长为浮点数
 
-        dump($quantity, $stepSize);
+
         $stepSize = (float)$stepSize;
         $quantity = (float)$quantity;
 
         // 调整数量，确保符合步长
         $adjustedQuantity = floor($quantity / $stepSize) * $stepSize;
-
+        dump(number_format($adjustedQuantity, strlen(explode('.', $stepSize)[1])));
         return number_format($adjustedQuantity, strlen(explode('.', $stepSize)[1]));
     }
     private function sell($lastOrder)
