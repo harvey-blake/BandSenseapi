@@ -215,7 +215,10 @@ class BinanceController extends Controller
         $decimalPlaces = strlen(explode('.', (string)$stepSize)[1]);
 
         // 使用 number_format 并确保不添加千位分隔符
-        return number_format($adjustedQuantity, $decimalPlaces, '.', '');
+        // return number_format($adjustedQuantity, $decimalPlaces, '.', '');
+
+        // 确保调整后的数量保留与步长相同的小数位数
+        return rtrim(number_format($adjustedQuantity, $decimalPlaces, '.', ''), '0');
     }
 
     private function sell($lastOrder)
