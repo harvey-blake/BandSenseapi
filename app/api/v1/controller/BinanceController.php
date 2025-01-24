@@ -213,7 +213,7 @@ class BinanceController extends Controller
 
         // 获取步长的小数部分的位数
         $decimalPlaces = strlen(explode('.', (string)$stepSize)[1]);
-
+        dump($decimalPlaces);
         // 使用 number_format 并确保不添加千位分隔符
         // return number_format($adjustedQuantity, $decimalPlaces, '.', '');
 
