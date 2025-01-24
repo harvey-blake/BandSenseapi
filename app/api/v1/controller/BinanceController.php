@@ -413,7 +413,7 @@ class BinanceController extends Controller
         dump($response['symbols'][0]['filters']);
 
         $lotSize = array_filter($response['symbols'][0]['filters'], fn($filter) => $filter['filterType'] === 'LOT_SIZE');
-        echo "数量步长" . $lotSize;
+        dump($lotSize);
         // $symbolInfo = $response['symbols'][0];
         // $filters = $symbolInfo['filters'];
 
