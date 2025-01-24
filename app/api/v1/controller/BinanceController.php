@@ -202,7 +202,17 @@ class BinanceController extends Controller
             echo json_encode(retur('失败', json_decode($matches[0]), 2015));
         }
     }
+    private function adjustQuantity($quantity, $stepSize)
+    {
+        // 确保步长为浮点数
+        $stepSize = (float)$stepSize;
+        $quantity = (float)$quantity;
 
+        // 调整数量，确保符合步长
+        $adjustedQuantity = floor($quantity / $stepSize) * $stepSize;
+
+        return number_format($adjustedQuantity, strlen(explode('.', $stepSize)[1]));
+    }
     private function sell($lastOrder)
     {
 
@@ -234,16 +244,17 @@ class BinanceController extends Controller
 
             // 获取最后一个历史订单（准备卖出）
             //可只传这一个
-
             $lastOrder = $Historicalorders[count($Historicalorders) - 1];
-
+            $response = $client->exchangeInfo(['symbol' => 'BTCUSDT']);
+            $lotSize = array_filter($response['symbols'][0]['filters'], fn($filter) => $filter['filterType'] === 'LOT_SIZE');
+            $adjustedQuantity = self::adjustQuantity(truncateToPrecision($lastOrder['origQty'], 8),  $lotSize['stepSize']);
             // 创建一个市价卖单
             $response = $client->newOrder(
                 $Strategy['token'], // 交易对
                 'SELL',             // 卖出
                 'MARKET',           // 市价单
                 [
-                    'quantity' => truncateToPrecision($lastOrder['origQty'], 8), // 卖出的数量，保留8位精度
+                    'quantity' => $adjustedQuantity, // 卖出的数量，保留8位精度
 
                 ]
             );
@@ -413,7 +424,7 @@ class BinanceController extends Controller
         dump($response['symbols'][0]['filters']);
 
         $lotSize = array_filter($response['symbols'][0]['filters'], fn($filter) => $filter['filterType'] === 'LOT_SIZE');
-        dump($lotSize);
+        dump($lotSize['stepSize']);
         // $symbolInfo = $response['symbols'][0];
         // $filters = $symbolInfo['filters'];
 
