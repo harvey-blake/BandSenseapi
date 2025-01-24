@@ -123,7 +123,7 @@ class BinanceController extends Controller
 
             //查新   上次调用距离现在没到60秒 禁止调用
             $timestamp = time();
-            if ($timestamp - 20 < $key['lasttime']) {
+            if ($timestamp - 2 < $key['lasttime']) {
                 echo json_encode(retur('失败', '调用频率过高', 2015));
                 exit;
             }
@@ -224,7 +224,7 @@ class BinanceController extends Controller
 
             //查新   上次调用距离现在没到60秒 禁止调用
             $timestamp = time();
-            if ($timestamp - 20 < $key['lasttime']) {
+            if ($timestamp - 2 < $key['lasttime']) {
                 echo json_encode(retur('失败', '调用频率过高', 2015));
                 exit;
             }
@@ -357,7 +357,7 @@ class BinanceController extends Controller
                 ->find();
             //查新   上次调用距离现在没到60秒 禁止调用
             $timestamp = time();
-            if ($timestamp - 20 < $key['lasttime']) {
+            if ($timestamp - 2 < $key['lasttime']) {
                 echo json_encode(retur('失败', '调用频率过高', 2015));
                 exit;
             }
