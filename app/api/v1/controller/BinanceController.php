@@ -411,8 +411,8 @@ class BinanceController extends Controller
 
         $response = $client->exchangeInfo(['symbol' => 'BTCUSDT']);
         dump($response);
-
-        $filters = $response['filters'];
+        $symbolInfo = $response['symbols'][0];
+        $filters = $symbolInfo['filters'];
 
         // 提取 LOT_SIZE 的步长
         $lotSize = array_filter($filters, fn($filter) => $filter['filterType'] === 'LOT_SIZE');
