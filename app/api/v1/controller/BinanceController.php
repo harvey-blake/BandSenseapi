@@ -382,6 +382,16 @@ class BinanceController extends Controller
                 ]
             );
 
+
+            if ($response['status'] == "EXPIRED") {
+
+                Db::table('bnsell')->insert([
+                    'token' => $Strategy['token'],
+                    'ding' => $response,
+
+                ]);
+            }
+
             // 计算本次交易的手续费总额
             $totalCommission = 0;
             foreach ($response['fills'] as $fill) {
