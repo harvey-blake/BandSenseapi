@@ -210,15 +210,15 @@ class BinanceController extends Controller
 
         // 调整数量，确保符合步长
         $adjustedQuantity = floor($quantity / $stepSize) * $stepSize;
-        dump($quantity / $stepSize);
+
         // 获取步长的小数部分的位数
         $decimalPlaces = strlen(explode('.', (string)$stepSize)[1]);
-        dump($decimalPlaces);
+
         // 使用 number_format 并确保不添加千位分隔符
-        // return number_format($adjustedQuantity, $decimalPlaces, '.', '');
+        return number_format($adjustedQuantity, $decimalPlaces, '.', '');
 
         // 确保调整后的数量保留与步长相同的小数位数
-        return rtrim(number_format($adjustedQuantity, $decimalPlaces, '.', ''), '0');
+        // return rtrim(number_format($adjustedQuantity, $decimalPlaces, '.', ''), '0');
     }
 
     private function sell($lastOrder)
@@ -257,11 +257,11 @@ class BinanceController extends Controller
             $lotSize = array_filter($response['symbols'][0]['filters'], fn($filter) => $filter['filterType'] === 'LOT_SIZE');
 
             $lotSize = array_values($lotSize); // 获取第一个匹配的过滤器
-            dump($lotSize[0]['stepSize']);
+            // dump($lotSize[0]['stepSize']);
 
             $adjustedQuantity = self::adjustQuantity(truncateToPrecision($lastOrder['origQty'], 8), $lotSize[0]['stepSize']);
 
-            dump($lastOrder['origQty'], $adjustedQuantity);
+            // dump($lastOrder['origQty'], $adjustedQuantity);
             // 创建一个市价卖单
             $response = $client->newOrder(
                 $Strategy['token'], // 交易对
