@@ -410,16 +410,16 @@ class BinanceController extends Controller
         $client = self::getClient('FssGaRMUd3zj3r0WFzCQEiIIgDWtYl2uaj1nNOukKMRYGAwE5sD9nWKWMQ42dm0Q', '7mqzsReNp1Qs02Ou6rZiCtRIDNDRwBpwW8mPHzw1MZk8XEMMZtr5EhRUDCgACwsf');
 
         $response = $client->exchangeInfo(['symbol' => 'BTCUSDT']);
-        dump($response);
-        $symbolInfo = $response['symbols'][0];
-        $filters = $symbolInfo['filters'];
+        dump($response['rateLimits']);
+        // $symbolInfo = $response['symbols'][0];
+        // $filters = $symbolInfo['filters'];
 
-        // 提取 LOT_SIZE 的步长
-        $lotSize = array_filter($filters, fn($filter) => $filter['filterType'] === 'LOT_SIZE');
-        if ($lotSize) {
-            $lotSize = array_values($lotSize)[0];
-            echo "数量步长 (stepSize): {$lotSize['stepSize']}\n";
-        }
+        // // 提取 LOT_SIZE 的步长
+        // $lotSize = array_filter($filters, fn($filter) => $filter['filterType'] === 'LOT_SIZE');
+        // if ($lotSize) {
+        //     $lotSize = array_values($lotSize)[0];
+        //     echo "数量步长 (stepSize): {$lotSize['stepSize']}\n";
+        // }
 
         //     // 创建市价卖单（卖出总数量）
         //     $response = $client->newOrder(
