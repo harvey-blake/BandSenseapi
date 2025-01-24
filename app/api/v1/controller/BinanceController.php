@@ -412,6 +412,15 @@ class BinanceController extends Controller
         $response = $client->exchangeInfo(['symbol' => 'BTCUSDT']);
         dump($response);
 
+        $filters = $response['filters'];
+
+        // 提取 LOT_SIZE 的步长
+        $lotSize = array_filter($filters, fn($filter) => $filter['filterType'] === 'LOT_SIZE');
+        if ($lotSize) {
+            $lotSize = array_values($lotSize)[0];
+            echo "数量步长 (stepSize): {$lotSize['stepSize']}\n";
+        }
+
         //     // 创建市价卖单（卖出总数量）
         //     $response = $client->newOrder(
         //         'ETHUSDT', // 交易对
