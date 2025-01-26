@@ -261,7 +261,8 @@ class BinanceController extends Controller
             // dump($lotSize[0]['stepSize']);
 
             $decimals =   $client->exchangeInfo(
-                $Strategy['token']
+                ['symbols' => $Strategy['token']]
+
             );
             $baseAssetPrecision = $decimals['symbols'][0]['baseAssetPrecision'];
             dump($baseAssetPrecision);
