@@ -264,10 +264,8 @@ class BinanceController extends Controller
                 ['symbol' => $Strategy['token']]
 
             );
-            dump($decimals);
             $baseAssetPrecision = $decimals['symbols'][0]['baseAssetPrecision'];
-            dump($baseAssetPrecision);
-            $adjustedQuantity = self::adjustQuantity(truncateToPrecision($lastOrder['origQty'], 8), $lotSize[0]['stepSize']);
+            $adjustedQuantity = self::adjustQuantity(truncateToPrecision($lastOrder['origQty'], $baseAssetPrecision), $lotSize[0]['stepSize']);
 
 
             // 创建一个市价卖单
