@@ -260,8 +260,8 @@ class BinanceController extends Controller
             $lotSize = array_values($lotSize); // 获取第一个匹配的过滤器
             // dump($lotSize[0]['stepSize']);
 
-            $decimals =   $client->exchangeInfo(
-                ['symbols' => $Strategy['token']]
+            $decimals = $client->exchangeInfo(
+                ['symbol' => $Strategy['token']]
 
             );
             dump($decimals);
