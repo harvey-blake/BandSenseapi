@@ -220,7 +220,10 @@ class BinanceController extends Controller
         // 确保调整后的数量保留与步长相同的小数位数
         // return rtrim(number_format($adjustedQuantity, $decimalPlaces, '.', ''), '0');
     }
-
+    private  function removeTrailingZeros($number)
+    {
+        return strpos($number, '.') !== false ? rtrim(rtrim($number, '0'), '.') : $number;
+    }
     private function sell($lastOrder)
     {
 
@@ -268,7 +271,7 @@ class BinanceController extends Controller
                 'SELL',             // 卖出
                 'MARKET',           // 市价单
                 [
-                    'quantity' => $adjustedQuantity, // 卖出的数量，保留8位精度
+                    'quantity' => self::removeTrailingZeros($adjustedQuantity), // 卖出的数量，保留8位精度
 
                 ]
             );
