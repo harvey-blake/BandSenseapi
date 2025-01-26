@@ -265,8 +265,8 @@ class BinanceController extends Controller
 
             );
             dump($decimals);
-            $baseAssetPrecision = $decimals['symbols'][0]['baseAssetPrecision'];
-            dump($baseAssetPrecision);
+            // // $baseAssetPrecision = $decimals['symbols'][0]['baseAssetPrecision'];
+            // dump($baseAssetPrecision);
             $adjustedQuantity = self::adjustQuantity(truncateToPrecision($lastOrder['origQty'], 8), $lotSize[0]['stepSize']);
 
 
