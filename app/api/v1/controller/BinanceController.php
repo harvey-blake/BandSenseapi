@@ -218,7 +218,6 @@ class BinanceController extends Controller
         $number = number_format($adjustedQuantity, $decimalPlaces, '.', '');
 
         return strpos($number, '.') !== false ? rtrim(rtrim($number, '0'), '.') : $number;
-
         // 确保调整后的数量保留与步长相同的小数位数
         // return rtrim(number_format($adjustedQuantity, $decimalPlaces, '.', ''), '0');
     }
