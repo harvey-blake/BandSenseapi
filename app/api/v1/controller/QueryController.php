@@ -50,6 +50,7 @@ class QueryController extends Controller
         if (count($arr) > 0) {
             foreach ($arr as $key => $value) {
                 //子账户
+                $arr[$key]['Strategy'] = json_decode(stripslashes($value['Strategy']));
                 $arr[$key]['keyname'] =  Db::table('binance_key')->field('Label')->where(['userid' => $user['id'], 'id' => $value['keyid']])->find();
                 $arr[$key]['pastProfit'] =  Db::table('income')->where(['userid' => $user['id'], 'Strategyid' =>  $value['id']])->SUM('income') ?? 0;
             }
