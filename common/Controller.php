@@ -62,13 +62,19 @@ class Controller
                 $token = encryptData($token->toString());
                 $uniqid = Uuid::uuid4();
                 $uniqid = $uniqid->toString();
-                $arr =  Db::table('LoginKey')->field('*')->where(['username' => $username])->find();
+                //这里判断下 存哪个仓库
+                $table = 'LoginKey';
+                if (isset($data['type']) && $data['type'] == 1) {
+                    $table = 'HangupLoginKey';
+                }
+
+                $arr =  Db::table($table)->field('*')->where(['username' => $username])->find();
                 if ($arr) {
                     // 修改
-                    $arr =  Db::table('LoginKey')->where(['username' => $username])->update(['username' => $username, 'keyid' => $uniqid, 'token' => $token]);
+                    $arr =  Db::table($table)->where(['username' => $username])->update(['username' => $username, 'keyid' => $uniqid, 'token' => $token]);
                 } else {
                     // 添加
-                    $arr =  Db::table('LoginKey')->insert(['username' => $username, 'keyid' => $uniqid, 'token' => $token]);
+                    $arr =  Db::table($table)->insert(['username' => $username, 'keyid' => $uniqid, 'token' => $token]);
                 }
 
                 if ($arr > 0) {
@@ -112,9 +118,11 @@ class Controller
             echo json_encode(retur('错误', '账号未登陆', 403));
             exit;
         }
-        $data = str_replace('Bearer ', '', $data);
-        $data =  Db::table('LoginKey')->field('*')->where(['keyid' => $data])->find();
-
+        $keyid = str_replace('Bearer ', '', $data);
+        $data =  Db::table('LoginKey')->field('*')->where(['keyid' => $keyid])->find();
+        if (!$data) {
+            $data =  Db::table('HangupLoginKey')->field('*')->where(['keyid' => $keyid])->find();
+        }
         // 获取数据库
         if ($data) {
             $data =  $data['token'];
