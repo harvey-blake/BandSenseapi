@@ -77,6 +77,22 @@ class QueryController extends Controller
             echo json_encode(retur('失败', $arr, 422));
         }
     }
+    public function allStrategytbot()
+    {
+
+        $user = self::validateJWT();
+        $arr =  Db::table('Strategy')->where(['userid' => $user['id'], 'state' => 3])->select();
+
+        if (count($arr) > 0) {
+            foreach ($arr as $key => $value) {
+                //子账户
+                $arr[$key]['Strategy'] = json_decode(stripslashes($arr[$key]['Strategy']), true);
+            }
+            echo json_encode(retur('成功', $arr));
+        } else {
+            echo json_encode(retur('失败', $arr, 422));
+        }
+    }
 
 
     //验证码验证
