@@ -83,10 +83,8 @@ class QueryController extends Controller
         $data = json_decode(file_get_contents('php://input'), true);
         $user = self::validateJWT();
         $arr =  Db::table('Strategy')->where(['userid' => $user['id'], 'id' => $data['id'], 'state' => 3])->find();
-
         if ($arr) {
             $arr['Strategy'] = json_decode(stripslashes($arr['Strategy']), true);
-
             echo json_encode(retur('成功', $arr));
         } else {
             echo json_encode(retur('失败', $arr, 422));
