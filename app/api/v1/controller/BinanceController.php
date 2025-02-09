@@ -252,6 +252,7 @@ class BinanceController extends Controller
             //可只传这一个
             $lastOrder = $Historicalorders[count($Historicalorders) - 1];
             $response = $client->exchangeInfo(['symbol' => 'BTCUSDT']);
+            dump($response);
             $lotSize = array_filter($response['symbols'][0]['filters'], fn($filter) => $filter['filterType'] === 'LOT_SIZE');
 
             $lotSize = array_values($lotSize); // 获取第一个匹配的过滤器
