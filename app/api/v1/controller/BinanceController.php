@@ -51,7 +51,7 @@ class BinanceController extends Controller
                 echo json_encode(retur('失败', 'APIKey已经存在,请勿重复添加', 409));
             }
         } catch (\Throwable $th) {
-            dump($th);
+
             echo json_encode(retur('失败', '$key或$secret错误', -2014));
         }
     }
@@ -252,7 +252,7 @@ class BinanceController extends Controller
             //可只传这一个
             $lastOrder = $Historicalorders[count($Historicalorders) - 1];
             $response = $client->exchangeInfo(['symbol' => $Strategy['token']]);
-            dump($response);
+
             $lotSize = array_filter($response['symbols'][0]['filters'], fn($filter) => $filter['filterType'] === 'LOT_SIZE');
 
             $lotSize = array_values($lotSize); // 获取第一个匹配的过滤器
@@ -265,7 +265,7 @@ class BinanceController extends Controller
             $baseAssetPrecision = $decimals['symbols'][0]['baseAssetPrecision'];
             $adjustedQuantity = self::adjustQuantity(truncateToPrecision($lastOrder['origQty'], $baseAssetPrecision), $lotSize[0]['stepSize']);
 
-            dump($adjustedQuantity);
+
             // 创建一个市价卖单
             $response = $client->newOrder(
                 $Strategy['token'], // 交易对
