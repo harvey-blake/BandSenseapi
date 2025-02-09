@@ -18,13 +18,11 @@ use GuzzleHttp\Exception\ClientException as GuzzleClientException;
 class BinanceController extends Controller
 {
     //币安控制器
-    // $key = '466SioaRMJGXfKESRF8mdGzICXDN4bv21TP2KzFYqx6AFMq3TNCiYNYY9TV6Aq32';
-    // $secret = 'FKEYTbtFUWKyoIrdeaGEsM1LYximNToGWGhyG5hWgWQOSEqGN4wxCE7h5eCzGqOE';
-
     private function getClient($APIKey, $SecretKey)
     {
         try {
-            return new Spot(['key' => $APIKey, 'secret' => $SecretKey, 'baseURL' => 'https://testnet.binance.vision']);
+            return new Spot(['key' => $APIKey, 'secret' => $SecretKey]);
+            // return new Spot(['key' => $APIKey, 'secret' => $SecretKey, 'baseURL' => 'https://testnet.binance.vision']);
         } catch (\Throwable $th) {
             return null;
         }
