@@ -251,7 +251,7 @@ class BinanceController extends Controller
             // 获取最后一个历史订单（准备卖出）
             //可只传这一个
             $lastOrder = $Historicalorders[count($Historicalorders) - 1];
-            $response = $client->exchangeInfo(['symbol' => 'BTCUSDT']);
+            $response = $client->exchangeInfo(['symbol' => $Strategy['token']]);
             dump($response);
             $lotSize = array_filter($response['symbols'][0]['filters'], fn($filter) => $filter['filterType'] === 'LOT_SIZE');
 
