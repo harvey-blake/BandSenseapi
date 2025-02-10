@@ -179,17 +179,6 @@ class BinanceController extends Controller
             $actualAveragePrice = bccomp($totalNetQty, '0', 8) > 0
                 ? bcdiv($response['cummulativeQuoteQty'], $totalNetQty, 8)
                 : '0';
-            dump([
-                'Strategyid' => $data['Strategyid'],
-                'userid' => $user['id'],
-                'orderId' => $response['orderId'],
-                'price' => $actualAveragePrice,
-                'cummulativeQuoteQty' => $response['cummulativeQuoteQty'],
-                'orderinfo' => $response,
-                'origQty' => $totalNetQty,
-                'side' => 'buy',
-                'state' => 1
-            ]);
             // 插入订单信息
             Db::table('bnorder')->insert([
                 'Strategyid' => $data['Strategyid'],
