@@ -192,6 +192,17 @@ class BinanceController extends Controller
                 'side' => 'buy',
                 'state' => 1
             ]);
+            dump([
+                'Strategyid' => $data['Strategyid'],
+                'userid' => $user['id'],
+                'orderId' => $response['orderId'],
+                'price' => $actualAveragePrice,
+                'cummulativeQuoteQty' => $response['cummulativeQuoteQty'],
+                'orderinfo' => $response,
+                'origQty' => $totalNetQty,
+                'side' => 'buy',
+                'state' => 1
+            ]);
             Db::table('binance_key')->where(['id' => $Strategy['keyid'], 'userid' => $user['id']])->update(['lasttime' => $timestamp]);
 
             echo json_encode(retur('成功', '成功'));
