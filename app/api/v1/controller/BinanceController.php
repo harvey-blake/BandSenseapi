@@ -262,6 +262,7 @@ class BinanceController extends Controller
                 ['symbol' => $Strategy['token']]
 
             );
+            //在这之前 获取下余额 通过余额 直接卖出余额  这是个重大问题
             $baseAssetPrecision = $decimals['symbols'][0]['baseAssetPrecision'];
             $adjustedQuantity = self::adjustQuantity(truncateToPrecision($lastOrder['origQty'], $baseAssetPrecision), $lotSize[0]['stepSize']);
 
@@ -350,9 +351,9 @@ class BinanceController extends Controller
             ]);
         } catch (ClientException $e) {
             preg_match('/\{("code":-?\d+,"msg":"[^"]+")\}/', $e->getMessage(), $matches);
-            Db::table('cetext')->insert([
-                'text' => $e->getMessage()
-            ]);
+            // Db::table('cetext')->insert([
+            //     'text' => $e->getMessage()
+            // ]);
             echo json_encode(retur('失败', json_decode($matches[0]), 2015));
 
             exit;
@@ -428,9 +429,9 @@ class BinanceController extends Controller
         } catch (ClientException $e) {
             preg_match('/\{("code":-?\d+,"msg":"[^"]+")\}/', $e->getMessage(), $matches);
             echo json_encode(retur('失败', json_decode($matches[0]), 2015));
-            Db::table('cetext')->insert([
-                'text' => $e->getMessage()
-            ]);
+            // Db::table('cetext')->insert([
+            //     'text' => $e->getMessage()
+            // ]);
         }
     }
 
