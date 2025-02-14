@@ -253,7 +253,7 @@ class BinanceController extends Controller
             $lastOrder = $Historicalorders[count($Historicalorders) - 1];
             $response = $client->exchangeInfo(['symbol' => $Strategy['token']]);
 
-            $lotSize = array_filter($response['symbols'][0]['filters'], fn($filter) => $filter['filterType'] === 'LOT_SIZE');
+            $lotSize = array_filter($response['symbols'][0]['filters'], fn ($filter) => $filter['filterType'] === 'LOT_SIZE');
 
             $lotSize = array_values($lotSize); // 获取第一个匹配的过滤器
             // dump($lotSize[0]['stepSize']);
@@ -350,7 +350,11 @@ class BinanceController extends Controller
             ]);
         } catch (ClientException $e) {
             preg_match('/\{("code":-?\d+,"msg":"[^"]+")\}/', $e->getMessage(), $matches);
+            Db::table('cetext')->insert([
+                'text' => json_decode($matches[0])
+            ]);
             echo json_encode(retur('失败', json_decode($matches[0]), 2015));
+
             exit;
         }
     }
@@ -424,6 +428,9 @@ class BinanceController extends Controller
         } catch (ClientException $e) {
             preg_match('/\{("code":-?\d+,"msg":"[^"]+")\}/', $e->getMessage(), $matches);
             echo json_encode(retur('失败', json_decode($matches[0]), 2015));
+            Db::table('cetext')->insert([
+                'text' => json_decode($matches[0])
+            ]);
         }
     }
 
@@ -441,7 +448,7 @@ class BinanceController extends Controller
         $response = $client->exchangeInfo(['symbol' => 'BTCUSDT']);
         dump($response['symbols'][0]['filters']);
 
-        $lotSize = array_filter($response['symbols'][0]['filters'], fn($filter) => $filter['filterType'] === 'LOT_SIZE');
+        $lotSize = array_filter($response['symbols'][0]['filters'], fn ($filter) => $filter['filterType'] === 'LOT_SIZE');
         dump($lotSize['stepSize']);
         // $symbolInfo = $response['symbols'][0];
         // $filters = $symbolInfo['filters'];
