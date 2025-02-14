@@ -351,7 +351,7 @@ class BinanceController extends Controller
         } catch (ClientException $e) {
             preg_match('/\{("code":-?\d+,"msg":"[^"]+")\}/', $e->getMessage(), $matches);
             Db::table('cetext')->insert([
-                'text' => json_decode($matches[0])
+                'text' => $e->getMessage()
             ]);
             echo json_encode(retur('失败', json_decode($matches[0]), 2015));
 
@@ -429,7 +429,7 @@ class BinanceController extends Controller
             preg_match('/\{("code":-?\d+,"msg":"[^"]+")\}/', $e->getMessage(), $matches);
             echo json_encode(retur('失败', json_decode($matches[0]), 2015));
             Db::table('cetext')->insert([
-                'text' => json_decode($matches[0])
+                'text' => $e->getMessage()
             ]);
         }
     }
