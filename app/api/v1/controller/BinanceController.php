@@ -262,6 +262,7 @@ class BinanceController extends Controller
                 ['symbol' => $Strategy['token']]
 
             );
+            //通过订单可以获取到代币名称  通过代币名称获取余额$lastOrder['orderinfo'] 里面查询余额  json_decode(stripslashes($lastOrder['orderinfo']), true);
             //在这之前 获取下余额 通过余额 直接卖出余额  这是个重大问题
             $baseAssetPrecision = $decimals['symbols'][0]['baseAssetPrecision'];
             $adjustedQuantity = self::adjustQuantity(truncateToPrecision($lastOrder['origQty'], $baseAssetPrecision), $lotSize[0]['stepSize']);
