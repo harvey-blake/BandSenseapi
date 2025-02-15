@@ -193,7 +193,7 @@ class BinanceController extends Controller
             ]);
 
             Db::table('binance_key')->where(['id' => $Strategy['keyid'], 'userid' => $user['id']])->update(['lasttime' => $timestamp]);
-
+            self::updateaccount($user['id']);
             echo json_encode(retur('成功', '成功'));
         } catch (ClientException $e) {
             preg_match('/\{("code":-?\d+,"msg":"[^"]+")\}/', $e->getMessage(), $matches);
@@ -265,9 +265,16 @@ class BinanceController extends Controller
             //通过订单可以获取到代币名称  通过代币名称获取余额$lastOrder['orderinfo'] 里面查询余额  json_decode(stripslashes($lastOrder['orderinfo']), true);
             //在这之前 获取下余额 通过余额 直接卖出余额  这是个重大问题
             $baseAssetPrecision = $decimals['symbols'][0]['baseAssetPrecision'];
-            $adjustedQuantity = self::adjustQuantity(truncateToPrecision($lastOrder['origQty'], $baseAssetPrecision), $lotSize[0]['stepSize']);
+            //获取余额
+            $balances = json_decode(stripslashes($key['Balance']), true);
+            $baseAsset = $decimals['symbols'][0]['baseAsset'];
 
-
+            $ethBalance = isset($balances[array_search($baseAsset, array_column($balances, 'asset'))]['free']) ? $balances[array_search($baseAsset, array_column($balances, 'asset'))]['free'] : 0;
+            $Sellquantity = $lastOrder['origQty'];
+            if ($ethBalance < $Sellquantity) {
+                $Sellquantity = $ethBalance;
+            }
+            $adjustedQuantity = self::adjustQuantity(truncateToPrecision($Sellquantity, $baseAssetPrecision), $lotSize[0]['stepSize']);
             // 创建一个市价卖单
             $response = $client->newOrder(
                 $Strategy['token'], // 交易对
@@ -350,6 +357,7 @@ class BinanceController extends Controller
                 'unitprice' => $Overallaverageprice,
                 'lumpsum' => $lumsum
             ]);
+            self::updateaccount($user['id']);
         } catch (ClientException $e) {
             preg_match('/\{("code":-?\d+,"msg":"[^"]+")\}/', $e->getMessage(), $matches);
             // Db::table('cetext')->insert([
