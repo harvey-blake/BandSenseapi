@@ -438,20 +438,20 @@ class BinanceController extends Controller
 
 
 
-    public function orderpol()
+    public function ceshi()
     {
 
         // dump($_SERVER);
         // // try {
 
 
-        $client = self::getClient('FssGaRMUd3zj3r0WFzCQEiIIgDWtYl2uaj1nNOukKMRYGAwE5sD9nWKWMQ42dm0Q', '7mqzsReNp1Qs02Ou6rZiCtRIDNDRwBpwW8mPHzw1MZk8XEMMZtr5EhRUDCgACwsf');
+        $key = Db::table('binance_key')->field('*')->where(['id' => 6])->find();
+        $client = self::getClient($key['APIKey'], $key['SecretKey']);
+        $response = $client->symbolInfo("ETHUSDT");
+        dump($response);
 
-        $response = $client->exchangeInfo(['symbol' => 'BTCUSDT']);
-        dump($response['symbols'][0]['filters']);
-
-        $lotSize = array_filter($response['symbols'][0]['filters'], fn ($filter) => $filter['filterType'] === 'LOT_SIZE');
-        dump($lotSize['stepSize']);
+        // $lotSize = array_filter($response['symbols'][0]['filters'], fn ($filter) => $filter['filterType'] === 'LOT_SIZE');
+        // dump($lotSize['stepSize']);
         // $symbolInfo = $response['symbols'][0];
         // $filters = $symbolInfo['filters'];
 
