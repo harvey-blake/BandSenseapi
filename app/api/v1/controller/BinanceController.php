@@ -154,16 +154,18 @@ class BinanceController extends Controller
             }
 
             // 计算历史订单的总数量和总金额（使用 BCMath）
+            //这里是错误的
             $HistoricalordersQty = '0';
-            $cummulHistorQty = '0';
+            // $cummulHistorQty = '0';
             foreach ($Historicalorders as $order) {
                 $HistoricalordersQty = bcadd($HistoricalordersQty, $order['origQty'], 8);
-                $cummulHistorQty = bcadd($cummulHistorQty, $order['cummulativeQuoteQty'], 8);
+                // $cummulHistorQty = bcadd($cummulHistorQty, $order['cummulativeQuoteQty'], 8);
             }
 
             // 计算总平均价格（使用 BCMath）
+            //
             $Overallaverageprice = bcdiv(
-                bcadd($cummulHistorQty, $response['cummulativeQuoteQty'], 8),
+                bcadd($Strategy['lumpsum'], $response['cummulativeQuoteQty'], 8),
                 bcadd($HistoricalordersQty, $totalNetQty, 8),
                 8
             );
