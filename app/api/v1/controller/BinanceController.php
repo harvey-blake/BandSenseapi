@@ -450,6 +450,10 @@ class BinanceController extends Controller
         $response = $client->exchangeInfo(['symbol' => "ETHUSDT"]);
         dump($response['symbols'][0]['baseAsset']);
 
+        //余额
+
+        dump(json_decode(stripslashes($key['Balance']), true));
+
         // $lotSize = array_filter($response['symbols'][0]['filters'], fn ($filter) => $filter['filterType'] === 'LOT_SIZE');
         // dump($lotSize['stepSize']);
         // $symbolInfo = $response['symbols'][0];
