@@ -448,7 +448,7 @@ class BinanceController extends Controller
         $key = Db::table('binance_key')->field('*')->where(['id' => 6])->find();
         $client = self::getClient($key['APIKey'], $key['SecretKey']);
         $response = $client->exchangeInfo(['symbol' => "ETHUSDT"]);
-        dump($response);
+        dump($response['symbols'][0]);
 
         // $lotSize = array_filter($response['symbols'][0]['filters'], fn ($filter) => $filter['filterType'] === 'LOT_SIZE');
         // dump($lotSize['stepSize']);
