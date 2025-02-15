@@ -154,7 +154,7 @@ class BinanceController extends Controller
             }
 
             // 计算历史订单的总数量和总金额（使用 BCMath）
-            //这里是错误的
+
             $HistoricalordersQty = '0';
             // $cummulHistorQty = '0';
             foreach ($Historicalorders as $order) {
@@ -320,7 +320,7 @@ class BinanceController extends Controller
                 'income' => $profit
             ]);
 
-            // 更新策略的总金额（扣除卖出的金额）  有问题
+            // 更新策略的总金额（扣除卖出的金额）
             $lumsum = $Strategy['lumpsum'] - $actualgain;
 
             // 更新最后一个订单的状态为已完成（state = 0）
