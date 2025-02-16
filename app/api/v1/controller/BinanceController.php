@@ -160,10 +160,8 @@ class BinanceController extends Controller
             // 计算历史订单的总数量和总金额（使用 BCMath）
 
             $HistoricalordersQty = '0';
-            // $cummulHistorQty = '0';
             foreach ($Historicalorders as $order) {
                 $HistoricalordersQty = bcadd($HistoricalordersQty, $order['origQty'], 8);
-                // $cummulHistorQty = bcadd($cummulHistorQty, $order['cummulativeQuoteQty'], 8);
             }
 
             // 计算总平均价格（使用 BCMath）
