@@ -148,7 +148,14 @@ class BinanceController extends Controller
             $totalNetQty = '0';
             foreach ($response['fills'] as $fill) {
                 $qty = $fill['qty'];             // 成交数量（字符串格式）
+                //手续费 如果是本币  那么就是 $fill['commission'] 不是那么就是0  'commissionAsset'
                 $commission = $fill['commission']; // 手续费（字符串格式）
+                if ($fill['commissionAsset'] == 'BNB') {
+                    $commission = 0; // 手续费（字符串格式）
+                }
+
+
+
                 $netQty = bcsub($qty, $commission, 8); // 计算净数量，保留8位小数
                 $totalNetQty = bcadd($totalNetQty, $netQty, 8); // 累加净数量
             }
@@ -255,7 +262,7 @@ class BinanceController extends Controller
             $lastOrder = $Historicalorders[count($Historicalorders) - 1];
             $response = $client->exchangeInfo(['symbol' => $Strategy['token']]);
 
-            $lotSize = array_filter($response['symbols'][0]['filters'], fn ($filter) => $filter['filterType'] === 'LOT_SIZE');
+            $lotSize = array_filter($response['symbols'][0]['filters'], fn($filter) => $filter['filterType'] === 'LOT_SIZE');
 
             $lotSize = array_values($lotSize); // 获取第一个匹配的过滤器
             // dump($lotSize[0]['stepSize']);
@@ -453,8 +460,10 @@ class BinanceController extends Controller
 
         // dump($_SERVER);
         // // try {
-
-
+        $str = 'prefix';
+        if (str_starts_with($str, 'prefix')) {
+            echo "字符串以 'prefix' 开头";
+        }
         // $key = Db::table('binance_key')->field('*')->where(['id' => 6])->find();
         // $client = self::getClient($key['APIKey'], $key['SecretKey']);
         // $response = $client->exchangeInfo(['symbol' => "ETHUSDT"]);
