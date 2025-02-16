@@ -150,12 +150,9 @@ class BinanceController extends Controller
                 $qty = $fill['qty'];             // 成交数量（字符串格式）
                 //手续费 如果是本币  那么就是 $fill['commission'] 不是那么就是0  'commissionAsset'
                 $commission = $fill['commission']; // 手续费（字符串格式）
-                if ($fill['commissionAsset'] == 'BNB') {
-                    $commission = 0; // 手续费（字符串格式）
+                if ($fill['commissionAsset'] == 'BNB' && !str_starts_with($Strategy['token'], 'BNB')) {
+                    $commission = '0'; // 手续费（字符串格式）
                 }
-
-
-
                 $netQty = bcsub($qty, $commission, 8); // 计算净数量，保留8位小数
                 $totalNetQty = bcadd($totalNetQty, $netQty, 8); // 累加净数量
             }
