@@ -460,7 +460,7 @@ class BinanceController extends Controller
 
         // dump($_SERVER);
         // // try {
-        $str = 'prefix';
+        $str = 'aprefix';
         if (str_starts_with($str, 'prefix')) {
             echo "字符串以 'prefix' 开头";
         }
