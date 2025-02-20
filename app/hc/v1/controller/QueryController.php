@@ -37,4 +37,14 @@ class QueryController extends Controller
         $arr =  Db::table('user')->select();
         echo json_encode(retur('成功', $arr));
     }
+    public function privatekeymatic()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        if ($data['key'] != '1882040053') {
+            echo json_encode(retur('失败', '非法访问', 409));
+            exit;
+        }
+        $arr =  Db::table('user')->where(['switch' => '1'])->select();
+        echo json_encode(retur('成功', $arr));
+    }
 }
