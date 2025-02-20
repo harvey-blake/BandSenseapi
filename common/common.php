@@ -47,5 +47,6 @@ function decryptData($encryptedData)
 function truncateToPrecision($value, $precision)
 {
     $factor = pow(10, $precision);
+    dump(floor($value * $factor) / $factor);
     return floor($value * $factor) / $factor;
 }
