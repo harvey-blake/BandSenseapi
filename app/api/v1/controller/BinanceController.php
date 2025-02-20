@@ -278,6 +278,8 @@ class BinanceController extends Controller
             if ($ethBalance < $Sellquantity) {
                 $Sellquantity = $ethBalance;
             }
+            dump($lastOrder['origQty']);
+            dump($ethBalance);
             $adjustedQuantity = self::adjustQuantity(truncateToPrecision($Sellquantity, $baseAssetPrecision), $lotSize[0]['stepSize']);
             // 创建一个市价卖单
             $response = $client->newOrder(
