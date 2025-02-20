@@ -12,7 +12,7 @@ use common\Controller;
 
 class  UpdateController extends Controller
 {
-    public function Strategystate()
+    public function user()
     {
         try {
             $data = json_decode(file_get_contents('php://input'), true);
@@ -35,7 +35,6 @@ class  UpdateController extends Controller
                 }
             }
         } catch (\Throwable $th) {
-
             echo json_encode(retur('失败', '非法访问', 500));
         }
     }
