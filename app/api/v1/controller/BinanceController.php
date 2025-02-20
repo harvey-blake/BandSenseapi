@@ -212,10 +212,10 @@ class BinanceController extends Controller
 
         // 调整数量，确保符合步长
         $adjustedQuantity = floor($quantity / $stepSize) * $stepSize;
-        dump($adjustedQuantity);
+
         // 获取步长的小数部分的位数
         $decimalPlaces = strlen(explode('.', (string)$stepSize)[1]);
-
+        dump($decimalPlaces);
         // 使用 number_format 并确保不添加千位分隔符
         $number = number_format($adjustedQuantity, $decimalPlaces, '.', '');
 
