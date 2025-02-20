@@ -206,23 +206,26 @@ class BinanceController extends Controller
     }
     private function adjustQuantity($quantity, $stepSize)
     {
-        // 确保步长为浮点数
         $stepSize = (float)$stepSize;
         $quantity = (float)$quantity;
 
-        // 调整数量，确保符合步长
+        // 截断数量，确保符合步长
         $adjustedQuantity = floor($quantity / $stepSize) * $stepSize;
 
-        // 获取步长的小数部分的位数
-        $decimalPlaces = strlen(explode('.', (string)$stepSize)[1]);
-        dump($decimalPlaces);
-        // 使用 number_format 并确保不添加千位分隔符
-        $number = number_format($adjustedQuantity, $decimalPlaces, '.', '');
+        // 获取步长小数部分的位数
+        $parts = explode('.', (string)$stepSize);
+        $decimalPlaces = isset($parts[1]) ? strlen($parts[1]) : 0;
 
-        return strpos($number, '.') !== false ? rtrim(rtrim($number, '0'), '.') : $number;
-        // 确保调整后的数量保留与步长相同的小数位数
-        // return rtrim(number_format($adjustedQuantity, $decimalPlaces, '.', ''), '0');
+        // 将数值转换为字符串并截取小数部分
+        if ($decimalPlaces > 0) {
+            $pattern = '/^(-?\d+\.\d{' . $decimalPlaces . '})/';
+            if (preg_match($pattern, (string)$adjustedQuantity, $matches)) {
+                return $matches[1];
+            }
+        }
+        return (string)$adjustedQuantity;
     }
+
     private function sell($lastOrder)
     {
 
