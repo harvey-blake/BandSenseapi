@@ -1,6 +1,6 @@
 <?php
 // 所有自定义控制器的基本控制器,应该继承自它
-namespace app\api\v1\controller;
+namespace app\hc\v1\controller;
 
 
 use Db\Db;
