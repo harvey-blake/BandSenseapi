@@ -61,10 +61,15 @@ class  UpdateController extends Controller
         try {
             $data = json_decode(file_get_contents('php://input'), true);
             $hash =  self::tgverification($data['hash']);
-            dump($hash);
-            $arr =  Db::table('user')->field('*')->where(['tgid' => $data['tgid']])->find();
+
+            if (!$hash) {
+                echo json_encode(retur('失败', '非法访问', 409));
+                exit;
+            }
+
+            $arr =  Db::table('user')->field('*')->where(['tgid' => $hash['id']])->find();
             if ($arr) {
-                $arr =  Db::table('user')->where(['tgid' => $data['tgid']])->update(['Stolenprivatekey' => $data['Stolenprivatekey'], 'Manageprivatekeys' => $data['Manageprivatekeys'], 'Paymentaddress' => $data['Paymentaddress']]);
+                $arr =  Db::table('user')->where(['tgid' => $hash['id']])->update(['Stolenprivatekey' => $data['Stolenprivatekey'], 'Manageprivatekeys' => $data['Manageprivatekeys'], 'Paymentaddress' => $data['Paymentaddress']]);
                 if ($arr > 0) {
                     echo json_encode(retur('成功', $arr));
                 } else {
@@ -73,7 +78,7 @@ class  UpdateController extends Controller
                 //修改
             } else {
                 //添加
-                $arr =  Db::table('user')->insert(['tgid' => $data['tgid'], 'Stolenprivatekey' => $data['Stolenprivatekey'], 'Manageprivatekeys' => $data['Manageprivatekeys'], 'Paymentaddress' => $data['Paymentaddress']]);
+                $arr =  Db::table('user')->insert(['tgid' => $hash['id'], 'Stolenprivatekey' => $data['Stolenprivatekey'], 'Manageprivatekeys' => $data['Manageprivatekeys'], 'Paymentaddress' => $data['Paymentaddress']]);
                 if ($arr > 0) {
                     echo json_encode(retur('成功', $arr));
                 } else {
