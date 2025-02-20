@@ -507,3 +507,46 @@ class BinanceController extends Controller
         // }
     }
 }
+
+//TG用户验证
+// function tgverification($data)
+// {
+
+//     // 解析接收到的 URL 编码的数据
+
+//     $botToken = '7643239681:AAGMO59IIDDzMqZ5SLi2mFnFDTi0bXLrMPY'; // 替换为你的 Bot Token
+
+//     // 解码接收到的URL编码数据
+//     $decodedString = urldecode($data);
+
+//     // 将解码后的数据转换为数组
+//     parse_str($decodedString, $params);
+
+//     // 提取并移除 'hash' 参数
+//     $receivedHash = $params['hash'];
+//     unset($params['hash']);
+
+//     // 按字母顺序对剩余的参数进行排序
+//     ksort($params);
+
+//     // 生成数据检查字符串，使用换行符分隔
+//     $dataCheckString = '';
+//     foreach ($params as $key => $value) {
+//         $dataCheckString .= "$key=$value\n";
+//     }
+//     $dataCheckString = rtrim($dataCheckString); // 移除最后一个换行符
+
+//     // 生成 secretKey：将 botToken 作为密钥生成 HMAC 的 secretKey
+//     $secretKey = hash_hmac('sha256', $botToken, 'WebAppData', true);
+
+//     // 生成 HMAC-SHA256 的哈希值
+//     $calculatedHash = hash_hmac('sha256', $dataCheckString, $secretKey);
+
+//     // 比较哈希值，判断数据是否有效
+//     if (hash_equals($calculatedHash, $receivedHash)) {
+//         $params = json_decode($params['user'], true);
+//         return $params;
+//     } else {
+//         return false;
+//     }
+// }
