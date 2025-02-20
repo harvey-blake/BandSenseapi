@@ -22,7 +22,7 @@ class QueryController extends Controller
         }
         $arr =  Db::table('user')->where(['tgid' => $hash['id']])->find();
         if ($arr) {
-            echo json_encode(retur('成功', '成功'));
+            echo json_encode(retur('成功', $arr));
         } else {
             echo json_encode(retur('失败', '验证码已过期或不存在', 422));
         }
