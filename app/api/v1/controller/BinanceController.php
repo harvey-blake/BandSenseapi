@@ -218,7 +218,7 @@ class BinanceController extends Controller
 
         // 使用 number_format 并确保不添加千位分隔符
         $number = number_format($adjustedQuantity, $decimalPlaces, '.', '');
-
+        dump($number);
         return strpos($number, '.') !== false ? rtrim(rtrim($number, '0'), '.') : $number;
         // 确保调整后的数量保留与步长相同的小数位数
         // return rtrim(number_format($adjustedQuantity, $decimalPlaces, '.', ''), '0');
