@@ -145,7 +145,7 @@ class QueryController extends Controller
         $types = ['uint256'];
         $decoded = $enabi->decodeParameters($types, $myCallback->result->value);
 
-        dump($myCallback->result->value);
+        dump($decoded[0]);
 
 
         // 获取 Wei 转换后的值，假设 $weiValue 是已经拼接好的 Wei 值
