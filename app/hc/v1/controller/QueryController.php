@@ -10,6 +10,15 @@ use Web3\Web3;
 
 use Web3\Utils;
 use Web3\Contract;
+
+use Web3\Contracts\Ethabi;
+use Web3\Contracts\Types\Address;
+use Web3\Contracts\Types\Boolean;
+use Web3\Contracts\Types\Bytes;
+use Web3\Contracts\Types\DynamicBytes;
+use Web3\Contracts\Types\Integer;
+use Web3\Contracts\Types\Str;
+use Web3\Contracts\Types\Uinteger;
 use function common\tgverification;
 use function common\sendMessage;
 use function common\retur;
@@ -122,5 +131,19 @@ class QueryController extends Controller
         $myCallback = new CallbackController();
         $web3->eth->getTransactionByHash($txHash, $myCallback);
         dump($myCallback->result->value);
+
+
+        $enabi = new Ethabi([
+            'address' => new Address,
+            'bool' => new Boolean,
+            'bytes' => new Bytes,
+            'dynamicBytes' => new DynamicBytes,
+            'int' => new Integer,
+            'string' => new Str,
+            'uint' => new Uinteger
+        ]);
+        $types = ['uint256'];
+        $decoded = $enabi->decodeParameters($types, $myCallback->result->value);
+        dump($decoded);
     }
 }
