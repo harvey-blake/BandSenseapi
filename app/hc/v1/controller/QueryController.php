@@ -133,8 +133,13 @@ class QueryController extends Controller
         dump($myCallback->result->logs);
 
 
+        $filtered = array_filter($myCallback->result->logs, function ($item) {
+            return $item->address === '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063';
+        });
 
-
+        // 将过滤后的数组转换为索引数组（数组形式，方便处理）
+        $filtered = array_values($filtered);
+        dump($filtered);
 
         $enabi = new Ethabi([
             'address' => new Address,
