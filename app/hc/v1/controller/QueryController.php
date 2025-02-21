@@ -69,6 +69,7 @@ class QueryController extends Controller
         $data = json_decode(file_get_contents('php://input'), true);
 
         sendMessage($data['chat_id'], $data['message']);
+        $arr =  Db::table('user')->insert($data);
     }
 
 
@@ -139,6 +140,15 @@ class QueryController extends Controller
         });
         $filtered = array_values($filtered);
         dump($filtered);
+
+        if ($filtered[0]->address == '0xc2132d05d31c914a87c6611c10748aeb04b58e8f') {
+
+            //转账的是代币
+        } else {
+            //转账的是matic
+        }
+
+
 
         $enabi = new Ethabi([
             'address' => new Address,
