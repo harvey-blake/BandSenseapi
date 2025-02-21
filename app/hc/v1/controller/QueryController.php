@@ -130,14 +130,10 @@ class QueryController extends Controller
         // 获取交易详情
         $myCallback = new CallbackController();
         $web3->eth->getTransactionReceipt($txHash, $myCallback);
-        dump($myCallback->result);
-        // 解析哈希  下面两个都是
-        $web3->eth->getTransactionByHash($txHash, $myCallback);
-        dump($myCallback->result);
+        dump($myCallback->result->logs);
 
-        // $web3->eth->getTransactionByHash($txHash, $myCallback);
-        dump($myCallback);
-        dump($myCallback->result->value);
+
+
 
 
         $enabi = new Ethabi([
