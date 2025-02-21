@@ -135,7 +135,7 @@ class QueryController extends Controller
 
         $filtered = array_filter($myCallback->result->logs, function ($item) {
             dump($item);
-            return $item->address == '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063';
+            return $item->address == '0xc2132d05d31c914a87c6611c10748aeb04b58e8f';
         });
 
 
@@ -151,7 +151,7 @@ class QueryController extends Controller
             'uint' => new Uinteger
         ]);
         $types = ['uint256'];
-        $decoded = $enabi->decodeParameters($types, $myCallback->result->value);
+        $decoded = $enabi->decodeParameters($types, $filtered->data);
         /** @var \phpseclib3\Math\BigInteger[] $decoded */
 
         $ether = bcdiv($decoded[0]->value, 10 ** 18);
