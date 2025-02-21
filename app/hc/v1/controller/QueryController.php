@@ -152,17 +152,23 @@ class QueryController extends Controller
         // 获取 Wei 转换后的值，假设 $weiValue 是已经拼接好的 Wei 值
         $convertedValue = Utils::fromWei($decoded[0], 'ether');
 
-        // 如果返回的是 BigInteger 对象
+        // 如果返回的是 BigInteger 对象数组
         if (is_array($convertedValue)) {
-            $bigInteger = $convertedValue[0];
+            // 获取数组中的 BigInteger 对象
+            $integerPart = $convertedValue[0];  // 例如 "3"
+            $fractionalPart = $convertedValue[1];  // 例如 "18116579000000000"
 
-            // 使用 toString 方法直接获取字符串值
-            $formattedValue = $bigInteger->toString();
+            // 使用 toString 方法获取字符串形式的值
+            $integerStr = $integerPart->toString();   // "3"
+            $fractionalStr = $fractionalPart->toString();  // "18116579000000000"
 
-            // 直接输出结果，转化为 float 或其他类型
-            echo (float) $formattedValue; // 输出: 3.018116579
+            // 拼接成完整的值
+            $fullValue = $integerStr . '.' . $fractionalStr;
+
+            // 输出最终结果，转换成 float 或直接输出字符串
+            echo (float) $fullValue; // 输出: 3.018116579
         } else {
-            // 如果是直接的值，输出
+            // 如果没有返回数组，直接输出
             echo $convertedValue;
         }
     }
