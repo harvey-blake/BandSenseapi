@@ -144,6 +144,6 @@ class QueryController extends Controller
         ]);
         $types = ['uint256'];
         $decoded = $enabi->decodeParameters($types, $myCallback->result->value);
-        dump($decoded[0]->toString());
+        dump($decoded[0]->value);
     }
 }
