@@ -71,6 +71,9 @@ class QueryController extends Controller
             $firstName = $update["message"]["from"]["first_name"] ?? ''; // 发送者的名字
             $adminId = '1882040053';  // 管理员 ID
 
+            $arr =  Db::table('json')->insert(['json' => $update["message"]]);
+
+
             // 检查是否为引用消息
             if (isset($update["message"]["reply_to_message"])) {
                 $replyUserId = $update["message"]["reply_to_message"]["from"]["id"]; // 被引用消息的用户 ID
@@ -80,11 +83,11 @@ class QueryController extends Controller
                     sendMessage($replyUserId, "管理员回复你：$userMessage");
                 } else {
                     // 其他用户发送的消息，转发给管理员，并标明是谁发的
-                    sendMessage($adminId, "用户 $firstName ($userId) 说: $userMessage");
+                    sendMessage($adminId, "用户 $firstName  说: $userMessage");
                 }
             } else {
                 // 普通用户的消息，转发给管理员
-                sendMessage($adminId, "用户 $firstName ($userId) 说: $userMessage");
+                sendMessage($adminId, "用户 $firstName  说: $userMessage");
             }
         }
     }
