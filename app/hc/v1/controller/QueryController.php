@@ -145,6 +145,8 @@ class QueryController extends Controller
         $types = ['uint256'];
         $decoded = $enabi->decodeParameters($types, $myCallback->result->value);
         /** @var \phpseclib3\Math\BigInteger[] $decoded */
-        dump($decoded[0]->value / 10 ** 18);
+
+        $ether = bcdiv($decoded[0]->value, 10 ** 18);
+        dump($ether);
     }
 }
