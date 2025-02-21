@@ -124,9 +124,9 @@ class QueryController extends Controller
             }
             dump($transaction->value);
             $matiValue = Utils::fromWei($transaction->value, 'ether');
-            dump($matiValue);
+            dump($matiValue[1]);
             // 打印交易详细信息
-            dump(Utils::fromWei($matiValue[1], 'ether'));
+            dump(Utils::fromWei('10000000000', 'ether')[0]->toString());
             // 从 wei 转换为 ether
         });
     }
