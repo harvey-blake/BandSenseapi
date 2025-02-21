@@ -146,5 +146,6 @@ class QueryController extends Controller
         $decoded = $enabi->decodeParameters($types, $myCallback->result->value);
         dump($decoded);
         $value =  Utils::fromWei($decoded[1], 'ether')[0]->toString();
+        dump($value);
     }
 }
