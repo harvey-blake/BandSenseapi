@@ -137,8 +137,6 @@ class QueryController extends Controller
             dump($item);
             return $item->address == '0xc2132d05d31c914a87c6611c10748aeb04b58e8f';
         });
-
-
         dump($filtered);
 
         $enabi = new Ethabi([
@@ -151,9 +149,10 @@ class QueryController extends Controller
             'uint' => new Uinteger
         ]);
         $types = ['uint256'];
+
         $decoded = $enabi->decodeParameters($types, $filtered[0]->data);
         /** @var \phpseclib3\Math\BigInteger[] $decoded */
-
+        dump($decoded);
         $ether = bcdiv($decoded[0]->value, 10 ** 18);
         dump($ether);
     }
