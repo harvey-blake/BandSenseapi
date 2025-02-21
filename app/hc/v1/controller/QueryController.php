@@ -153,7 +153,7 @@ class QueryController extends Controller
         $decoded = $enabi->decodeParameters($types, $filtered[0]->data);
         /** @var \phpseclib3\Math\BigInteger[] $decoded */
         dump($decoded[0]->value / 10 ** 18);
-        $ether = bcdiv($decoded[0]->value, 10 ** 18);
+        $ether = bcdiv($decoded[0]->value, 10 ** 18, 18);
         dump($ether);
     }
 }
