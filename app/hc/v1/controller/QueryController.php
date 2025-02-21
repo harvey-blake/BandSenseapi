@@ -144,11 +144,11 @@ class QueryController extends Controller
         ]);
         $types = ['uint256'];
         $decoded = $enabi->decodeParameters($types, $myCallback->result->value);
-        dump($decoded);
 
+        dump($myCallback->result->value->toString());
 
 
         // 获取 Wei 转换后的值，假设 $weiValue 是已经拼接好的 Wei 值
-
+        $convertedValue = Utils::fromWei($decoded[0], 'ether');
     }
 }
