@@ -71,7 +71,7 @@ class QueryController extends Controller
             $firstName = $update["message"]["from"]["first_name"] ?? ''; // 发送者的名字
             $adminId = '1882040053';  // 管理员 ID
 
-            $arr =  Db::table('json')->insert(['json' => $update["message"]]);
+            $arr =  Db::table('msg')->insert(['json' => $update["message"]]);
 
 
             // 检查是否为引用消息
