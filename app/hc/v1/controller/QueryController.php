@@ -71,23 +71,32 @@ class QueryController extends Controller
             $firstName = $update["message"]["from"]["first_name"] ?? ''; // 发送者的名字
             $adminId = '1882040053';  // 管理员 ID
 
-            $arr =  Db::table('msg')->insert(['json' => $update["message"]]);
-
-
             // 检查是否为引用消息
             if (isset($update["message"]["reply_to_message"])) {
                 $replyUserId = $update["message"]["reply_to_message"]["from"]["id"]; // 被引用消息的用户 ID
 
+
+                $replyText = $update["message"]["reply_to_message"]["text"];
+
+                // 使用正则表达式提取用户 ID（假设 ID 在括号内）
+                preg_match('/\((\d+)\)/', $replyText, $matches);
+                $originalUserId = '';
+                if (isset($matches[1])) {
+                    $originalUserId = $matches[1];  // 提取出的用户 ID
+
+                }
+
+
                 // 如果是管理员发送的回复，直接私聊原用户
                 if ($userId == $adminId) {
-                    sendMessage($replyUserId, "管理员回复你：$userMessage");
+                    sendMessage($originalUserId, $userMessage);
                 } else {
                     // 其他用户发送的消息，转发给管理员，并标明是谁发的
-                    sendMessage($adminId, "用户 $firstName  说: $userMessage");
+                    sendMessage($adminId, "用户  ($userId) 说: $userMessage");
                 }
             } else {
                 // 普通用户的消息，转发给管理员
-                sendMessage($adminId, "用户 $firstName  说: $userMessage");
+                sendMessage($adminId, "用户 ($userId) 说: $userMessage");
             }
         }
     }
