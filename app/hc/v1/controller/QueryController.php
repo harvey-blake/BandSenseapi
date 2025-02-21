@@ -134,7 +134,7 @@ class QueryController extends Controller
 
 
         $filtered = array_filter($myCallback->result->logs, function ($item) {
-            return $item->address === '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063';
+            return $item->address == '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063';
         });
 
 
