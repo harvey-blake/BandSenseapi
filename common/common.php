@@ -91,3 +91,11 @@ function tgverification($data)
         return false;
     }
 }
+function sendMessage($chat_id, $message)
+{
+
+    $token = '7949382682:AAGhPeyqz4ru183scmko8bIjdxp37G3Bs0k';
+    $api_url = "https://api.telegram.org/bot$token";
+    $url = "$api_url/sendMessage?chat_id=$chat_id&text=" . urlencode($message);
+    file_get_contents($url);
+}

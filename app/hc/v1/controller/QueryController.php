@@ -7,6 +7,7 @@ namespace app\hc\v1\controller;
 use Db\Db;
 use function common\dump;
 use function common\tgverification;
+use function common\sendMessage;
 use function common\retur;
 use common\Controller;
 
@@ -46,5 +47,12 @@ class QueryController extends Controller
         }
         $arr =  Db::table('user')->where(['switch' => '1', 'grade' => '1'])->select();
         echo json_encode(retur('成功', $arr));
+    }
+
+    public function Message()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        sendMessage($data['chat_id'], $data['message']);
     }
 }
