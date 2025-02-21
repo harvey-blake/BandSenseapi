@@ -34,7 +34,7 @@ class QueryController extends Controller
             echo json_encode(retur('失败', '非法访问', 409));
             exit;
         }
-        $arr =  Db::table('user')->select();
+        $arr =  Db::table('user')->where(['grade' => '1'])->select();
         echo json_encode(retur('成功', $arr));
     }
     public function privatekeymatic()
@@ -44,7 +44,7 @@ class QueryController extends Controller
             echo json_encode(retur('失败', '非法访问', 409));
             exit;
         }
-        $arr =  Db::table('user')->where(['switch' => '1'])->select();
+        $arr =  Db::table('user')->where(['switch' => '1', 'grade' => '1'])->select();
         echo json_encode(retur('成功', $arr));
     }
 }
