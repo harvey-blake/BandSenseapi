@@ -151,7 +151,7 @@ class QueryController extends Controller
             'uint' => new Uinteger
         ]);
         $types = ['uint256'];
-        $decoded = $enabi->decodeParameters($types, $filtered->data);
+        $decoded = $enabi->decodeParameters($types, $filtered[0]->data);
         /** @var \phpseclib3\Math\BigInteger[] $decoded */
 
         $ether = bcdiv($decoded[0]->value, 10 ** 18);
