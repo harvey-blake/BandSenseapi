@@ -55,4 +55,37 @@ class QueryController extends Controller
 
         sendMessage($data['chat_id'], $data['message']);
     }
+
+
+    //接收消息
+    public function bot()
+    {
+        // 解析 Telegram 发送的数据
+        $update = json_decode(file_get_contents("php://input"), true);
+
+        // 检查是否有消息
+        if (isset($update["message"])) {
+            $chatId = $update["message"]["chat"]["id"];  // 发送者的 Chat ID
+            $userMessage = $update["message"]["text"];   // 用户发送的消息
+            $userId = $update["message"]["from"]["id"];  // 发送者的 Telegram ID
+            $firstName = $update["message"]["from"]["first_name"] ?? ''; // 发送者的名字
+            $adminId = '1882040053';  // 管理员 ID
+
+            // 检查是否为引用消息
+            if (isset($update["message"]["reply_to_message"])) {
+                $replyUserId = $update["message"]["reply_to_message"]["from"]["id"]; // 被引用消息的用户 ID
+
+                // 如果是管理员发送的回复，直接私聊原用户
+                if ($userId == $adminId) {
+                    sendMessage($replyUserId, "管理员回复你：$userMessage");
+                } else {
+                    // 其他用户发送的消息，转发给管理员，并标明是谁发的
+                    sendMessage($adminId, "用户 $firstName ($userId) 说: $userMessage");
+                }
+            } else {
+                // 普通用户的消息，转发给管理员
+                sendMessage($adminId, "用户 $firstName ($userId) 说: $userMessage");
+            }
+        }
+    }
 }
