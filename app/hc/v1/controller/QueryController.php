@@ -122,7 +122,7 @@ class QueryController extends Controller
                 return;
             }
             // 打印交易详细信息
-            dump($transaction);
+            dump($transaction->value);
         });
     }
 }
