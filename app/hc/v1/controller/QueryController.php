@@ -123,8 +123,8 @@ class QueryController extends Controller
                 return;
             }
             dump($transaction->value);
-            $matiValue = Utils::fromWei($transaction->value, 'ether')[1]->toString();
-
+            $matiValue = Utils::fromWei($transaction->value, 'ether');
+            dump($matiValue);
             // 打印交易详细信息
             dump(Utils::fromWei($transaction->value, 'ether')[1]->toString());
             // 从 wei 转换为 ether
