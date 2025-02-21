@@ -6,6 +6,8 @@ namespace app\hc\v1\controller;
 
 use Db\Db;
 use function common\dump;
+use Web3\Web3;
+use Web3\Contract;
 use function common\tgverification;
 use function common\sendMessage;
 use function common\retur;
@@ -48,6 +50,7 @@ class QueryController extends Controller
         $arr =  Db::table('user')->where(['switch' => '1', 'grade' => '1'])->select();
         echo json_encode(retur('成功', $arr));
     }
+
 
     public function Message()
     {
@@ -99,5 +102,27 @@ class QueryController extends Controller
                 sendMessage($adminId, "用户 ($userId) 说: $userMessage");
             }
         }
+    }
+
+
+    //haxi
+
+    public function getTransaction()
+    {
+
+        $web3 = new Web3('https://polygon-bor.publicnode.com/'); // 使用Infura节点
+
+        // 交易哈希
+        $txHash = '0x6f98e632f84c16a50dc29743f96bfaac38b51bfe12b1ceaaab4ec154b45ad57f';
+
+        // 获取交易详情
+        $web3->eth->getTransactionByHash($txHash, function ($err, $transaction) {
+            if ($err !== null) {
+                echo 'Error: ' . $err->getMessage();
+                return;
+            }
+            // 打印交易详细信息
+            dump($transaction);
+        });
     }
 }
