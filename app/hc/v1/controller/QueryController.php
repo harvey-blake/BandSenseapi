@@ -145,7 +145,25 @@ class QueryController extends Controller
         $types = ['uint256'];
         $decoded = $enabi->decodeParameters($types, $myCallback->result->value);
         Utils::toWei($decoded[0], 'ether');
-        $value = (float)  Utils::fromWei($decoded[0], 'ether');
+        $value =  Utils::fromWei($decoded[0], 'ether');
         dump($value);
+
+
+        // 获取 Wei 转换后的值，假设 $weiValue 是已经拼接好的 Wei 值
+        $convertedValue = Utils::fromWei($decoded[0], 'ether');
+
+        // 如果返回的是 BigInteger 对象
+        if (is_array($convertedValue)) {
+            $bigInteger = $convertedValue[0];
+
+            // 使用 toString 方法直接获取字符串值
+            $formattedValue = $bigInteger->toString();
+
+            // 直接输出结果，转化为 float 或其他类型
+            echo (float) $formattedValue; // 输出: 3.018116579
+        } else {
+            // 如果是直接的值，输出
+            echo $convertedValue;
+        }
     }
 }
