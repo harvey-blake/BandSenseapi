@@ -122,6 +122,7 @@ class QueryController extends Controller
                 echo 'Error: ' . $err->getMessage();
                 return;
             }
+            dump($transaction->value->toString());
             $matiValue = Utils::fromWei($transaction->value, 'ether')[0]->toString();
             // 打印交易详细信息
             dump($matiValue);
