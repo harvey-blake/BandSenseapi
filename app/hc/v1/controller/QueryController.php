@@ -120,7 +120,7 @@ class QueryController extends Controller
 
         // 获取交易详情
         $myCallback = new CallbackController();
-        $ref =     $web3->eth->getTransactionByHash($txHash, $myCallback);
-        dump($ref);
+        $web3->eth->getTransactionByHash($txHash, $myCallback);
+        dump($myCallback);
     }
 }
