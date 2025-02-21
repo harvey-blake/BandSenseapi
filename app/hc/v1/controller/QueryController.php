@@ -7,6 +7,7 @@ namespace app\hc\v1\controller;
 use Db\Db;
 use function common\dump;
 use Web3\Web3;
+use Web3\Utils;
 use Web3\Contract;
 use function common\tgverification;
 use function common\sendMessage;
@@ -122,7 +123,8 @@ class QueryController extends Controller
                 return;
             }
             // 打印交易详细信息
-            dump($transaction->value);
+            dump(Utils::fromWei($transaction->value, 'ether'));
+            // 从 wei 转换为 ether
         });
     }
 }
