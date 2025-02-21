@@ -7,12 +7,14 @@ namespace app\hc\v1\controller;
 use Db\Db;
 use function common\dump;
 use Web3\Web3;
+
 use Web3\Utils;
 use Web3\Contract;
 use function common\tgverification;
 use function common\sendMessage;
 use function common\retur;
 use common\Controller;
+use common\CallbackController;
 
 class QueryController extends Controller
 {
@@ -117,17 +119,8 @@ class QueryController extends Controller
         $txHash = '0x6f98e632f84c16a50dc29743f96bfaac38b51bfe12b1ceaaab4ec154b45ad57f';
 
         // 获取交易详情
-        $web3->eth->getTransactionByHash($txHash, function ($err, $transaction) {
-            if ($err !== null) {
-                echo 'Error: ' . $err->getMessage();
-                return;
-            }
-            dump($transaction->value);
-            $matiValue = Utils::fromWei($transaction->value, 'ether');
-            dump($matiValue[1]);
-            // 打印交易详细信息
-            dump(Utils::fromWei('10000000000', 'ether'));
-            // 从 wei 转换为 ether
-        });
+        $myCallback = new CallbackController();
+        $ref =     $web3->eth->getTransactionByHash($txHash, $myCallback);
+        dump($ref);
     }
 }
