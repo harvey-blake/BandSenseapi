@@ -64,13 +64,6 @@ class QueryController extends Controller
     }
 
 
-    public function Message()
-    {
-        $data = json_decode(file_get_contents('php://input'), true);
-
-        sendMessage($data['chat_id'], $data['message']);
-        $arr =  Db::table('msg')->insert(['json' => $data]);
-    }
 
 
     //接收消息
@@ -120,7 +113,7 @@ class QueryController extends Controller
 
     //haxi
 
-    public function getTransaction()
+    public function Message()
     {
 
         $data = json_decode(file_get_contents('php://input'), true);
