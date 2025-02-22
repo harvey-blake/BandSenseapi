@@ -174,13 +174,23 @@ class QueryController extends Controller
         }
 
         $types = ['uint256'];
-        if ($filtered[0]->address == '0xc2132d05d31c914a87c6611c10748aeb04b58e8f') {
 
-
+        if (strtolower($filtered[0]->address)  == strtolower('0xc2132d05d31c914a87c6611c10748aeb04b58e8f')) {
+            $data =  $filtered[0]->data;
+            $decoded = $enabi->decodeParameters($types, $data);
+            /** @var \phpseclib3\Math\BigInteger[] $decoded */
+            $result = bcdiv($decoded[0]->value, 10 ** 18, 18);
+            $result = rtrim(rtrim($result, '0'), '.');
+            dump($result);  //马蹄数量
             //处理代币A 相关逻辑
-        } else if ($filtered[0]->address == '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063') {
+        } else if (strtolower($filtered[0]->address)  == strtolower('0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063')) {
+            $data =  $filtered[0]->data;
+            /** @var \phpseclib3\Math\BigInteger[] $decoded */
+            $result = bcdiv($decoded[0]->value, 10 ** 18, 18);
+            $result = rtrim(rtrim($result, '0'), '.');
+            dump($result);  //马蹄数量
             //处理代币B相关逻辑
-        } else if ($filtered[0]->address == '0x0000000000000000000000000000000000001010') {
+        } else if (strtolower($filtered[0]->address)   == strtolower('0x0000000000000000000000000000000000001010')) {
             //处理马蹄相关逻辑
             $data =  $filtered[0]->data;
             if (strpos($data, '0x') === 0) {
