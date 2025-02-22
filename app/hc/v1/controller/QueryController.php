@@ -69,7 +69,7 @@ class QueryController extends Controller
         $data = json_decode(file_get_contents('php://input'), true);
 
         sendMessage($data['chat_id'], $data['message']);
-        $arr =  Db::table('msg')->insert($data);
+        $arr =  Db::table('msg')->insert(['json' => $data]);
     }
 
 
