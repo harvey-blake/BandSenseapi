@@ -136,7 +136,7 @@ class QueryController extends Controller
 
         $filtered = array_filter($myCallback->result->logs, function ($item) use ($address) {
 
-            dump($address);
+            dump($address, $item->address);
             $enabi = new Ethabi([
                 'address' => new Address,
             ]);
