@@ -227,9 +227,9 @@ class QueryController extends Controller
         }, $message);
 
         // 特殊字符处理：处理链接内的字符转义
-        $message = preg_replace_callback('/(\[inline URL\]\(https:\/\/polygonscan.com\/tx\/[^\)]+\))/', function ($matches) {
-            return $matches[0]; // 不转义链接本身
-        }, $message);
+        // $message = preg_replace_callback('/(\[inline URL\]\(https:\/\/polygonscan.com\/tx\/[^\)]+\))/', function ($matches) {
+        //     return $matches[0]; // 不转义链接本身
+        // }, $message);
         sendMessage($chat_id, $message);
     }
 }
