@@ -131,15 +131,19 @@ class QueryController extends Controller
         // 获取交易详情
         $myCallback = new CallbackController();
         $web3->eth->getTransactionReceipt($txHash, $myCallback);
-        dump($myCallback->result->logs);
+        $enabi = new Ethabi([
+            'address' => new Address,
+            'bool' => new Boolean,
+            'bytes' => new Bytes,
+            'dynamicBytes' => new DynamicBytes,
+            'int' => new Integer,
+            'string' => new Str,
+            'uint' => new Uinteger
+        ]);
 
 
-        $filtered = array_filter($myCallback->result->logs, function ($item) use ($address) {
+        $filtered = array_filter($myCallback->result->logs, function ($item) use ($address, $enabi) {
 
-
-            $enabi = new Ethabi([
-                'address' => new Address,
-            ]);
             $types = ['address'];
             $toaddress = '';
 
@@ -162,26 +166,28 @@ class QueryController extends Controller
         });
         $filtered = array_values($filtered);
         dump($filtered);
+        if (count($filtered) == 0) {
+            //没有
+            exit;
+        }
 
+        $types = ['uint256'];
         if ($filtered[0]->address == '0xc2132d05d31c914a87c6611c10748aeb04b58e8f') {
 
-            //转账的是代币
-        } else {
-            //转账的是matic
+
+            //处理代币A 相关逻辑
+        } else if ($filtered[0]->address == '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063') {
+            //处理代币B相关逻辑
+        } else if ($filtered[0]->address == '0x0000000000000000000000000000000000001010') {
+            //处理马蹄相关逻辑
+            $data =  $filtered[0]->data;
+            dump($data);
         }
 
 
 
-        $enabi = new Ethabi([
-            'address' => new Address,
-            'bool' => new Boolean,
-            'bytes' => new Bytes,
-            'dynamicBytes' => new DynamicBytes,
-            'int' => new Integer,
-            'string' => new Str,
-            'uint' => new Uinteger
-        ]);
-        $types = ['uint256'];
+
+
 
         $decoded = $enabi->decodeParameters($types, $filtered[0]->data);
         /** @var \phpseclib3\Math\BigInteger[] $decoded */
