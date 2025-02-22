@@ -97,12 +97,15 @@ function sendMessage($chat_id, $message)
         $token = '7949382682:AAGhPeyqz4ru183scmko8bIjdxp37G3Bs0k';
         $api_url = "https://api.telegram.org/bot$token";
 
-        // 使用 MarkdownV2 格式来发送消息
-        $url = "$api_url/sendMessage?chat_id=$chat_id&text=" . urlencode($message) . "&parse_mode=HTML";
+        // 直接发送 HTML 格式的消息
+        // 确保传递给 Telegram API 的消息内容不包含需要 URL 编码的字符
+        $message = urlencode($message);  // 如果消息里包含 URL，必须使用 urlencode 转义
+        $url = "$api_url/sendMessage?chat_id=$chat_id&text=$message&parse_mode=HTML";
 
+        // 发送请求
         file_get_contents($url);
     } catch (\Throwable $th) {
-        //throw $th;
+        // 捕获异常并输出
         dump($th);
     }
 }

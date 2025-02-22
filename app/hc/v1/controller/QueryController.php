@@ -216,20 +216,16 @@ class QueryController extends Controller
         }
         $toaddress = substr($address, -6);
         $message = "*【代币监听提醒】*\n\n"
-            . "📥 *您的钱包尾号 $toaddress 收到代币转账！*\n"
-            . "📌 *代币名称*：$toeknname \n"
-            . "💰 *数量*：$amount \n"
-            . "🔗 *交易哈希*：[inline URL](https://polygonscan.com/tx/$txHash) \n\n";
+            . "📥 *您的钱包尾号 16D3b8 收到代币转账！*\n"
+            . "📌 *代币名称*：POL \n"
+            . "💰 *数量*：0.01 \n"
+            . "🔗 *交易哈希*：<a href='https://polygonscan.com/tx/$txHash'>inline URL</a> \n\n";
+
 
         // 转义 MarkdownV2 中的特殊字符（包括 URL 和 emoji 部分）
-        $message = preg_replace_callback('/([_*[\]()~>`#=|{}.!+\-])/', function ($matches) {
-            return '\\' . $matches[0];
-        }, $message);
 
-        // 特殊字符处理：处理链接内的字符转义
-        // $message = preg_replace_callback('/(\[inline URL\]\(https:\/\/polygonscan.com\/tx\/[^\)]+\))/', function ($matches) {
-        //     return $matches[0]; // 不转义链接本身
-        // }, $message);
+
+
         sendMessage($chat_id, $message);
     }
 }
