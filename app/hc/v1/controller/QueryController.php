@@ -158,7 +158,7 @@ class QueryController extends Controller
                 '0x0000000000000000000000000000000000001010'
             ];
             dump($toaddress, $address);
-            return in_array($item->address, $allowedContracts) && $toaddress == $address;
+            return in_array($item->address, $allowedContracts) && strtolower($toaddress) == strtolower($address);
         });
         $filtered = array_values($filtered);
         dump($filtered);
