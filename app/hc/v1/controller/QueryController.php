@@ -150,6 +150,7 @@ class QueryController extends Controller
                 $decoded = $enabi->decodeParameters($types, $item->topics[2]);
                 $toaddress = $decoded[0];
             }
+            dump($toaddress);
             // 允许的合约地址集合
             $allowedContracts = [
                 '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063',
