@@ -217,7 +217,7 @@ class QueryController extends Controller
             $toeknname = 'POL';
         }
 
-        $message = "*【代币到账提醒】*\n\n"
+        $message = "*【代币监听提醒】*\n\n"
             . "📥 *您的钱包（尾号 `$address`）收到代币转账！*\n"
             . "📌 *代币种类*：`$toeknname`\n"
             . "💰 *数量*：`$amount`\n"
