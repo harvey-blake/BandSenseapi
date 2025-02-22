@@ -187,8 +187,9 @@ class QueryController extends Controller
             $field1 = substr($data, 0, 64);
             $decoded = $enabi->decodeParameters($types, $field1);
             /** @var \phpseclib3\Math\BigInteger[] $decoded */
-            $ether = bcdiv($decoded[0]->value, 10 ** 18);
-            dump($ether);
+            $result = bcdiv($decoded[0]->value, 10 ** 18, 18);
+            $result = rtrim(rtrim($result, '0'), '.');
+            dump($result);  //马蹄数量
         }
     }
 }
