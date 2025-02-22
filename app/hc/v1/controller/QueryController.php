@@ -123,15 +123,22 @@ class QueryController extends Controller
     public function getTransaction()
     {
 
+        $data = json_decode(file_get_contents('php://input'), true);
+
+
+        ignore_user_abort(true);
+        // 设置脚本的最大执行时间为无限制
+        set_time_limit(0);
+
         $web3 = new Web3('https://polygon-bor.publicnode.com/'); // 使用Infura节点
 
         // 交易哈希
-        $txHash = '0xa5c4f5a465049b184e14cf85374eca03da5064490f584d5bfaf4c3493117bc34';
-        $address = '0xc86C59D86A125f42123945Ee7AF0ad737416D3b8';
+        $txHash = $data['hash'];
+        $address = $data['address'];
         // 获取交易详情
         $myCallback = new CallbackController();
         $web3->eth->getTransactionReceipt($txHash, $myCallback);
-        dump($myCallback->result);
+
         $enabi = new Ethabi([
             'address' => new Address,
             'bool' => new Boolean,
@@ -167,30 +174,35 @@ class QueryController extends Controller
             return in_array(strtolower($item->address), $allowedContracts) && strtolower($toaddress) == strtolower($address);
         });
         $filtered = array_values($filtered);
-        dump($filtered);
+
         if (count($filtered) == 0) {
             //没有
             exit;
         }
 
         $types = ['uint256'];
-
+        $toeknname = '';
+        $amount = '';
         if (strtolower($filtered[0]->address)  == strtolower('0xc2132d05d31c914a87c6611c10748aeb04b58e8f')) {
             $data =  $filtered[0]->data;
             $decoded = $enabi->decodeParameters($types, $data);
             /** @var \phpseclib3\Math\BigInteger[] $decoded */
             $result = bcdiv($decoded[0]->value, 10 ** 18, 18);
-            $result = rtrim(rtrim($result, '0'), '.');
-            dump($result);  //马蹄数量
+            $amount = rtrim(rtrim($result, '0'), '.');
+
+            $toeknname = 'HC';
+
+
             //处理代币A 相关逻辑
         } else if (strtolower($filtered[0]->address)  == strtolower('0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063')) {
             $data =  $filtered[0]->data;
             $decoded = $enabi->decodeParameters($types, $data);
             /** @var \phpseclib3\Math\BigInteger[] $decoded */
             $result = bcdiv($decoded[0]->value, 10 ** 18, 18);
-            $result = rtrim(rtrim($result, '0'), '.');
-            dump($result);  //马蹄数量
+            $amount = rtrim(rtrim($result, '0'), '.');
+
             //处理代币B相关逻辑
+            $toeknname = 'DAI';
         } else if (strtolower($filtered[0]->address)   == strtolower('0x0000000000000000000000000000000000001010')) {
             //处理马蹄相关逻辑
             $data =  $filtered[0]->data;
@@ -201,8 +213,17 @@ class QueryController extends Controller
             $decoded = $enabi->decodeParameters($types, $field1);
             /** @var \phpseclib3\Math\BigInteger[] $decoded */
             $result = bcdiv($decoded[0]->value, 10 ** 18, 18);
-            $result = rtrim(rtrim($result, '0'), '.');
-            dump($result);  //马蹄数量
+            $amount = rtrim(rtrim($result, '0'), '.');
+            $toeknname = 'POL';
         }
+
+        $message = "*【代币到账提醒】*\n\n"
+            . "📥 *您的钱包（尾号 `$address`）收到代币转账！*\n"
+            . "📌 *代币种类*：`$toeknname`\n"
+            . "💰 *数量*：`$amount`\n"
+            . "🔗 *交易哈希*：[查看交易](https://polygonscan.com/tx//tx/$txHash)\n\n"
+            . "请及时核对，如有疑问请联系客服。";
+
+        sendMessage($data['chat_id'], $message);
     }
 }
