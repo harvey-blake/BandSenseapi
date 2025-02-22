@@ -126,7 +126,7 @@ class QueryController extends Controller
         $web3 = new Web3('https://polygon-bor.publicnode.com/'); // 使用Infura节点
 
         // 交易哈希
-        $txHash = '0xea0eb14319db7ddf90177a48de6fabb31d3eed6723f0ba53d0f828d79cb4cfc0';
+        $txHash = '0xb33b36612b6523c13c7cb6645acff1c249bdfa68cb84b1ecec109192563f76e1';
 
         // 获取交易详情
         $myCallback = new CallbackController();
