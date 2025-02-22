@@ -162,8 +162,9 @@ class QueryController extends Controller
                 '0x762d3D096B9A74f4d3Adf2b0824456Ef8FCe5DaA',
                 '0x0000000000000000000000000000000000001010'
             ];
+            $allowedContracts = array_map('strtolower', $allowedContracts);
 
-            return in_array($item->address, $allowedContracts) && strtolower($toaddress) == strtolower($address);
+            return in_array(strtolower($item->address), $allowedContracts) && strtolower($toaddress) == strtolower($address);
         });
         $filtered = array_values($filtered);
         dump($filtered);
