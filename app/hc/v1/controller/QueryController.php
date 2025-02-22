@@ -224,4 +224,9 @@ class QueryController extends Controller
 
         sendMessage($chat_id, $message);
     }
+    public function getTransaction()
+    {
+
+        sendMessage('1882040053', '$message');
+    }
 }
