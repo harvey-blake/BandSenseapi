@@ -127,7 +127,7 @@ class QueryController extends Controller
 
         // 交易哈希
         $txHash = '0xb33b36612b6523c13c7cb6645acff1c249bdfa68cb84b1ecec109192563f76e1';
-
+        $address = '0xc86C59D86A125f42123945Ee7AF0ad737416D3b8';
         // 获取交易详情
         $myCallback = new CallbackController();
         $web3->eth->getTransactionReceipt($txHash, $myCallback);
@@ -136,7 +136,16 @@ class QueryController extends Controller
 
         $filtered = array_filter($myCallback->result->logs, function ($item) {
             dump($item);
-            return $item->address == '0xc2132d05d31c914a87c6611c10748aeb04b58e8f';
+
+            $enabi = new Ethabi([
+                'address' => new Address,
+            ]);
+            $types = ['address'];
+            $decoded = $enabi->decodeParameters($types,  $item->topics[3]);
+            dump($decoded);
+
+            $address = '0xc86C59D86A125f42123945Ee7AF0ad737416D3b8';
+            return ($item->address == '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063' && $item->topics[3] == $address) || $item->address == '0x762d3D096B9A74f4d3Adf2b0824456Ef8FCe5DaA' || $item->address = '0x0000000000000000000000000000000000001010';
         });
         $filtered = array_values($filtered);
         dump($filtered);
