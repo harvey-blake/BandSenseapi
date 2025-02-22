@@ -136,7 +136,7 @@ class QueryController extends Controller
 
         $filtered = array_filter($myCallback->result->logs, function ($item) use ($address) {
 
-            dump($address, $item->address);
+
             $enabi = new Ethabi([
                 'address' => new Address,
             ]);
@@ -150,14 +150,15 @@ class QueryController extends Controller
                 $decoded = $enabi->decodeParameters($types, $item->topics[2]);
                 $toaddress = $decoded[0];
             }
-            dump($toaddress);
+
             // 允许的合约地址集合
             $allowedContracts = [
                 '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063',
                 '0x762d3D096B9A74f4d3Adf2b0824456Ef8FCe5DaA',
                 '0x0000000000000000000000000000000000001010'
             ];
-            return in_array($item->address, $allowedContracts) && ($toaddress == $address);
+            dump(in_array($item->address, $allowedContracts));
+            return in_array($item->address, $allowedContracts) && $toaddress == $address;
         });
         $filtered = array_values($filtered);
         dump($filtered);
