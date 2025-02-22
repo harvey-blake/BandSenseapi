@@ -141,8 +141,16 @@ class QueryController extends Controller
                 'address' => new Address,
             ]);
             $types = ['address'];
-            $decoded = $enabi->decodeParameters($types,  $item->topics[3]);
-            dump($decoded[0]);
+            if (count($item->topics) > 3) {
+                $decoded = $enabi->decodeParameters($types,  $item->topics[3]);
+                dump($decoded[0]);
+            } else {
+                $decoded = $enabi->decodeParameters($types,  $item->topics[2]);
+                dump($decoded[0]);
+            }
+
+
+
 
             $address = '0xc86C59D86A125f42123945Ee7AF0ad737416D3b8';
             return ($item->address == '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063' &&  $item->topics[3] == $address) || $item->address == '0x762d3D096B9A74f4d3Adf2b0824456Ef8FCe5DaA' || $item->address = '0x0000000000000000000000000000000000001010';
