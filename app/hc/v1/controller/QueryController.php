@@ -219,7 +219,7 @@ class QueryController extends Controller
             . "📥 *您的钱包尾号 16D3b8 收到代币转账！*\n"
             . "📌 *代币名称*：POL \n"
             . "💰 *数量*：0.01 \n"
-            . "🔗 *交易哈希*：<a href='https://polygonscan.com/tx/$txHash'>inline URL</a> \n\n";
+            . "🔗 *交易哈希*：<a href='https://polygonscan.com/tx/$txHash'>查看交易</a> \n\n";
 
 
         // 转义 MarkdownV2 中的特殊字符（包括 URL 和 emoji 部分）
