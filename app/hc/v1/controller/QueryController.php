@@ -122,12 +122,8 @@ class QueryController extends Controller
         ignore_user_abort(true);
         // 设置脚本的最大执行时间为无限制
         set_time_limit(0);
-        $context = stream_context_create([
-            'http' => [
-                'timeout' => 10, // 超时时间 10 秒
-            ],
-        ]);
-        $web3 = new Web3('https://polygon-bor.publicnode.com/', null, $context); // 使用Infura节点
+
+        $web3 = new Web3('https://polygon-mainnet.infura.io/v3/718a3f83a5ce4a2baef370db1faee1e7'); // 使用Infura节点
 
         // 交易哈希
         $txHash = $data['hash'];
