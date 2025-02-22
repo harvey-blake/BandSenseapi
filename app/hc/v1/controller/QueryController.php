@@ -161,7 +161,7 @@ class QueryController extends Controller
                 '0x762d3D096B9A74f4d3Adf2b0824456Ef8FCe5DaA',
                 '0x0000000000000000000000000000000000001010'
             ];
-            dump($toaddress, $address);
+
             return in_array($item->address, $allowedContracts) && strtolower($toaddress) == strtolower($address);
         });
         $filtered = array_values($filtered);
@@ -181,7 +181,11 @@ class QueryController extends Controller
         } else if ($filtered[0]->address == '0x0000000000000000000000000000000000001010') {
             //处理马蹄相关逻辑
             $data =  $filtered[0]->data;
-            dump($data);
+            if (strpos($data, '0x') === 0) {
+                $data = substr($data, 2);
+            }
+            $field1 = substr($data, 0, 64);
+            dump($field1);
         }
 
 
