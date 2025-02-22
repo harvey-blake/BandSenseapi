@@ -216,11 +216,10 @@ class QueryController extends Controller
         }
         $toaddress = substr($address, -6);
         $message = "*【代币监听提醒】*\n\n"
-            . "📥 *您的钱包（尾号 `$toaddress`）收到代币转账！*\n"
-            . "📌 *代币种类*：`$toeknname`\n"
-            . "💰 *数量*：`$amount`\n"
-            . "🔗 *交易哈希*：[查看交易](https://polygonscan.com/tx//tx/$txHash)\n\n"
-            . "请及时核对，如有疑问请联系客服。";
+            . "📥 *您的钱包（尾号 $toaddress 收到代币转账！*\n"
+            . "📌 *代币名称*：$toeknname \n"
+            . "💰 *数量*：$amount \n"
+            . "🔗 *交易哈希*：<a href=\"https://polygonscan.com/tx/$txHash\">查看交易</a>\n\n";
 
         sendMessage($chat_id, $message);
     }
