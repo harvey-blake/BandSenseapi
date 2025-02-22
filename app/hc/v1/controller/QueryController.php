@@ -216,11 +216,15 @@ class QueryController extends Controller
         }
         $toaddress = substr($address, -6);
         $message = "*【代币监听提醒】*\n\n"
-            . "📥 *您的钱包（尾号 $toaddress 收到代币转账！*\n"
+            . "📥 *您的钱包尾号 $toaddress 收到代币转账！*\n"
             . "📌 *代币名称*：$toeknname \n"
             . "💰 *数量*：$amount \n"
             . "🔗 *交易哈希*：[inline URL](https://polygonscan.com/tx/$txHash) \n\n";
 
+        // 转义 MarkdownV2 中的特殊字符（不包括 URL 部分）
+        $message = preg_replace_callback('/([*_\[\]()~>])/', function ($matches) {
+            return '\\' . $matches[0];
+        }, $message);
         sendMessage($chat_id, $message);
     }
 }

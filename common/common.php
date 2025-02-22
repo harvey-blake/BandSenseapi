@@ -94,10 +94,18 @@ function tgverification($data)
 function sendMessage($chat_id, $message)
 {
     $token = '7949382682:AAGhPeyqz4ru183scmko8bIjdxp37G3Bs0k';
-    $api_url = "https://api.telegram.org/bot$token";
+    $api_url = "https://api.telegram.org/bot$token/sendMessage";
+    $url = "$api_url?chat_id=$chat_id&text=" . urlencode($message) . "&parse_mode=MarkdownV2";
 
-    // 使用 MarkdownV2 格式来发送消息
-    $url = "$api_url/sendMessage?chat_id=$chat_id&text=" . urlencode($message) . "&parse_mode=MarkdownV2";
+    // 使用 curl 发送请求
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    $response = curl_exec($ch);
+    curl_close($ch);
 
-    file_get_contents($url);
+    // 如果 curl 请求失败
+    if ($response === false) {
+        echo 'Curl error: ' . curl_error($ch);
+    }
 }
