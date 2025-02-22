@@ -134,28 +134,29 @@ class QueryController extends Controller
         dump($myCallback->result->logs);
 
 
-        $filtered = array_filter($myCallback->result->logs, function ($item) {
-            dump($item);
+        $filtered = array_filter($myCallback->result->logs, function ($item) use ($address) {
+
 
             $enabi = new Ethabi([
                 'address' => new Address,
             ]);
             $types = ['address'];
             $toaddress = '';
+
             if (count($item->topics) > 3) {
-                $decoded = $enabi->decodeParameters($types,  $item->topics[3]);
+                $decoded = $enabi->decodeParameters($types, $item->topics[3]);
                 $toaddress = $decoded[0];
             } else {
-                $decoded = $enabi->decodeParameters($types,  $item->topics[2]);
-
+                $decoded = $enabi->decodeParameters($types, $item->topics[2]);
                 $toaddress = $decoded[0];
             }
-
-
-
-
-            $address = '0xc86C59D86A125f42123945Ee7AF0ad737416D3b8';
-            return ($item->address == '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063' &&  $toaddress == $address) || ($item->address == '0x762d3D096B9A74f4d3Adf2b0824456Ef8FCe5DaA' &&  $toaddress == $address) || ($item->address = '0x0000000000000000000000000000000000001010' &&  $toaddress == $address);
+            // 允许的合约地址集合
+            $allowedContracts = [
+                '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063',
+                '0x762d3D096B9A74f4d3Adf2b0824456Ef8FCe5DaA',
+                '0x0000000000000000000000000000000000001010'
+            ];
+            return in_array($item->address, $allowedContracts) && ($toaddress == $address);
         });
         $filtered = array_values($filtered);
         dump($filtered);
