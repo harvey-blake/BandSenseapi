@@ -98,7 +98,7 @@ function sendMessage($chat_id, $message)
         $api_url = "https://api.telegram.org/bot$token";
 
         // 使用 MarkdownV2 格式来发送消息
-        $url = "$api_url/sendMessage?chat_id=$chat_id&text=" . urlencode($message) . "&parse_mode=MarkdownV2";
+        $url = "$api_url/sendMessage?chat_id=$chat_id&text=" . urlencode($message) . "&parse_mode=HTML";
 
         file_get_contents($url);
     } catch (\Throwable $th) {
