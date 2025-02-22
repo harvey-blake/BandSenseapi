@@ -185,6 +185,7 @@ class QueryController extends Controller
             //处理代币A 相关逻辑
         } else if (strtolower($filtered[0]->address)  == strtolower('0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063')) {
             $data =  $filtered[0]->data;
+            $decoded = $enabi->decodeParameters($types, $data);
             /** @var \phpseclib3\Math\BigInteger[] $decoded */
             $result = bcdiv($decoded[0]->value, 10 ** 18, 18);
             $result = rtrim(rtrim($result, '0'), '.');
