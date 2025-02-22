@@ -157,7 +157,7 @@ class QueryController extends Controller
                 '0x762d3D096B9A74f4d3Adf2b0824456Ef8FCe5DaA',
                 '0x0000000000000000000000000000000000001010'
             ];
-            dump(in_array($item->address, $allowedContracts));
+            dump($toaddress == $address);
             return in_array($item->address, $allowedContracts) && $toaddress == $address;
         });
         $filtered = array_values($filtered);
