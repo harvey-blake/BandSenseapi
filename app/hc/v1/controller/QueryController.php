@@ -221,9 +221,14 @@ class QueryController extends Controller
             . "💰 *数量*：$amount \n"
             . "🔗 *交易哈希*：[inline URL](https://polygonscan.com/tx/$txHash) \n\n";
 
-        // 转义 MarkdownV2 中的特殊字符（不包括 URL 部分）
-        $message = preg_replace_callback('/([*_\[\]()~>])/', function ($matches) {
+        // 转义 MarkdownV2 中的特殊字符（包括 URL 和 emoji 部分）
+        $message = preg_replace_callback('/([_*[\]()~>`#=|{}.!+\-])/', function ($matches) {
             return '\\' . $matches[0];
+        }, $message);
+
+        // 特殊字符处理：处理链接内的字符转义
+        $message = preg_replace_callback('/(\[inline URL\]\(https:\/\/polygonscan.com\/tx\/[^\)]+\))/', function ($matches) {
+            return $matches[0]; // 不转义链接本身
         }, $message);
         sendMessage($chat_id, $message);
     }
