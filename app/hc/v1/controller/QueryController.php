@@ -185,18 +185,10 @@ class QueryController extends Controller
                 $data = substr($data, 2);
             }
             $field1 = substr($data, 0, 64);
-            dump($field1);
+            $decoded = $enabi->decodeParameters($types, $field1);
+            /** @var \phpseclib3\Math\BigInteger[] $decoded */
+            $ether = bcdiv($decoded[0]->value, 10 ** 18, 18);
+            dump($ether);
         }
-
-
-
-
-
-
-        $decoded = $enabi->decodeParameters($types, $filtered[0]->data);
-        /** @var \phpseclib3\Math\BigInteger[] $decoded */
-        dump($decoded[0]->value / 10 ** 18);
-        $ether = bcdiv($decoded[0]->value, 10 ** 18, 18);
-        dump($ether);
     }
 }
