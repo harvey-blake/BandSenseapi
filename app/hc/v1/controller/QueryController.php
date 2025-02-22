@@ -219,7 +219,7 @@ class QueryController extends Controller
             . "📥 *您的钱包（尾号 $toaddress 收到代币转账！*\n"
             . "📌 *代币名称*：$toeknname \n"
             . "💰 *数量*：$amount \n"
-            . "🔗 *交易哈希*：[inline URL](http://www.example.com/) \n\n";
+            . "🔗 *交易哈希*：[inline URL](https://polygonscan.com/tx/$txHash) \n\n";
 
         sendMessage($chat_id, $message);
     }
