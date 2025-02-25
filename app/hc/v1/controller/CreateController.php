@@ -29,18 +29,23 @@ class CreateController extends Controller
 {
     public function onaddress()
     {
-        $data = json_decode(file_get_contents('php://input'), true);
-        $hash = tgverification($data['hash']);
-        $arr =  Db::table('tokenlist')->field('*')->where(['chain' => $data['chain'], 'address' => $data['token']])->find();
-        if (!$arr) {
-            $arr =  Db::table('onaddress')->insert(['chain' => $data['chain'], 'address' => $data['address'], 'userid' => $hash['id'], 'tokenname' => $arr['name'], 'token' => $data['token']]);
-            if ($arr > 0) {
-                echo json_encode(retur('成功', $arr));
+        try {
+            $data = json_decode(file_get_contents('php://input'), true);
+            // $hash = tgverification($data['hash']);
+            $hash = ['id' => 18820];
+            $arr =  Db::table('tokenlist')->field('*')->where(['chain' => $data['chain'], 'address' => $data['token']])->find();
+            if (!$arr) {
+                $arr =  Db::table('onaddress')->insert(['chain' => $data['chain'], 'address' => $data['address'], 'userid' => $hash['id'], 'tokenname' => $arr['name'], 'token' => $data['token']]);
+                if ($arr > 0) {
+                    echo json_encode(retur('成功', $arr));
+                } else {
+                    echo json_encode(retur('失败', '添加失败请查看参数', 422));
+                }
             } else {
-                echo json_encode(retur('失败', '添加失败请查看参数', 422));
+                echo json_encode(retur('失败', '交易对已经存在', 409));
             }
-        } else {
-            echo json_encode(retur('失败', '交易对已经存在', 409));
+        } catch (\Throwable $th) {
+            dump($th);
         }
     }
 }
