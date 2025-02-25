@@ -32,6 +32,16 @@ class CreateController extends Controller
         try {
             $data = json_decode(file_get_contents('php://input'), true);
             $hash = tgverification($data['hash']);
+            if (!$hash) {
+                echo json_encode(retur('失败', '非法访问', 409));
+                exit;
+            }
+
+            $Permissions =  Db::table('userinfo')->field('*')->where(['tgid' => $hash['id'], 'monitor' => 1])->find();
+            if (!$Permissions) {
+                echo json_encode(retur('失败', '没有权限,请开通后使用', 403));
+                exit;
+            }
 
             $arr =  Db::table('tokenlist')->field('*')->where(['chain' => $data['chain'], 'address' => $data['token']])->find();
 

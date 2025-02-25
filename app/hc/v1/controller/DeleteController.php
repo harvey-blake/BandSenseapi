@@ -16,6 +16,17 @@ class  DeleteController extends Controller
     {
         $data = json_decode(file_get_contents('php://input'), true);
         $hash = tgverification($data['hash']);
+        if (!$hash) {
+            echo json_encode(retur('失败', '非法访问', 409));
+            exit;
+        }
+
+        $Permissions =  Db::table('userinfo')->field('*')->where(['tgid' => $hash['id'], 'monitor' => 1])->find();
+        if (!$Permissions) {
+            echo json_encode(retur('失败', '没有权限,请开通后使用', 403));
+            exit;
+        }
+
         $arr =  Db::table('onaddress')->where(['id' => $data['id'], 'userid' => $hash['id']])->delete();
         if ($arr > 0) {
             echo json_encode(retur('成功', $arr));

