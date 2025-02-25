@@ -34,7 +34,7 @@ class CreateController extends Controller
             // $hash = tgverification($data['hash']);
             $hash = ['id' => 18820];
             $arr =  Db::table('tokenlist')->field('*')->where(['chain' => $data['chain'], 'address' => $data['token']])->find();
-            if (!$arr) {
+            if ($arr) {
                 $arr =  Db::table('onaddress')->insert(['chain' => $data['chain'], 'address' => $data['address'], 'userid' => $hash['id'], 'tokenname' => $arr['name'], 'token' => $data['token']]);
                 if ($arr > 0) {
                     echo json_encode(retur('成功', $arr));
