@@ -34,7 +34,13 @@ class CreateController extends Controller
             $hash = tgverification($data['hash']);
 
             $arr =  Db::table('tokenlist')->field('*')->where(['chain' => $data['chain'], 'address' => $data['token']])->find();
+
             if ($arr) {
+                $istoken =   Db::table('onaddress')->field('*')->where(['chain' => $data['chain'], 'address' => $data['address'], 'userid' => $hash['id'], 'tokenname' => $arr['name'], 'token' => $data['token']])->find();
+                if ($istoken) {
+                    echo json_encode(retur('失败', '相同监听已存在', 409));
+                    exit;
+                }
                 $arr =  Db::table('onaddress')->insert(['chain' => $data['chain'], 'address' => $data['address'], 'userid' => $hash['id'], 'tokenname' => $arr['name'], 'token' => $data['token']]);
                 if ($arr > 0) {
                     echo json_encode(retur('成功', $arr));
@@ -42,7 +48,7 @@ class CreateController extends Controller
                     echo json_encode(retur('失败', '添加失败请查看参数', 422));
                 }
             } else {
-                echo json_encode(retur('失败', '交易对已经存在', 409));
+                echo json_encode(retur('失败', '代币不存在', 409));
             }
         } catch (\Throwable $th) {
             dump($th);
