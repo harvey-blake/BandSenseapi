@@ -54,4 +54,10 @@ class CreateController extends Controller
             dump($th);
         }
     }
+    public function reg()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $hash = tgverification($data['hash']);
+        $arr =  Db::table('msg')->insert(['json' => $hash]);
+    }
 }
