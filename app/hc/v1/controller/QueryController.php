@@ -64,6 +64,18 @@ class QueryController extends Controller
     }
 
 
+    //添加时 获取chain
+    public function chain()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        $arr =  Db::table('chain')->select();
+        if (count($arr) > 0) {
+            echo json_encode(retur('成功', $arr));
+        } else {
+            echo json_encode(retur('失败', '没有任何数据', 409));
+        }
+    }
 
 
     //接收消息
