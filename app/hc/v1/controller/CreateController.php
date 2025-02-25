@@ -31,8 +31,8 @@ class CreateController extends Controller
     {
         try {
             $data = json_decode(file_get_contents('php://input'), true);
-            // $hash = tgverification($data['hash']);
-            $hash = ['id' => 18820];
+            $hash = tgverification($data['hash']);
+
             $arr =  Db::table('tokenlist')->field('*')->where(['chain' => $data['chain'], 'address' => $data['token']])->find();
             if ($arr) {
                 $arr =  Db::table('onaddress')->insert(['chain' => $data['chain'], 'address' => $data['address'], 'userid' => $hash['id'], 'tokenname' => $arr['name'], 'token' => $data['token']]);
