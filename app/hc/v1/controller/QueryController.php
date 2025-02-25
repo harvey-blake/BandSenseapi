@@ -76,7 +76,17 @@ class QueryController extends Controller
             echo json_encode(retur('失败', '没有任何数据', 409));
         }
     }
+    public function token()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
 
+        $arr =  Db::table('chain')->where(['chain' => $data['chain']])->select();
+        if (count($arr) > 0) {
+            echo json_encode(retur('成功', $arr));
+        } else {
+            echo json_encode(retur('失败', '没有任何数据', 409));
+        }
+    }
 
     //接收消息
     public function bot()
