@@ -56,12 +56,15 @@ class CreateController extends Controller
     }
     public function reg()
     {
-        $data = json_decode(file_get_contents('php://input'), true);
-        $hash = tgverification($data['hash']);
-
-        $arr =  Db::table('userinfo')->field('*')->where(['tgid' => $hash['id']])->find();
-        if (!$arr) {
-            Db::table('userinfo')->insert(['tgid' => $hash['id'], 'username' => $hash['username'], 'first_name' => $hash['first_name'], 'last_name' => $hash['last_name']]);
+        try {
+            $data = json_decode(file_get_contents('php://input'), true);
+            $hash = tgverification($data['hash']);
+            $arr =  Db::table('userinfo')->field('*')->where(['tgid' => $hash['id']])->find();
+            if (!$arr) {
+                Db::table('userinfo')->insert(['tgid' => $hash['id'], 'username' => '@' . $hash['username'], 'first_name' => $hash['first_name'], 'last_name' => $hash['last_name']]);
+            }
+        } catch (\Throwable $th) {
+            dump($th);
         }
     }
 }
