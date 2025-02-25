@@ -80,7 +80,7 @@ class QueryController extends Controller
     {
         $data = json_decode(file_get_contents('php://input'), true);
 
-        $arr =  Db::table('chain')->where(['chain' => $data['chain']])->select();
+        $arr =  Db::table('tokenlist')->where(['chain' => $data['chain']])->select();
         if (count($arr) > 0) {
             echo json_encode(retur('成功', $arr));
         } else {
