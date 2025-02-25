@@ -5,7 +5,7 @@ return [
     // 应用配置
     'app' => [
         // 调试开关
-        'debug' => true,
+        'debug' => false,
 
         // 默认控制器
         'default_controller' => 'api',
