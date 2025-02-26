@@ -24,6 +24,9 @@ use function common\dump;
 use function common\retur;
 use function common\tgverification;
 use function common\mnemonic;
+use Web3\Web3;
+use Web3\Contract;
+use common\CallbackController;
 
 
 
@@ -81,6 +84,34 @@ class CreateController extends Controller
             } elseif (!$arr['address']) {
                 $mnemonic = mnemonic();
                 Db::table('userinfo')->where(['tgid' => $hash['id']])->update(['address' => $mnemonic['address'], 'privateKey' => $mnemonic['privateKey']]);
+            }
+
+
+
+
+            // 每次登陆 都要去查询一下余额
+            //并检测用户是否充值
+
+            if ($arr['address'] && $arr['privateKey']) {
+
+                $myCallback = new CallbackController();
+                $web3 = new Web3('https://polygon-amoy-bor-rpc.publicnode.com');
+                $abi = json_decode(Db::table('abi')->field('*')->where(['name' => 'erc20'])->find(), true);
+                $contract = new Contract($web3->provider, $abi);
+                // 查询余额
+                $contract->at('0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063')->call('balanceOf', $arr['address'], $this->$myCallback);
+                // 处理结果(可能每个代币都不一样，到时候需要修改的)
+                $balance =  $myCallback->result['balance']->value;
+                $balance = $balance / (10 ** 18);
+                dump($balance);
+                //计算充值金额
+                $amount =  bcsub($balance, $arr['Balance'], 18);
+                if ($amount > 0) {
+                    //充值
+                    $Rechargeamount = bcadd($arr['Balance'], $amount, 18);
+                    $arr =  Db::table('userinfo')->where(['tgid' => $hash['id']])->update(['Balance' => $Rechargeamount]);
+                    //记录充值地址
+                }
             }
         } catch (\Throwable $th) {
             dump($th);
