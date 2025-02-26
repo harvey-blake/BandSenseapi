@@ -127,6 +127,7 @@ class QueryController extends Controller
 
                 // 使用正则表达式提取用户 ID（假设 ID 在括号内）
                 $replyText =  $update["message"]["reply_to_message"]["text"];
+                $replyText = "用户(7234953607)通过群<-1002419501505>[15]说: 可以";
 
                 // 使用正则表达式提取用户 ID（假设 ID 在括号内）
                 preg_match('/\((\d+)\)/', $replyText, $matchesUserId);
