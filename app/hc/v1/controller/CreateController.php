@@ -139,7 +139,7 @@ class CreateController extends Controller
             $contract = new Contract($web3->provider, $abi);
 
 
-            $contract->at('0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A061')->call('balanceOf', '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063', function ($err, $result) {
+            $contract->at('0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063')->call('balanceOf', ['0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063'], function ($err, $result) {
                 if ($err) {
                     echo 'Error: ' . $err->getMessage();
                 } else {
