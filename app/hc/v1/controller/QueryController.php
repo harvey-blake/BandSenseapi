@@ -259,6 +259,16 @@ class QueryController extends Controller
 
         sendMessage($chat_id, $message);
     }
+
+
+    public function webappsendMessage()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $hash = tgverification($data['hash']);
+        if (!$hash) {
+            sendMessage($hash['id'], $data['message']);;
+        }
+    }
     public function getTransaction()
     {
 
