@@ -146,28 +146,51 @@ function sendMessage($chat_id, $message, $photoId = null, $videoId = null)
     }
 }
 
-function sendReplyMessage($chat_id, $message, $message_id)
+
+function sendReplyMessage($chat_id, $message, $message_id, $photoId = null, $videoId = null)
 {
     try {
         $token = '7949382682:AAGhPeyqz4ru183scmko8bIjdxp37G3Bs0k';  // 请替换为你的 Bot Token
-        $api_url = "https://api.telegram.org/bot$token/sendMessage";
+        $api_url = "https://api.telegram.org/bot$token/";
 
-        // 准备请求数据
-        $data = [
-            'chat_id' => $chat_id,
-            'text' => $message,
-            'reply_to_message_id' => $message_id,
-            'parse_mode' => 'HTML',
-        ];
+        // 如果提供了图片 ID，发送图片并附带文本和引用的消息
+        if ($photoId) {
+            $data = [
+                'chat_id' => $chat_id,
+                'photo' => $photoId, // 图片的 file_id
+                'caption' => $message, // 图片的文本消息
+                'reply_to_message_id' => $message_id, // 引用的消息 ID
+                'parse_mode' => 'HTML', // 支持 HTML 格式的文本
+            ];
+            $url = $api_url . 'sendPhoto?' . http_build_query($data);
+        }
+        // 如果提供了视频 ID，发送视频并附带文本和引用的消息
+        elseif ($videoId) {
+            $data = [
+                'chat_id' => $chat_id,
+                'video' => $videoId, // 视频的 file_id
+                'caption' => $message, // 视频的文本消息
+                'reply_to_message_id' => $message_id, // 引用的消息 ID
+                'parse_mode' => 'HTML', // 支持 HTML 格式的文本
+            ];
+            $url = $api_url . 'sendVideo?' . http_build_query($data);
+        } else {
+            // 如果没有图片和视频，发送纯文本消息并引用
+            $data = [
+                'chat_id' => $chat_id,
+                'text' => $message,
+                'reply_to_message_id' => $message_id, // 引用的消息 ID
+                'parse_mode' => 'HTML', // 支持 HTML 格式的文本
+            ];
+            $url = $api_url . 'sendMessage?' . http_build_query($data);
+        }
 
-        // 使用 http_build_query 对请求数据进行编码
-        $url = $api_url . '?' . http_build_query($data);
-
+        // 发送 GET 请求并获取响应
         $response = file_get_contents($url);
-        dump($url);
+        dump($url); // 可选，输出请求的 URL 以供调试
         // 解析 JSON 响应
         $result = json_decode($response, true);
-        dump($result);
+        dump($result); // 输出 API 响应结果
     } catch (\Throwable $th) {
         // 捕获异常并输出
         echo "发送引用消息失败: " . $th->getMessage() . "\n";
