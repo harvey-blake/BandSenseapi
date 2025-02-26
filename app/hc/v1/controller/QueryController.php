@@ -267,11 +267,11 @@ class QueryController extends Controller
             //code...
             $data = json_decode(file_get_contents('php://input'), true);
             $hash = tgverification($data['hash']);
-            if (!$hash) {
-                sendMessage('1882040053', '$message');
+            if ($hash) {
+
                 sendMessage($hash['id'], $data['message']);;
+                echo json_encode(retur('成功', [$hash['id'], $data['message']]));
             }
-            echo json_encode(retur('成功', [$hash['id'], $data['message']]));
         } catch (\Throwable $th) {
             //throw $th;
         }
