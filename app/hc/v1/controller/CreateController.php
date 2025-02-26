@@ -138,22 +138,11 @@ class CreateController extends Controller
             $contract = new Contract($web3->provider, $abi);
 
             dump('?');
-            $contract->at('0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063')->call('totalSupply',  function ($err, $result) {
-                if ($err) {
-                    echo 'Error: ' . $err->getMessage();
-                } else {
-                    // 检查 result 是否为 GMP 对象
-                    dump($result);
-                    // $balanceBigInt = $result['balance'];
-
-                    // $balanceString = $balanceBigInt->toString();  // 转换为字符串
-                    // dump($balanceString);
-                }
-            });
+            $contract->at('0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063')->call('totalSupply',  $myCallback);
 
             // 处理结果(可能每个代币都不一样，到时候需要修改的)
 
-            // dump($myCallback->result);
+            dump('结果', $myCallback->result);
             // $balance =  $myCallback->result['balance']->value;
             // $balance = $balance / (10 ** 18);
             // dump($balance);
