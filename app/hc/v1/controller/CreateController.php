@@ -120,7 +120,7 @@ class CreateController extends Controller
     {
         try {
             $myCallback = new CallbackController();
-            $web3 = new Web3('https://polygon-amoy-bor-rpc.publicnode.com');
+            $web3 = new Web3('https://polygon-amoy-bor-rpc.publicnode.conm');
             $abi = [
                 [
                     'constant' => true,
