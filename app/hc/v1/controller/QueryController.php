@@ -137,6 +137,7 @@ class QueryController extends Controller
 
 
                 $originalChatId = isset($matchesUserId[1]) ? $matchesUserId[1] : '';
+
                 preg_match('/\[(\d+)\]/', $replyText, $matchesUserId);
                 $originalMessageId = isset($matchesUserId[1]) ? $matchesUserId[1] : '';
 
