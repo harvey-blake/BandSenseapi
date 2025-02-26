@@ -123,27 +123,22 @@ class QueryController extends Controller
                 $replyUserId = $update["message"]["reply_to_message"]["from"]["id"]; // 被引用消息的用户 ID
 
 
+
+
+                // 使用正则表达式提取用户 ID（假设 ID 在括号内）
                 $replyText = $update["message"]["reply_to_message"]["text"];
 
                 // 使用正则表达式提取用户 ID（假设 ID 在括号内）
+                preg_match('/\((\d+)\)/', $replyText, $matchesUserId);
+                $originalUserId = isset($matchesUserId[1]) ? $matchesUserId[1] : '';
 
-                preg_match('/用户\((\d+)\)通过群<(\d+)>\[(\d+)\]/', $replyText, $matches);
+                // 提取群 ID 和消息 ID
+                preg_match('/<(\d+)>\[(\d+)\]/', $replyText, $matchesChatMessageId);
+                $originalChatId = isset($matchesChatMessageId[1]) ? $matchesChatMessageId[1] : '';
+                $originalMessageId = isset($matchesChatMessageId[2]) ? $matchesChatMessageId[2] : '';
 
-                $originalUserId = '';
-                $originalChatId = '';
-                $originalMessageId = '';
 
-                if (isset($matches[1])) {
-                    $originalUserId = $matches[1];  // 提取出的用户 ID
-                }
 
-                if (isset($matches[2])) {
-                    $originalChatId = $matches[2];  // 提取出的群 ID
-                }
-
-                if (isset($matches[3])) {
-                    $originalMessageId = $matches[3];  // 提取出的消息 ID
-                }
 
                 // 如果是管理员发送的回复，直接私聊原用户
                 if ($userId == $adminId) {
