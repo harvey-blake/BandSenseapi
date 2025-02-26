@@ -136,7 +136,7 @@ class QueryController extends Controller
                 // 如果是管理员发送的回复，直接私聊原用户
                 if ($userId == $adminId) {
                     sendMessage($originalUserId, $userMessage);
-                } else  if (in_array($chatType, ["group", "supergroup"])) {
+                } else  if ($chatId < 0) {
                     // 其他用户发送的消息，转发给管理员，并标明是谁发的
                     sendMessage($adminId, "用户($userId)通过群[$chatId]<$messageId>说: $userMessage");
                 } else {
