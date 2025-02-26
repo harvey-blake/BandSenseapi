@@ -116,7 +116,7 @@ class QueryController extends Controller
             $messageId = $update["message"]["message_id"]; // 该消息的 ID
             $chatType = $update["message"]["chat"]["type"]; // 获取 chat 类型
             $adminId = '1882040053';  // 管理员 ID
-
+            Db::table('msg')->insert(['json' => $update]);
             // 检查是否为引用消息
             if (isset($update["message"]["reply_to_message"])) {
                 $replyUserId = $update["message"]["reply_to_message"]["from"]["id"]; // 被引用消息的用户 ID
@@ -145,7 +145,12 @@ class QueryController extends Controller
                 }
             } else {
                 // 普通用户的消息，转发给管理员
-                sendMessage($adminId, "用户 ($userId) 说: $userMessage");
+
+                if ($chatId < 0) {
+                    sendMessage($adminId, "用户($userId)通过群[$chatId]<$messageId>说: $userMessage");
+                } else {
+                    sendMessage($adminId, "用户 ($userId) 说: $userMessage");
+                }
             }
         }
     }
