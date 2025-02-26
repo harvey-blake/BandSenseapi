@@ -105,7 +105,7 @@ class QueryController extends Controller
     {
         $data = json_decode(file_get_contents('php://input'), true);
         $hash = tgverification($data['hash']);
-        $arr =  Db::table('userinfo')->where(['tgid' => $hash['id']])->select();
+        $arr =  Db::table('userinfo')->where(['tgid' => $hash['id']])->find();
         if (count($arr) > 0) {
             echo json_encode(retur('成功', $arr));
         } else {
