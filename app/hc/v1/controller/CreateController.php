@@ -122,6 +122,16 @@ class CreateController extends Controller
         try {
             $myCallback = new CallbackController();
             $web3 = new Web3(new HttpAsyncProvider('https://polygon-amoy-bor-rpc.publicnode.conm'));
+
+            $web3->clientVersion(function ($err, $version) {
+                if ($err !== null) {
+                    // do something
+                    return;
+                }
+                if (isset($version)) {
+                    echo 'Client version: ' . $version;
+                }
+            });
             $abi = [
                 [
                     'constant' => true,
