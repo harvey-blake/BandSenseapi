@@ -133,6 +133,13 @@ class CreateController extends Controller
             // $balance =  $myCallback->result['balance']->value;
             // $balance = $balance / (10 ** 18);
             // dump($balance);
+
+            $web3 = new Web3('https://data-seed-prebsc-1-s1.binance.org:8545');
+
+            $contract = new Contract($web3->provider, $abi);
+
+            $contract->at('0xDD2f7682429EBf4818eacC8C50102d0DA8772900')->call('balanceOf', '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063', $myCallback);
+            dump($myCallback->result);
         } catch (\Throwable $th) {
             dump($th);
         }
