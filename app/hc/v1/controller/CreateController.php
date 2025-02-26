@@ -143,10 +143,10 @@ class CreateController extends Controller
                 } else {
                     // 检查 result 是否为 GMP 对象
                     dump($result);
-                    $balanceBigInt = $result['balance'];
+                    // $balanceBigInt = $result['balance'];
 
-                    $balanceString = $balanceBigInt->toString();  // 转换为字符串
-                    dump($balanceString);
+                    // $balanceString = $balanceBigInt->toString();  // 转换为字符串
+                    // dump($balanceString);
                 }
             });
 
