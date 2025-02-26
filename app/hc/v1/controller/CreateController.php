@@ -124,7 +124,7 @@ class CreateController extends Controller
             $abi = Db::table('abi')->field('*')->where(['name' => 'erc20'])->find();
             $contract = new Contract($web3->provider, $abi);
             // 查询余额
-            dump($contract);
+            dump($contract->at('0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063'));
 
             $contract->at('0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063')->call('symbol');
             // 处理结果(可能每个代币都不一样，到时候需要修改的)
