@@ -146,11 +146,13 @@ class QueryController extends Controller
 
 
                 // 如果是管理员发送的回复，直接私聊原用户
-                if ($userId == $adminId) {
-                    sendMessage($originalUserId, $userMessage);
-                } else if (!empty($originalChatId) && !empty($originalChatId)) {
+                if (!empty($originalChatId) && !empty($originalMessageId && $userId == $adminId)) {
                     //私聊消息
+
+
                     sendReplyMessage($originalChatId, $userMessage, $originalMessageId);
+                } else if ($userId == $adminId) {
+                    sendMessage($originalUserId, $userMessage);
                 } else {
                     $msg = htmlspecialchars("用户 ($userId) 说: $userMessage");
                     sendMessage($adminId, $msg);
