@@ -144,8 +144,11 @@ function sendReplyMessage($chat_id, $message, $message_id)
         // 使用 http_build_query 对请求数据进行编码
         $url = $api_url . '?' . http_build_query($data);
 
-        // 发送请求
-        file_get_contents($url);
+        $response = file_get_contents($url);
+        dump($url);
+        // 解析 JSON 响应
+        $result = json_decode($response, true);
+        dump($result);
     } catch (\Throwable $th) {
         // 捕获异常并输出
         echo "发送引用消息失败: " . $th->getMessage() . "\n";

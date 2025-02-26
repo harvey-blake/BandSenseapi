@@ -311,7 +311,8 @@ class QueryController extends Controller
     public function getTransaction()
     {
 
-        $message = htmlspecialchars("用户(99)<88>[77]通过群说: 22", ENT_QUOTES, 'UTF-8'); // 转义特殊字符
-        sendMessage('1882040053', $message);
+        // sendReplyMessage($originalChatId, $userMessage, $originalMessageId);
+        // $message = htmlspecialchars("用户(99)<88>[77]通过群说: 22", ENT_QUOTES, 'UTF-8'); // 转义特殊字符
+        sendReplyMessage(-1002419501505, '$userMessage', 15);
     }
 }
