@@ -136,20 +136,20 @@ class QueryController extends Controller
                 // 如果是管理员发送的回复，直接私聊原用户
                 if ($userId == $adminId) {
                     sendMessage($originalUserId, $userMessage);
-                } else  if ($chatId < 0) {
-                    // 其他用户发送的消息，转发给管理员，并标明是谁发的
-                    sendMessage($adminId, "用户($userId)通过群[$chatId]<$messageId>说: $userMessage");
                 } else {
                     //私聊消息
-                    sendMessage($adminId, "用户  ($userId)  说: $userMessage");
+                    $msg = htmlspecialchars("用户 ($userId) 说: $userMessage");
+                    sendMessage($adminId, $msg);
                 }
             } else {
                 // 普通用户的消息，转发给管理员
 
                 if ($chatId < 0) {
-                    sendMessage($adminId,  "用户($userId)通过群($chatId)($messageId)说: $userMessage");
+                    $msg = htmlspecialchars("用户($userId)通过群<$chatId>[$messageId]说: $userMessage");
+                    sendMessage($adminId,  $msg);
                 } else {
-                    sendMessage($adminId, "用户 ($userId) 说: $userMessage");
+                    $msg = htmlspecialchars("用户 ($userId) 说: $userMessage");
+                    sendMessage($adminId, $msg);
                 }
             }
         }
@@ -289,7 +289,7 @@ class QueryController extends Controller
     public function getTransaction()
     {
 
-        $message = htmlspecialchars("用户(99)通过群<88>(77)说: 22", ENT_QUOTES, 'UTF-8'); // 转义特殊字符
+        $message = htmlspecialchars("用户(99)<88>[77]通过群说: 22", ENT_QUOTES, 'UTF-8'); // 转义特殊字符
         sendMessage('1882040053', $message);
     }
 }
