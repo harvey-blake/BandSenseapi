@@ -112,6 +112,7 @@ class QueryController extends Controller
         $arr =  Db::table('userinfo')->where(['tgid' => $hash['id']])->find();
         if ($arr) {
             unset($arr['privateKey']);
+            unset($arr['originalamount']);
             echo json_encode(retur('成功', $arr));
         } else {
             echo json_encode(retur('失败', '没有任何数据', 409));
