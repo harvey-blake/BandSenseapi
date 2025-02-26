@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '17e7632cd5377354d50f6bbd85c844c0a8a79579',
+        'reference' => '3de585febea4d722581d1db444df083ccdeee62c',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '17e7632cd5377354d50f6bbd85c844c0a8a79579',
+            'reference' => '3de585febea4d722581d1db444df083ccdeee62c',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -1636,6 +1636,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'react/promise-timer' => array(
+            'pretty_version' => 'v1.11.0',
+            'version' => '1.11.0.0',
+            'reference' => '4f70306ed66b8b44768941ca7f142092600fafc1',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../react/promise-timer',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'react/socket' => array(
             'pretty_version' => 'v1.16.0',
             'version' => '1.16.0.0',
@@ -1760,12 +1769,14 @@
             'dev_requirement' => false,
         ),
         'web3p/web3.php' => array(
-            'pretty_version' => '0.2.1',
-            'version' => '0.2.1.0',
-            'reference' => 'a8c543fbad4d6c8a4b6cd9efced5fc0032da7d66',
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '716082dd45709e3950c9dddfd4e39d2fe1fb300b',
             'type' => 'library',
             'install_path' => __DIR__ . '/../web3p/web3.php',
-            'aliases' => array(),
+            'aliases' => array(
+                0 => '9999999-dev',
+            ),
             'dev_requirement' => false,
         ),
         'workerman/workerman' => array(

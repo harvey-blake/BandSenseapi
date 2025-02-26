@@ -87,13 +87,12 @@ class Utils
      */
     public static function toHex($value, $isPrefix=false)
     {
-        if (is_numeric($value)) {
+        if (is_int($value) || is_float($value)) {
             // turn to hex number
             $bn = self::toBn($value);
             $hex = $bn->toHex(true);
             $hex = preg_replace('/^0+(?!$)/', '', $hex);
         } elseif (is_string($value)) {
-            $value = self::stripZero($value);
             $hex = implode('', unpack('H*', $value));
         } elseif ($value instanceof BigNumber) {
             $hex = $value->toHex(true);
@@ -121,6 +120,10 @@ class Utils
         if (self::isZeroPrefixed($value)) {
             $count = 1;
             $value = str_replace('0x', '', $value, $count);
+            // avoid suffix 0
+            if (strlen($value) % 2 > 0) {
+                $value = '0' . $value;
+            }
         }
         return pack('H*', $value);
     }
@@ -172,16 +175,14 @@ class Utils
      * isAddress
      * 
      * @param string $value
-     * @return bool
+     * @return bool true if the address is lowercase or in checksum format otherwise false
      */
     public static function isAddress($value)
     {
         if (!is_string($value)) {
             throw new InvalidArgumentException('The value to isAddress function must be string.');
         }
-        if (preg_match('/^(0x|0X)?[a-f0-9A-F]{40}$/', $value) !== 1) {
-            return false;
-        } elseif (preg_match('/^(0x|0X)?[a-f0-9]{40}$/', $value) === 1 || preg_match('/^(0x|0X)?[A-F0-9]{40}$/', $value) === 1) {
+        if (preg_match('/^(0x)?[a-f0-9]{40}$/', $value) === 1) {
             return true;
         }
         return self::isAddressChecksum($value);
@@ -199,6 +200,9 @@ class Utils
             throw new InvalidArgumentException('The value to isAddressChecksum function must be string.');
         }
         $value = self::stripZero($value);
+        if (mb_strlen($value) !== 40) {
+            return false;
+        }
         $hash = self::stripZero(self::sha3(mb_strtolower($value)));
 
         for ($i = 0; $i < 40; $i++) {
@@ -544,5 +548,19 @@ class Utils
             throw new InvalidArgumentException('toBn number must be BigNumber, string or int.');
         }
         return $bn;
+    }
+
+    /**
+     * hexToNumber
+     * 
+     * @param string $hexNumber
+     * @return int
+     */
+    public static function hexToNumber($hexNumber)
+    {
+        if (!self::isZeroPrefixed($hexNumber)) {
+            $hexNumber = '0x' . $hexNumber;
+        }
+        return intval(self::toBn($hexNumber)->toString());
     }
 }

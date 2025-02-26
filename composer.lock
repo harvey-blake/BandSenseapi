@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0feb948cab4eb85cd9b53c7c32f38888",
+    "content-hash": "dfa8458664f90a62ebff4add43d301f4",
     "packages": [
         {
             "name": "adbario/php-dot-notation",
@@ -4388,6 +4388,85 @@
             "time": "2023-11-16T16:16:50+00:00"
         },
         {
+            "name": "react/promise-timer",
+            "version": "v1.11.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/reactphp/promise-timer.git",
+                "reference": "4f70306ed66b8b44768941ca7f142092600fafc1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/reactphp/promise-timer/zipball/4f70306ed66b8b44768941ca7f142092600fafc1",
+                "reference": "4f70306ed66b8b44768941ca7f142092600fafc1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3",
+                "react/event-loop": "^1.2",
+                "react/promise": "^3.2 || ^2.7.0 || ^1.2.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.6 || ^5.7 || ^4.8.36"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/functions_include.php"
+                ],
+                "psr-4": {
+                    "React\\Promise\\Timer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christian Lück",
+                    "email": "christian@clue.engineering",
+                    "homepage": "https://clue.engineering/"
+                },
+                {
+                    "name": "Cees-Jan Kiewiet",
+                    "email": "reactphp@ceesjankiewiet.nl",
+                    "homepage": "https://wyrihaximus.net/"
+                },
+                {
+                    "name": "Jan Sorgalla",
+                    "email": "jsorgalla@gmail.com",
+                    "homepage": "https://sorgalla.com/"
+                },
+                {
+                    "name": "Chris Boden",
+                    "email": "cboden@gmail.com",
+                    "homepage": "https://cboden.dev/"
+                }
+            ],
+            "description": "A trivial implementation of timeouts for Promises, built on top of ReactPHP.",
+            "homepage": "https://github.com/reactphp/promise-timer",
+            "keywords": [
+                "async",
+                "event-loop",
+                "promise",
+                "reactphp",
+                "timeout",
+                "timer"
+            ],
+            "support": {
+                "issues": "https://github.com/reactphp/promise-timer/issues",
+                "source": "https://github.com/reactphp/promise-timer/tree/v1.11.0"
+            },
+            "funding": [
+                {
+                    "url": "https://opencollective.com/reactphp",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2024-06-04T14:27:45+00:00"
+        },
+        {
             "name": "react/socket",
             "version": "v1.16.0",
             "source": {
@@ -5155,16 +5234,16 @@
         },
         {
             "name": "web3p/web3.php",
-            "version": "0.2.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/web3p/web3.php.git",
-                "reference": "a8c543fbad4d6c8a4b6cd9efced5fc0032da7d66"
+                "reference": "716082dd45709e3950c9dddfd4e39d2fe1fb300b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/web3p/web3.php/zipball/a8c543fbad4d6c8a4b6cd9efced5fc0032da7d66",
-                "reference": "a8c543fbad4d6c8a4b6cd9efced5fc0032da7d66",
+                "url": "https://api.github.com/repos/web3p/web3.php/zipball/716082dd45709e3950c9dddfd4e39d2fe1fb300b",
+                "reference": "716082dd45709e3950c9dddfd4e39d2fe1fb300b",
                 "shasum": ""
             },
             "require": {
@@ -5173,15 +5252,18 @@
                 "kornrunner/keccak": "~1.0",
                 "php": "^7.2|^8.0",
                 "phpseclib/phpseclib": "~2.0.30",
+                "ratchet/pawl": "^0.4.1",
                 "react/async": "^4.0.0|^3.1.0",
                 "react/event-loop": "^1.2",
                 "react/http": "^1.6.0",
                 "react/promise": "^2.9.0",
+                "react/promise-timer": "^1.10",
                 "react/socket": "^1.13"
             },
             "require-dev": {
                 "phpunit/phpunit": "~8.0|~9.0"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -5201,9 +5283,9 @@
             "description": "Ethereum web3 interface.",
             "support": {
                 "issues": "https://github.com/web3p/web3.php/issues",
-                "source": "https://github.com/web3p/web3.php/tree/0.2.1"
+                "source": "https://github.com/web3p/web3.php/tree/master"
             },
-            "time": "2023-09-04T09:42:58+00:00"
+            "time": "2024-07-05T08:13:13+00:00"
         },
         {
             "name": "workerman/workerman",
@@ -5272,10 +5354,15 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "web3p/web3.php": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
+    "platform-overrides": {
+        "php": "8.2.0"
+    },
     "plugin-api-version": "2.6.0"
 }

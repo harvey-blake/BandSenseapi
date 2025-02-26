@@ -6,6 +6,12 @@
     "files": [
     ]
   },
+
+    "config": {
+      "platform": {
+        "php": "8.2.0"
+      }
+    },
   "require": {
     "phpoffice/phpspreadsheet": "^1.23",
     "fukuball/jieba-php": "^0.34.0",
@@ -14,7 +20,7 @@
     "alibabacloud/sdk": "^1.8",
     "alibabacloud/vod-20170321": "^2.16",
     "ramsey/uuid": "^4.2",
-    "web3p/web3.php": "^0.2.1",
+    "web3p/web3.php": "dev-master",
     "web3p/ethereum-tx": "^0.4.3",
     "alibabacloud/sts-20150401": "^1.1",
     "phpmailer/phpmailer": "^6.8",
