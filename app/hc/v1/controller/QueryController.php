@@ -105,8 +105,13 @@ class QueryController extends Controller
     {
         $data = json_decode(file_get_contents('php://input'), true);
         $hash = tgverification($data['hash']);
+        if (!$hash || !isset($hash['id'])) {
+            echo json_encode(retur('失败', '验证失败', 401));  // 验证失败
+            return;
+        }
         $arr =  Db::table('userinfo')->where(['tgid' => $hash['id']])->find();
-        if (count($arr) > 0) {
+        if ($arr) {
+            unset($arr['privateKey']);
             echo json_encode(retur('成功', $arr));
         } else {
             echo json_encode(retur('失败', '没有任何数据', 409));
