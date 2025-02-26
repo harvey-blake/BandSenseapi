@@ -288,6 +288,8 @@ class QueryController extends Controller
     }
     public function getTransaction()
     {
-        sendMessage('1882040053', "用户(99)通过群<88>(77)说: 22");
+
+        $message = htmlspecialchars("用户(99)通过群<88>(77)说: 22", ENT_QUOTES, 'UTF-8'); // 转义特殊字符
+        sendMessage('1882040053', $message);
     }
 }
