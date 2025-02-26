@@ -121,7 +121,7 @@ class CreateController extends Controller
     {
         try {
             $myCallback = new CallbackController();
-            $web3 = new Web3('https://polygon-bor-rpc.publicnode.com');
+            $web3 = new Web3(new HttpAsyncProvider('https://polygon-bor-rpc.publicnode.com'));
 
             $web3->clientVersion(function ($err, $version) {
                 if ($err !== null) {
@@ -152,10 +152,10 @@ class CreateController extends Controller
 
             // 处理结果(可能每个代币都不一样，到时候需要修改的)
 
-            dump('结果', $myCallback->result);
-            // $balance =  $myCallback->result['balance']->value;
-            // $balance = $balance / (10 ** 18);
-            // dump($balance);
+            dump('结果', $myCallback);
+            $balance =  $myCallback->result['balance']->value;
+            $balance = $balance / (10 ** 18);
+            dump($balance);
         } catch (\Throwable $th) {
             dump($th);
         }
