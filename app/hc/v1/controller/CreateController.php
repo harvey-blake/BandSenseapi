@@ -154,7 +154,7 @@ class CreateController extends Controller
                     return;
                 }
                 if (isset($version)) {
-                    echo 'Client version: ' . $version;
+                    dump($version);
                 }
             });
 
