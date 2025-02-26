@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'a8e424414962ea90c020e1611c9894d44eff8ef7',
+        'reference' => '17e7632cd5377354d50f6bbd85c844c0a8a79579',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'a8e424414962ea90c020e1611c9894d44eff8ef7',
+            'reference' => '17e7632cd5377354d50f6bbd85c844c0a8a79579',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -31,157 +31,157 @@
         'alibabacloud/aas' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/actiontrail' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/adb' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/aegis' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/afs' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/airec' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/alidns' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/alikafka' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/alimt' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/aliprobe' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/aliyuncvc' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/appmallsservice' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/arms' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/arms4finance' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/baas' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/batchcompute' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/bss' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/bssopenapi' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/cas' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/cbn' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/ccc' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/ccs' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/cdn' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/cds' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/cf' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/chatbot' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/client' => array(
@@ -196,61 +196,61 @@
         'alibabacloud/cloudapi' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/cloudauth' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/cloudesl' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/cloudmarketing' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/cloudphoto' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/cloudwf' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/cms' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/commondriver' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/companyreg' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/cr' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/credentials' => array(
@@ -265,25 +265,25 @@
         'alibabacloud/crm' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/cs' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/csb' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/cusanalyticsconline' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/darabonba-openapi' => array(
@@ -298,145 +298,145 @@
         'alibabacloud/dataworkspublic' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/dbs' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/dcdn' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/dds' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/democenter' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/dm' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/dmsenterprise' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/domain' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/domainintl' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/drcloud' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/drds' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/dts' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/dybaseapi' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/dyplsapi' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/dypnsapi' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/dysmsapi' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/dyvmsapi' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/eci' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/ecs' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/ecsinc' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/edas' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/ehpc' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/elasticsearch' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/emr' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/endpoint-util' => array(
@@ -451,31 +451,31 @@
         'alibabacloud/ess' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/facebody' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/fnf' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/foas' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/ft' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/gateway-spi' => array(
@@ -490,301 +490,301 @@
         'alibabacloud/goodstech' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/gpdb' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/green' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/hbase' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/hiknoengine' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/hpc' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/hsm' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/httpdns' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/idst' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/imageaudit' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/imageenhan' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/imagerecog' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/imagesearch' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/imageseg' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/imm' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/industrybrain' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/iot' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/iqa' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/itaas' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/ivision' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/ivpd' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/jaq' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/jarvis' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/jarvispublic' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/kms' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/linkedmall' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/linkface' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/linkwan' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/live' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/lubancloud' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/lubanruler' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/market' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/mopen' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/mpserverless' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/mts' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/multimediaai' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/nas' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/netana' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/nlp' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/nlpautoml' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/nlscloudmeta' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/nlsfiletrans' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/objectdet' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/ocr' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/ocs' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/oms' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/ons' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/onsmqtt' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/oos' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/openanalytics' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/openapi-util' => array(
@@ -799,139 +799,139 @@
         'alibabacloud/ossadmin' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/ots' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/outboundbot' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/petadata' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/polardb' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/productcatalog' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/pts' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/push' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/pvtz' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/qualitycheck' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/ram' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/rds' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/reid' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/retailcloud' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/rkvstore' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/ros' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/rtc' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/saf' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/sas' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/sasapi' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/scdn' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/schedulerx2' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/sdk' => array(
-            'pretty_version' => '1.8.2239',
-            'version' => '1.8.2239.0',
-            'reference' => 'd284b7a740c21cc8f6afe07691180802fea29388',
+            'pretty_version' => '1.8.2245',
+            'version' => '1.8.2245.0',
+            'reference' => '212798b6df56fb2d23953cce8f3747904cd1dbf5',
             'type' => 'library',
             'install_path' => __DIR__ . '/../alibabacloud/sdk',
             'aliases' => array(),
@@ -940,49 +940,49 @@
         'alibabacloud/skyeye' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/slb' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/smartag' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/smc' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/sms' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/smsintl' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/snsuapi' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/sts' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/sts-20150401' => array(
@@ -997,7 +997,7 @@
         'alibabacloud/taginner' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/tea' => array(
@@ -1030,55 +1030,55 @@
         'alibabacloud/tesladam' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/teslamaxcompute' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/teslastream' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/ubsms' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/ubsmsinner' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/uis' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/unimkt' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/visionai' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/vod' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/vod-20170321' => array(
@@ -1093,55 +1093,55 @@
         'alibabacloud/voicenavigator' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/vpc' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/vs' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/wafopenapi' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/welfareinner' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/xspace' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/xtrace' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/yqbridge' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'alibabacloud/yundun' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '1.8.2239',
+                0 => '1.8.2245',
             ),
         ),
         'aliyuncs/oss-sdk-php' => array(
@@ -1162,10 +1162,37 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'bitwasp/bech32' => array(
+            'pretty_version' => 'v0.0.1',
+            'version' => '0.0.1.0',
+            'reference' => 'e1ea58c848a4ec59d81b697b3dfe9cc99968d0e7',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../bitwasp/bech32',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'bitwasp/bitcoin' => array(
+            'pretty_version' => 'v1.0.4',
+            'version' => '1.0.4.0',
+            'reference' => '65ff8384a15e805effcf600fb08cef3a0fc63824',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../bitwasp/bitcoin',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'bitwasp/buffertools' => array(
+            'pretty_version' => 'v0.5.7',
+            'version' => '0.5.7.0',
+            'reference' => '133746d0b514e0016d8479b54aa97475405a9f1f',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../bitwasp/buffertools',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'brick/math' => array(
-            'pretty_version' => '0.12.1',
-            'version' => '0.12.1.0',
-            'reference' => 'f510c0a40911935b77b86859eb5223d58d660df1',
+            'pretty_version' => '0.12.2',
+            'version' => '0.12.2.0',
+            'reference' => '901eddb1e45a8e0f689302e40af871c181ecbe40',
             'type' => 'library',
             'install_path' => __DIR__ . '/../brick/math',
             'aliases' => array(),
@@ -1177,6 +1204,24 @@
             'reference' => '8802c7396d61a923c9a73e37ead062b24bb1b273',
             'type' => 'library',
             'install_path' => __DIR__ . '/../clagiordano/weblibs-configmanager',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'composer/pcre' => array(
+            'pretty_version' => '3.3.2',
+            'version' => '3.3.2.0',
+            'reference' => 'b2bed4734f0cc156ee1fe9c0da2550420d99a21e',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/./pcre',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'composer/semver' => array(
+            'pretty_version' => '1.7.2',
+            'version' => '1.7.2.0',
+            'reference' => '647490bbcaf7fc4891c58f47b825eb99d19c377a',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/./semver',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
@@ -1199,9 +1244,9 @@
             'dev_requirement' => false,
         ),
         'fgrosse/phpasn1' => array(
-            'pretty_version' => 'v2.5.0',
-            'version' => '2.5.0.0',
-            'reference' => '42060ed45344789fb9f21f9f1864fc47b9e3507b',
+            'pretty_version' => 'v2.0.2',
+            'version' => '2.0.2.0',
+            'reference' => '973b5f437221e477486cdd33f1d693fd68446df6',
             'type' => 'library',
             'install_path' => __DIR__ . '/../fgrosse/phpasn1',
             'aliases' => array(),
@@ -1222,6 +1267,15 @@
             'reference' => '44d62bda8b80fe07ff59e8fc654f477685109a66',
             'type' => 'library',
             'install_path' => __DIR__ . '/../fukuball/jieba-php',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'genkgo/php-asn1' => array(
+            'pretty_version' => 'v2.8.0',
+            'version' => '2.8.0.0',
+            'reference' => '4de712c68bbf51c00551cb45f55642e30fed1fdb',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../genkgo/php-asn1',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
@@ -1262,18 +1316,27 @@
             'dev_requirement' => false,
         ),
         'kornrunner/secp256k1' => array(
-            'pretty_version' => '0.2.0',
-            'version' => '0.2.0.0',
-            'reference' => 'c3990dba47c7a8b0c9fd858fb29c61a5794fbb39',
+            'pretty_version' => '0.3.0',
+            'version' => '0.3.0.0',
+            'reference' => '0cfc81c5a1aae3f654ad34ee9d77f0bb9bdde2ef',
             'type' => 'library',
             'install_path' => __DIR__ . '/../kornrunner/secp256k1',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'lastguest/murmurhash' => array(
+            'pretty_version' => '2.0.0',
+            'version' => '2.0.0.0',
+            'reference' => '4fb7516f67e695e5d7fa129d1bbb925ec0ebe408',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../lastguest/murmurhash',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'lcobucci/clock' => array(
-            'pretty_version' => '3.0.0',
-            'version' => '3.0.0.0',
-            'reference' => '039ef98c6b57b101d10bd11d8fdfda12cbd996dc',
+            'pretty_version' => '3.3.1',
+            'version' => '3.3.1.0',
+            'reference' => 'db3713a61addfffd615b79bf0bc22f0ccc61b86b',
             'type' => 'library',
             'install_path' => __DIR__ . '/../lcobucci/clock',
             'aliases' => array(),
@@ -1298,9 +1361,9 @@
             'dev_requirement' => false,
         ),
         'maennchen/zipstream-php' => array(
-            'pretty_version' => '3.1.1',
-            'version' => '3.1.1.0',
-            'reference' => '6187e9cc4493da94b9b63eb2315821552015fca9',
+            'pretty_version' => '3.1.2',
+            'version' => '3.1.2.0',
+            'reference' => 'aeadcf5c412332eb426c0f9b4485f6accba2a99f',
             'type' => 'library',
             'install_path' => __DIR__ . '/../maennchen/zipstream-php',
             'aliases' => array(),
@@ -1325,9 +1388,9 @@
             'dev_requirement' => false,
         ),
         'mdanter/ecc' => array(
-            'pretty_version' => 'v1.0.0',
-            'version' => '1.0.0.0',
-            'reference' => '34e2eec096bf3dcda814e8f66dd91ae87a2db7cd',
+            'pretty_version' => 'v0.5.0',
+            'version' => '0.5.0.0',
+            'reference' => 'ed5c6d496f5310de1b7071b8375fafa3559a1344',
             'type' => 'library',
             'install_path' => __DIR__ . '/../mdanter/ecc',
             'aliases' => array(),
@@ -1342,6 +1405,24 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'paragonie/ecc' => array(
+            'pretty_version' => 'v2.4.0',
+            'version' => '2.4.0.0',
+            'reference' => 'fdba22a506492eb6e5fe38c501c0df61eaf0b54c',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../paragonie/ecc',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'paragonie/sodium_compat' => array(
+            'pretty_version' => 'v2.1.0',
+            'version' => '2.1.0.0',
+            'reference' => 'a673d5f310477027cead2e2f2b6db5d8368157cb',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../paragonie/sodium_compat',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'phpmailer/phpmailer' => array(
             'pretty_version' => 'v6.9.3',
             'version' => '6.9.3.0',
@@ -1352,9 +1433,9 @@
             'dev_requirement' => false,
         ),
         'phpoffice/phpspreadsheet' => array(
-            'pretty_version' => '1.29.7',
-            'version' => '1.29.7.0',
-            'reference' => '02c8625411dcb96e1f63d58c47460284e15b2e80',
+            'pretty_version' => '1.29.10',
+            'version' => '1.29.10.0',
+            'reference' => 'c80041b1628c4f18030407134fe88303661d4e4e',
             'type' => 'library',
             'install_path' => __DIR__ . '/../phpoffice/phpspreadsheet',
             'aliases' => array(),
@@ -1366,6 +1447,15 @@
             'reference' => 'eaa7be704b8b93a6913b69eb7f645a59d7731b61',
             'type' => 'library',
             'install_path' => __DIR__ . '/../phpseclib/phpseclib',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'pleonasm/merkle-tree' => array(
+            'pretty_version' => '1.0.0',
+            'version' => '1.0.0.0',
+            'reference' => '9ddc9d0a0e396750fada378f3aa90f6c02dd56a1',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../pleonasm/merkle-tree',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
@@ -1648,6 +1738,15 @@
             'reference' => '9a01f5389835d4092d338bb7b7d119017052ca68',
             'type' => 'library',
             'install_path' => __DIR__ . '/../web3p/ethereum-util',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'web3p/ethereum-wallet' => array(
+            'pretty_version' => '0.1.0',
+            'version' => '0.1.0.0',
+            'reference' => '5d4d5547310742d124e79a94624bf8d4e7f3e541',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../web3p/ethereum-wallet',
             'aliases' => array(),
             'dev_requirement' => false,
         ),

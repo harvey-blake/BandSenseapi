@@ -22,8 +22,8 @@ The library supports the following curves:
  - secp256k1
  - nistp192
  - nistp224
- - nistp256 / secp256r1
- - nistp384 / secp384r1
+ - nistp256 / secg256r1
+ - nistp384 / secg384r1
  - nistp521
 
 During ECDSA, a random value `k` is required. It is acceptable to use a true RNG to generate this value, but 
@@ -40,20 +40,17 @@ This package is released under the MIT license.
 
 ### Requirements
 
-* PHP 7.0+ or PHP 8.0+
+* PHP 7.0+
 * composer
 * ext-gmp
 
-Support for older PHP versions:
- * v0.4.x: php ^5.6|<7.2
- * v0.5.x: php ^7.0
- * v1.0.x: php ^7.0|^8.0
+For PHP5.6 compatibility, use the v0.4.x releases.
 
 ### Installation
 
 You can install this library via Composer :
 
-`composer require mdanter/ecc:^1.0`
+`composer require mdanter/ecc`
 
 ### Contribute
 

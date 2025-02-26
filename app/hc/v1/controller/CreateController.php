@@ -23,6 +23,10 @@ use Db\Db;
 use function common\dump;
 use function common\retur;
 use function common\tgverification;
+use Web3p\EthereumWallet\Wallet;
+
+
+
 use common\Controller;
 // 写入
 class CreateController extends Controller
@@ -76,5 +80,18 @@ class CreateController extends Controller
         } catch (\Throwable $th) {
             dump($th);
         }
+    }
+    public function mnemonic()
+    {
+        $wallet = new Wallet();
+        $mnemonicLength = 15;
+        $wallet->generate($mnemonicLength);
+        dump($wallet->mnemonic);
+        dump($wallet);
+
+        // $wallet->address;
+        // danger zone, if the data was leaked, money would be stolen
+        // $wallet->privateKey;
+        // $wallet->mnemonic;
     }
 }

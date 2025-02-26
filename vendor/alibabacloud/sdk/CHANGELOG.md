@@ -1,5 +1,29 @@
 # CHANGELOG
 
+## 1.8.2245 - 2025-2-11
+- Generated 2020-06-01 for `SWAS-OPEN`.
+
+
+## 1.8.2244 - 2025-2-11
+- Generated 2019-03-07 for `Cloudauth`.
+
+
+## 1.8.2243 - 2025-2-7
+- Add ModifyInstanceProperties.
+
+
+## 1.8.2242 - 2025-2-6
+- Rebuild.
+
+
+## 1.8.2241 - 2025-1-20
+- Generated 2017-08-01 for `polardb`.
+
+
+## 1.8.2240 - 2025-1-14
+- Generated 2023-01-20 for `csas`.
+
+
 ## 1.8.2239 - 2025-1-9
 - Supported GetInstanceLicense.
 

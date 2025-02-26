@@ -13,10 +13,13 @@ class ComposerStaticInit6bef86f4d53bb11ff54fc7a7dfa3498f
         'd767e4fc2dc52fe66584ab8c6684783e' => __DIR__ . '/..' . '/adbario/php-dot-notation/src/helpers.php',
         'ad155f8f1cf0d418fe49e248db8c661b' => __DIR__ . '/..' . '/react/promise/src/functions_include.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
-        '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         'decc78cc4436b1292c6c0d151b19445c' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/bootstrap.php',
+        '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
+        'a626201e4406003b96eee958a069f504' => __DIR__ . '/..' . '/bitwasp/bech32/src/bech32.php',
         'b067bc7112e384b61c701452d53a14a8' => __DIR__ . '/..' . '/mtdowling/jmespath.php/src/JmesPath.php',
+        '3109cb1a231dcd04bee1f9f620d46975' => __DIR__ . '/..' . '/paragonie/sodium_compat/autoload.php',
         '66453932bc1be9fb2f910a27947d11b6' => __DIR__ . '/..' . '/alibabacloud/client/src/Functions.php',
+        '7cfce27594bbc1dd0dbf7e3eb5cd4911' => __DIR__ . '/..' . '/bitwasp/bitcoin/src/Script/functions.php',
         '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
         '3be16222a6efa6dd226a219eaaff823b' => __DIR__ . '/..' . '/ratchet/pawl/src/functions_include.php',
         'c4e03ecd470d2a87804979c0a8152284' => __DIR__ . '/..' . '/react/async/src/functions_include.php',
@@ -29,6 +32,10 @@ class ComposerStaticInit6bef86f4d53bb11ff54fc7a7dfa3498f
         'p' => 
         array (
             'phpseclib\\' => 10,
+        ),
+        'l' => 
+        array (
+            'lastguest\\' => 10,
         ),
         'k' => 
         array (
@@ -46,6 +53,7 @@ class ComposerStaticInit6bef86f4d53bb11ff54fc7a7dfa3498f
         array (
             'Workerman\\' => 10,
             'Web3p\\RLP\\' => 10,
+            'Web3p\\EthereumWallet\\' => 21,
             'Web3p\\EthereumUtil\\' => 19,
             'Web3p\\EthereumTx\\' => 17,
             'Web3\\' => 5,
@@ -124,11 +132,16 @@ class ComposerStaticInit6bef86f4d53bb11ff54fc7a7dfa3498f
         ),
         'C' => 
         array (
+            'Composer\\Semver\\' => 16,
+            'Composer\\Pcre\\' => 14,
             'Complex\\' => 8,
         ),
         'B' => 
         array (
             'Brick\\Math\\' => 11,
+            'BitWasp\\Buffertools\\' => 20,
+            'BitWasp\\Bitcoin\\' => 16,
+            'BitWasp\\Bech32\\' => 15,
             'Binance\\' => 8,
             'BN\\' => 3,
             'BI\\' => 3,
@@ -154,6 +167,10 @@ class ComposerStaticInit6bef86f4d53bb11ff54fc7a7dfa3498f
         array (
             0 => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib',
         ),
+        'lastguest\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/lastguest/murmurhash/src/lastguest',
+        ),
         'kornrunner\\' => 
         array (
             0 => __DIR__ . '/..' . '/kornrunner/keccak/src',
@@ -174,6 +191,10 @@ class ComposerStaticInit6bef86f4d53bb11ff54fc7a7dfa3498f
         'Web3p\\RLP\\' => 
         array (
             0 => __DIR__ . '/..' . '/web3p/rlp/src',
+        ),
+        'Web3p\\EthereumWallet\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/web3p/ethereum-wallet/src',
         ),
         'Web3p\\EthereumUtil\\' => 
         array (
@@ -287,6 +308,7 @@ class ComposerStaticInit6bef86f4d53bb11ff54fc7a7dfa3498f
         'Mdanter\\Ecc\\' => 
         array (
             0 => __DIR__ . '/..' . '/mdanter/ecc/src',
+            1 => __DIR__ . '/..' . '/paragonie/ecc/src',
         ),
         'Matrix\\' => 
         array (
@@ -327,6 +349,7 @@ class ComposerStaticInit6bef86f4d53bb11ff54fc7a7dfa3498f
         'FG\\' => 
         array (
             0 => __DIR__ . '/..' . '/fgrosse/phpasn1/lib',
+            1 => __DIR__ . '/..' . '/genkgo/php-asn1/lib',
         ),
         'Evenement\\' => 
         array (
@@ -344,6 +367,14 @@ class ComposerStaticInit6bef86f4d53bb11ff54fc7a7dfa3498f
         array (
             0 => __DIR__ . '/..' . '/alibabacloud/gateway-spi/src',
         ),
+        'Composer\\Semver\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/composer/semver/src',
+        ),
+        'Composer\\Pcre\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/composer/pcre/src',
+        ),
         'Complex\\' => 
         array (
             0 => __DIR__ . '/..' . '/markbaker/complex/classes/src',
@@ -351,6 +382,18 @@ class ComposerStaticInit6bef86f4d53bb11ff54fc7a7dfa3498f
         'Brick\\Math\\' => 
         array (
             0 => __DIR__ . '/..' . '/brick/math/src',
+        ),
+        'BitWasp\\Buffertools\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/bitwasp/buffertools/src/Buffertools',
+        ),
+        'BitWasp\\Bitcoin\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/bitwasp/bitcoin/src',
+        ),
+        'BitWasp\\Bech32\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/bitwasp/bech32/src',
         ),
         'Binance\\' => 
         array (
@@ -411,6 +454,13 @@ class ComposerStaticInit6bef86f4d53bb11ff54fc7a7dfa3498f
     );
 
     public static $prefixesPsr0 = array (
+        'P' => 
+        array (
+            'Pleo' => 
+            array (
+                0 => __DIR__ . '/..' . '/pleonasm/merkle-tree/src',
+            ),
+        ),
         'H' => 
         array (
             'HTMLPurifier' => 
