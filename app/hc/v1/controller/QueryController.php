@@ -303,9 +303,9 @@ class QueryController extends Controller
 
         preg_match('/<(\d+)>/', "用户(7234953607)通过群<-1002419501505>[15]说: 可以", $matchesChatId);
 
-
-        $originalChatId = isset($matchesUserId[1]) ? $matchesUserId[1] : '';
-        dump($originalChatId);
+        // 确保变量名一致，使用 $matchesChatId 获取群 ID
+        $originalChatId = isset($matchesChatId[1]) ? $matchesChatId[1] : '';
+        dump($originalChatId);  // 输出：-1002419501505
 
         // sendReplyMessage($originalChatId, $userMessage, $originalMessageId);
         // $message = htmlspecialchars("用户(99)<88>[77]通过群说: 22", ENT_QUOTES, 'UTF-8'); // 转义特殊字符
