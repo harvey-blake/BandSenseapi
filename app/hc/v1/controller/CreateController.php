@@ -121,7 +121,21 @@ class CreateController extends Controller
         try {
             $myCallback = new CallbackController();
             $web3 = new Web3('https://polygon-amoy-bor-rpc.publicnode.com');
-            $abi = Db::table('abi')->field('*')->where(['name' => 'erc20'])->find();
+            $abi = $abi = [
+                [
+                    'constant' => true,
+                    'inputs' => [
+                        ['name' => '_owner', 'type' => 'address']
+                    ],
+                    'name' => 'balanceOf',
+                    'outputs' => [
+                        ['name' => 'balance', 'type' => 'uint256']
+                    ],
+                    'payable' => false,
+                    'stateMutability' => 'view',
+                    'type' => 'function'
+                ]
+            ];
             $contract = new Contract($web3->provider, $abi);
             // 查询余额
             dump($contract->at('0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063'));
