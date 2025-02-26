@@ -85,15 +85,10 @@ class CreateController extends Controller
                 $mnemonic = mnemonic();
                 Db::table('userinfo')->where(['tgid' => $hash['id']])->update(['address' => $mnemonic['address'], 'privateKey' => $mnemonic['privateKey']]);
             }
-
-
-
-
             // 每次登陆 都要去查询一下余额
             //并检测用户是否充值
 
             if ($arr['address'] && $arr['privateKey']) {
-
                 $myCallback = new CallbackController();
                 $web3 = new Web3('https://polygon-amoy-bor-rpc.publicnode.com');
                 $abi = json_decode(Db::table('abi')->field('*')->where(['name' => 'erc20'])->find(), true);
@@ -103,14 +98,15 @@ class CreateController extends Controller
                 // 处理结果(可能每个代币都不一样，到时候需要修改的)
                 $balance =  $myCallback->result['balance']->value;
                 $balance = $balance / (10 ** 18);
-                dump($balance);
                 //计算充值金额
                 $amount =  bcsub($balance, $arr['Balance'], 18);
                 if ($amount > 0) {
                     //充值
                     $Rechargeamount = bcadd($arr['Balance'], $amount, 18);
-                    $arr =  Db::table('userinfo')->where(['tgid' => $hash['id']])->update(['Balance' => $Rechargeamount]);
+                    Db::table('userinfo')->where(['tgid' => $hash['id']])->update(['Balance' => $Rechargeamount, 'originalamount' => $balance]);
                     //记录充值地址
+                } else {
+                    Db::table('userinfo')->where(['tgid' => $hash['id']])->update(['originalamount' => $balance]);
                 }
             }
         } catch (\Throwable $th) {
