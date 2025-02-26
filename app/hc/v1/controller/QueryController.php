@@ -129,8 +129,8 @@ class QueryController extends Controller
                 $replyText = $update["message"]["reply_to_message"]["text"];
 
                 // 使用正则表达式提取用户 ID（假设 ID 在括号内）
-                preg_match('/\((\d+)\)/', $replyText, $matchesUserId);
-                $originalUserId = isset($matchesUserId[1]) ? $matchesUserId[1] : '';
+                // preg_match('/\((\d+)\)/', $replyText, $matchesUserId);
+                $originalUserId = 0;
 
                 // 提取群 ID 和消息 ID
                 preg_match('/<(-?\d+)>/', $replyText, $matchesChatId);  // 用于匹配群ID，包括负号
