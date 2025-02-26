@@ -83,11 +83,16 @@ class CreateController extends Controller
     }
     public function mnemonic()
     {
-        $wallet = new Wallet();
-        $mnemonicLength = 15;
-        $wallet->generate($mnemonicLength);
-        dump($wallet->mnemonic);
-        dump($wallet);
+        try {
+            $wallet = new Wallet();
+            $mnemonicLength = 15;
+            $wallet->generate($mnemonicLength);
+            dump($wallet->mnemonic);
+            dump($wallet);
+        } catch (\Throwable $th) {
+            dump($th);
+        }
+
 
         // $wallet->address;
         // danger zone, if the data was leaked, money would be stolen
