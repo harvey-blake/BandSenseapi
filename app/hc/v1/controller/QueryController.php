@@ -113,6 +113,8 @@ class QueryController extends Controller
             $userMessage = $update["message"]["text"];   // 用户发送的消息
             $userId = $update["message"]["from"]["id"];  // 发送者的 Telegram ID
             $firstName = $update["message"]["from"]["first_name"] ?? ''; // 发送者的名字
+            $messageId = $update["message"]["message_id"]; // 该消息的 ID
+            $chatType = $update["message"]["chat"]["type"]; // 获取 chat 类型
             $adminId = '1882040053';  // 管理员 ID
 
             // 检查是否为引用消息
@@ -134,9 +136,12 @@ class QueryController extends Controller
                 // 如果是管理员发送的回复，直接私聊原用户
                 if ($userId == $adminId) {
                     sendMessage($originalUserId, $userMessage);
-                } else {
+                } else  if (in_array($chatType, ["group", "supergroup"])) {
                     // 其他用户发送的消息，转发给管理员，并标明是谁发的
-                    sendMessage($adminId, "用户  ($userId) 说: $userMessage");
+                    sendMessage($adminId, "用户($userId)通过群[$chatId]<$messageId>说: $userMessage");
+                } else {
+                    //私聊消息
+                    sendMessage($adminId, "用户  ($userId)  说: $userMessage");
                 }
             } else {
                 // 普通用户的消息，转发给管理员
