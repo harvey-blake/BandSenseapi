@@ -116,6 +116,21 @@ class QueryController extends Controller
             $firstName = $update["message"]["from"]["first_name"] ?? ''; // 发送者的名字
             $messageId = $update["message"]["message_id"]; // 该消息的 ID
             $chatType = $update["message"]["chat"]["type"]; // 获取 chat 类型
+
+            $videoId = null;
+            $photoId = null;
+
+            // 检查是否有视频
+            if (isset($update["message"]["video"])) {
+                $videoId = $update["message"]["video"]["file_id"];
+            }
+
+            // 检查是否有图片
+            if (isset($update["message"]["photo"])) {
+                // Telegram 会提供不同尺寸的图片，这里取最后一个尺寸作为原始图片
+                $photoId = $update["message"]["photo"][count($update["message"]["photo"]) - 1]["file_id"];
+            }
+
             $adminId = '1882040053';  // 管理员 ID
 
             // 检查是否为引用消息
@@ -152,20 +167,21 @@ class QueryController extends Controller
 
                     sendReplyMessage($originalChatId, $userMessage, $originalMessageId);
                 } else if ($userId == $adminId) {
-                    sendMessage($originalUserId, $userMessage);
+                    sendMessage($originalUserId, $userMessage, $photoId, $videoId);
                 } else {
                     $msg = htmlspecialchars("用户 ($userId) 说: $userMessage");
-                    sendMessage($adminId, $msg);
+
+                    sendMessage($adminId, $msg, $photoId, $videoId);
                 }
             } else {
                 // 普通用户的消息，转发给管理员
 
                 if ($chatId < 0) {
                     $msg = htmlspecialchars("用户($userId)通过群<$chatId>[$messageId]说: $userMessage");
-                    sendMessage($adminId,  $msg);
+                    sendMessage($adminId,  $msg, $photoId, $videoId);
                 } else {
                     $msg = htmlspecialchars("用户 ($userId) 说: $userMessage");
-                    sendMessage($adminId, $msg);
+                    sendMessage($adminId, $msg, $photoId, $videoId);
                 }
             }
         }

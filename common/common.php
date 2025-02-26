@@ -99,28 +99,47 @@ function tgverification($data)
 }
 
 
-function sendMessage($chat_id, $message)
+function sendMessage($chat_id, $message, $photoId = null, $videoId = null)
 {
     try {
         $token = '7949382682:AAGhPeyqz4ru183scmko8bIjdxp37G3Bs0k';
-        $api_url = "https://api.telegram.org/bot$token/sendMessage";
+        $api_url = "https://api.telegram.org/bot$token/";
 
-        // 创建消息数据
-        $data = [
-            'chat_id' => $chat_id,
-            'text' => $message,
-            'parse_mode' => 'HTML', // 设置 HTML 格式
-        ];
-
-        // 使用 http_build_query 编码 URL 参数
-        $url = $api_url . '?' . http_build_query($data);
+        // 如果提供了图片 ID，发送图片并附带文本
+        if ($photoId) {
+            $data = [
+                'chat_id' => $chat_id,
+                'photo' => $photoId, // 图片的 file_id
+                'caption' => $message, // 图片的文本消息
+                'parse_mode' => 'HTML', // 如果需要支持 HTML 格式的文本
+            ];
+            $url = $api_url . 'sendPhoto?' . http_build_query($data);
+        }
+        // 如果提供了视频 ID，发送视频并附带文本
+        elseif ($videoId) {
+            $data = [
+                'chat_id' => $chat_id,
+                'video' => $videoId, // 视频的 file_id
+                'caption' => $message, // 视频的文本消息
+                'parse_mode' => 'HTML', // 如果需要支持 HTML 格式的文本
+            ];
+            $url = $api_url . 'sendVideo?' . http_build_query($data);
+        } else {
+            // 发送纯文本消息
+            $data = [
+                'chat_id' => $chat_id,
+                'text' => $message,
+                'parse_mode' => 'HTML', // 设置 HTML 格式
+            ];
+            $url = $api_url . 'sendMessage?' . http_build_query($data);
+        }
 
         // 发送 GET 请求并获取响应
         $response = file_get_contents($url);
-        dump($url);
+        dump($url); // 可选，输出请求的 URL 以供调试
         // 解析 JSON 响应
         $result = json_decode($response, true);
-        dump($result);
+        dump($result); // 输出 API 响应结果
     } catch (\Throwable $th) {
         // 捕获异常并输出
         echo "发送失败，错误信息: " . $th->getMessage();
@@ -154,6 +173,9 @@ function sendReplyMessage($chat_id, $message, $message_id)
         echo "发送引用消息失败: " . $th->getMessage() . "\n";
     }
 }
+
+
+
 
 
 // function sendMessage($chat_id, $message)
