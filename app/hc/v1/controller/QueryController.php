@@ -133,9 +133,11 @@ class QueryController extends Controller
                 $originalUserId = isset($matchesUserId[1]) ? $matchesUserId[1] : '';
 
                 // 提取群 ID 和消息 ID
-                preg_match('/<(\d+)>\[(\d+)\]/', $replyText, $matchesChatMessageId);
-                $originalChatId = isset($matchesChatMessageId[1]) ? $matchesChatMessageId[1] : '';
-                $originalMessageId = isset($matchesChatMessageId[2]) ? $matchesChatMessageId[2] : '';
+                preg_match('/\<(\d+)\>/', $replyText, $matchesUserId);
+
+                $originalChatId = isset($matchesUserId[1]) ? $matchesUserId[1] : '';
+                preg_match('/\[(\d+)\]/', $replyText, $matchesUserId);
+                $originalMessageId = isset($matchesUserId[1]) ? $matchesUserId[1] : '';
 
 
 
