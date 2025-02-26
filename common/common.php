@@ -127,6 +127,32 @@ function sendMessage($chat_id, $message)
     }
 }
 
+function sendReplyMessage($chat_id, $message, $message_id)
+{
+    try {
+        $token = '7949382682:AAGhPeyqz4ru183scmko8bIjdxp37G3Bs0k';  // 请替换为你的 Bot Token
+        $api_url = "https://api.telegram.org/bot$token/sendMessage";
+
+        // 准备请求数据
+        $data = [
+            'chat_id' => $chat_id,
+            'text' => $message,
+            'reply_to_message_id' => $message_id,
+            'parse_mode' => 'HTML',
+        ];
+
+        // 使用 http_build_query 对请求数据进行编码
+        $url = $api_url . '?' . http_build_query($data);
+
+        // 发送请求
+        file_get_contents($url);
+    } catch (\Throwable $th) {
+        // 捕获异常并输出
+        echo "发送引用消息失败: " . $th->getMessage() . "\n";
+    }
+}
+
+
 // function sendMessage($chat_id, $message)
 // {
 //     try {

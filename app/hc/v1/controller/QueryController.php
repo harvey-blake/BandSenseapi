@@ -21,6 +21,7 @@ use Web3\Contracts\Types\Str;
 use Web3\Contracts\Types\Uinteger;
 use function common\tgverification;
 use function common\sendMessage;
+use function common\sendReplyMessage;
 use function common\retur;
 use common\Controller;
 use common\CallbackController;
@@ -125,19 +126,40 @@ class QueryController extends Controller
                 $replyText = $update["message"]["reply_to_message"]["text"];
 
                 // 使用正则表达式提取用户 ID（假设 ID 在括号内）
-                preg_match('/\((\d+)\)/', $replyText, $matches);
+
+                preg_match('/用户\((\d+)\)通过群<(\d+)>\[(\d+)\]/', $replyText, $matches);
+
                 $originalUserId = '';
+                $originalChatId = '';
+                $originalMessageId = '';
+
                 if (isset($matches[1])) {
                     $originalUserId = $matches[1];  // 提取出的用户 ID
-
                 }
+
+                if (isset($matches[2])) {
+                    $originalChatId = $matches[2];  // 提取出的群 ID
+                }
+
+                if (isset($matches[3])) {
+                    $originalMessageId = $matches[3];  // 提取出的消息 ID
+                }
+
+                echo "用户ID: $originalUserId\n";
+                echo "群ID: $originalChatId\n";
+                echo "消息ID: $originalMessageId\n";
+
+
+
 
 
                 // 如果是管理员发送的回复，直接私聊原用户
                 if ($userId == $adminId) {
                     sendMessage($originalUserId, $userMessage);
-                } else {
+                } else if (!empty($originalUserId) && !empty($originalChatId)) {
                     //私聊消息
+                    sendReplyMessage($originalChatId, $userMessage, $originalMessageId);
+                } else {
                     $msg = htmlspecialchars("用户 ($userId) 说: $userMessage");
                     sendMessage($adminId, $msg);
                 }
