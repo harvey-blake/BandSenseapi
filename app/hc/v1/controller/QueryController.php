@@ -135,6 +135,7 @@ class QueryController extends Controller
                 // 提取群 ID 和消息 ID
                 preg_match('/<(\d+)>/', $replyText, $matchesChatId);
 
+
                 $originalChatId = isset($matchesUserId[1]) ? $matchesUserId[1] : '';
                 preg_match('/\[(\d+)\]/', $replyText, $matchesUserId);
                 $originalMessageId = isset($matchesUserId[1]) ? $matchesUserId[1] : '';
@@ -299,6 +300,12 @@ class QueryController extends Controller
     }
     public function getTransaction()
     {
+
+        preg_match('/<(\d+)>/', "用户(7234953607)通过群<-1002419501505>[15]说: 可以", $matchesChatId);
+
+
+        $originalChatId = isset($matchesUserId[1]) ? $matchesUserId[1] : '';
+        dump($originalChatId);
 
         // sendReplyMessage($originalChatId, $userMessage, $originalMessageId);
         // $message = htmlspecialchars("用户(99)<88>[77]通过群说: 22", ENT_QUOTES, 'UTF-8'); // 转义特殊字符
