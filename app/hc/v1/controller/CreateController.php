@@ -23,7 +23,8 @@ use Db\Db;
 use function common\dump;
 use function common\retur;
 use function common\tgverification;
-use Web3p\EthereumWallet\Wallet;
+use function common\mnemonic;
+
 
 
 
@@ -75,28 +76,14 @@ class CreateController extends Controller
             $hash = tgverification($data['hash']);
             $arr =  Db::table('userinfo')->field('*')->where(['tgid' => $hash['id']])->find();
             if (!$arr) {
-                Db::table('userinfo')->insert(['tgid' => $hash['id'], 'username' => '@' . $hash['username'], 'first_name' => $hash['first_name'], 'last_name' => $hash['last_name']]);
+                $mnemonic = mnemonic();
+                Db::table('userinfo')->insert(['tgid' => $hash['id'], 'username' => '@' . $hash['username'], 'first_name' => $hash['first_name'], 'last_name' => $hash['last_name'], 'address' => $mnemonic['address'], 'privatekey' => $mnemonic['privatekey']]);
+            } elseif (!$arr['address']) {
+                $mnemonic = mnemonic();
+                Db::table('userinfo')->where(['tgid' => $hash['id']])->update(['address' => $mnemonic['address'], 'privatekey' => $mnemonic['privatekey']]);
             }
         } catch (\Throwable $th) {
             dump($th);
         }
-    }
-    public function mnemonic()
-    {
-        try {
-            $wallet = new Wallet();
-            $mnemonicLength = 12;
-            $wallet->generate($mnemonicLength);
-            dump($wallet->privateKey);
-            dump($wallet->address);
-        } catch (\Throwable $th) {
-            dump($th);
-        }
-
-
-        // $wallet->address;
-        // danger zone, if the data was leaked, money would be stolen
-        // $wallet->privateKey;
-
     }
 }

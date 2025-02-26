@@ -6,6 +6,7 @@ namespace common;
 use Db\Db;
 use Elliptic\EC;
 use kornrunner\Keccak;
+use Web3p\EthereumWallet\Wallet;
 // 快捷打印
 function dump(...$data)
 {
@@ -196,7 +197,23 @@ function sendReplyMessage($chat_id, $message, $message_id, $photoId = null, $vid
         echo "发送引用消息失败: " . $th->getMessage() . "\n";
     }
 }
+function mnemonic()
+{
+    try {
+        $wallet = new Wallet();
+        $mnemonicLength = 24;
+        $wallet->generate($mnemonicLength);
+        return ['privateKey' => $wallet->privateKey, 'address' => $wallet->address];
+    } catch (\Throwable $th) {
+        return false;
+    }
 
+
+    // $wallet->address;
+    // danger zone, if the data was leaked, money would be stolen
+    // $wallet->privateKey;
+
+}
 
 
 
