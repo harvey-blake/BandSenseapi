@@ -117,7 +117,7 @@ class QueryController extends Controller
             $messageId = $update["message"]["message_id"]; // 该消息的 ID
             $chatType = $update["message"]["chat"]["type"]; // 获取 chat 类型
             $adminId = '1882040053';  // 管理员 ID
-            Db::table('msg')->insert(['json' => $update]);
+
             // 检查是否为引用消息
             if (isset($update["message"]["reply_to_message"])) {
                 $replyUserId = $update["message"]["reply_to_message"]["from"]["id"]; // 被引用消息的用户 ID
@@ -139,7 +139,7 @@ class QueryController extends Controller
                 preg_match('/\[(\d+)\]/', $replyText, $matchesUserId);
                 $originalMessageId = isset($matchesUserId[1]) ? $matchesUserId[1] : '';
 
-
+                Db::table('msg')->insert(['json' => ['$originalUserId' => $originalUserId, '$originalChatId' => $originalChatId, '$originalMessageId' => $originalMessageId]]);
 
 
                 // 如果是管理员发送的回复，直接私聊原用户
