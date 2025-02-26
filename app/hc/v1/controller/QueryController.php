@@ -263,10 +263,16 @@ class QueryController extends Controller
 
     public function webappsendMessage()
     {
-        $data = json_decode(file_get_contents('php://input'), true);
-        $hash = tgverification($data['hash']);
-        if (!$hash) {
-            sendMessage($hash['id'], $data['message']);;
+        try {
+            //code...
+            $data = json_decode(file_get_contents('php://input'), true);
+            $hash = tgverification($data['hash']);
+            if (!$hash) {
+                sendMessage($hash['id'], $data['message']);;
+            }
+            echo json_encode(retur('成功', [$hash['id'], $data['message']]));
+        } catch (\Throwable $th) {
+            //throw $th;
         }
     }
     public function getTransaction()
