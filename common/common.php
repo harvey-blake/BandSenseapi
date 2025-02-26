@@ -120,6 +120,7 @@ function sendMessage($chat_id, $message)
 
         // 解析 JSON 响应
         $result = json_decode($response, true);
+        dump($result);
     } catch (\Throwable $th) {
         // 捕获异常并输出
         echo "发送失败，错误信息: " . $th->getMessage();
