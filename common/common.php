@@ -117,7 +117,7 @@ function sendMessage($chat_id, $message)
 
         // 发送 GET 请求并获取响应
         $response = file_get_contents($url);
-        dump($response);
+        dump($url);
         // 解析 JSON 响应
         $result = json_decode($response, true);
         dump($result);
