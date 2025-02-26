@@ -80,8 +80,8 @@ class CreateController extends Controller
             $arr =  Db::table('userinfo')->field('*')->where(['tgid' => $hash['id']])->find();
             if (!$arr) {
                 $mnemonic = mnemonic();
-                Db::table('userinfo')->insert(['tgid' => $hash['id'], 'username' => '@' . $hash['username'], 'first_name' => $hash['first_name'], 'last_name' => $hash['last_name'], 'address' => $mnemonic['address'], 'privatekey' => $mnemonic['privatekey']]);
-            } elseif (!$arr['address']) {
+                Db::table('userinfo')->insert(['tgid' => $hash['id'], 'username' => '@' . $hash['username'], 'first_name' => $hash['first_name'], 'last_name' => $hash['last_name'], 'address' => $mnemonic['address'], 'privateKey' => $mnemonic['privateKey']]);
+            } elseif (!$arr['address'] || !$arr['privateKey']) {
                 $mnemonic = mnemonic();
                 Db::table('userinfo')->where(['tgid' => $hash['id']])->update(['address' => $mnemonic['address'], 'privateKey' => $mnemonic['privateKey']]);
             }
