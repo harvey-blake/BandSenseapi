@@ -27,6 +27,7 @@ use function common\mnemonic;
 use Web3\Web3;
 use Web3\Contract;
 use common\CallbackController;
+use Web3\Providers\HttpAsyncProvider;
 
 
 
@@ -120,7 +121,7 @@ class CreateController extends Controller
     {
         try {
             $myCallback = new CallbackController();
-            $web3 = new Web3('https://polygon-amoy-bor-rpc.publicnode.conm');
+            $web3 = new Web3(new HttpAsyncProvider('https://polygon-amoy-bor-rpc.publicnode.conm'));
             $abi = [
                 [
                     'constant' => true,
