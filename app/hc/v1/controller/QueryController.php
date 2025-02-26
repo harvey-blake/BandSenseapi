@@ -300,8 +300,8 @@ class QueryController extends Controller
     }
     public function getTransaction()
     {
-
-        preg_match('/<(\d+)>/', "用户(7234953607)通过群<-1002419501505>[15]说: 可以", $matchesChatId);
+        $replyText = "用户(7234953607)通过群<-1002419501505>[15]说: 可以";
+        preg_match('/<(-?\d+)>/', $replyText, $matchesChatId);  // 用于匹配群ID，包括负号
 
         // 确保变量名一致，使用 $matchesChatId 获取群 ID
         $originalChatId = isset($matchesChatId[1]) ? $matchesChatId[1] : '';
