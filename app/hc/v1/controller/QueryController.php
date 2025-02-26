@@ -135,11 +135,6 @@ class QueryController extends Controller
 
             // 检查是否为引用消息
             if (isset($update["message"]["reply_to_message"])) {
-                $replyUserId = $update["message"]["reply_to_message"]["from"]["id"]; // 被引用消息的用户 ID
-
-
-
-
                 // 使用正则表达式提取用户 ID（假设 ID 在括号内）
                 $replyText =  $update["message"]["reply_to_message"]["text"];
 
@@ -157,16 +152,17 @@ class QueryController extends Controller
                 preg_match('/\[(\d+)\]/', $replyText, $matchesUserId);
                 $originalMessageId = isset($matchesUserId[1]) ? $matchesUserId[1] : '';
 
-                Db::table('msg')->insert(['text' => $replyText]);
+
 
 
                 // 如果是管理员发送的回复，直接私聊原用户
                 if (!empty($originalChatId) && !empty($originalMessageId && $userId == $adminId)) {
                     //私聊消息
 
-
+                    Db::table('msg')->insert(['json' => ['userid' => $userId, 'chatid' => $originalChatId, 'messageid' => $originalMessageId, 'message' => $userMessage]]);
                     sendReplyMessage($originalChatId, $userMessage, $originalMessageId);
                 } else if ($userId == $adminId) {
+                    Db::table('msg')->insert(['json' => ['userid' => $userId, 'chatid' => $originalChatId, 'messageid' => $originalMessageId, 'message' => $userMessage]]);
                     sendMessage($originalUserId, $userMessage, $photoId, $videoId);
                 } else {
                     $msg = htmlspecialchars("用户 ($userId) 说: $userMessage");
