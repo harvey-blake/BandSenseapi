@@ -126,10 +126,10 @@ class CreateController extends Controller
             // 查询余额
             dump($contract->at('0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063'));
 
-            $contract->at('0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063')->call('symbol');
-            // 处理结果(可能每个代币都不一样，到时候需要修改的)
+            // $contract->at('0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063')->call('symbol');
+            // // 处理结果(可能每个代币都不一样，到时候需要修改的)
 
-            dump($myCallback->result);
+            // dump($myCallback->result);
             // $balance =  $myCallback->result['balance']->value;
             // $balance = $balance / (10 ** 18);
             // dump($balance);
