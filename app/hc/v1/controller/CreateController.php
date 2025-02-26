@@ -145,10 +145,10 @@ class CreateController extends Controller
             });
             // 处理结果(可能每个代币都不一样，到时候需要修改的)
 
-            dump($myCallback->result);
-            $balance =  $myCallback->result['balance']->value;
-            $balance = $balance / (10 ** 18);
-            dump($balance);
+            // dump($myCallback->result);
+            // $balance =  $myCallback->result['balance']->value;
+            // $balance = $balance / (10 ** 18);
+            // dump($balance);
         } catch (\Throwable $th) {
             dump($th);
         }
