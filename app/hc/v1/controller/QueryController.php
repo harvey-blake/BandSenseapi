@@ -338,6 +338,6 @@ class QueryController extends Controller
         dump($originalUserId, $originalChatId, $originalMessageId);
         // sendReplyMessage($originalChatId, $userMessage, $originalMessageId);
         // $message = htmlspecialchars("用户(99)<88>[77]通过群说: 22", ENT_QUOTES, 'UTF-8'); // 转义特殊字符
-        sendReplyMessage(-1002419501505, '$userMessage', 15);
+        sendMessage(7234953607, '$userMessage');
     }
 }
