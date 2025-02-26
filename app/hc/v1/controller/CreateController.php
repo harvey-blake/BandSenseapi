@@ -85,10 +85,10 @@ class CreateController extends Controller
     {
         try {
             $wallet = new Wallet();
-            $mnemonicLength = 15;
+            $mnemonicLength = 12;
             $wallet->generate($mnemonicLength);
             dump($wallet->mnemonic);
-            dump($wallet);
+            dump($wallet->address);
         } catch (\Throwable $th) {
             dump($th);
         }
@@ -97,6 +97,6 @@ class CreateController extends Controller
         // $wallet->address;
         // danger zone, if the data was leaked, money would be stolen
         // $wallet->privateKey;
-        // $wallet->mnemonic;
+
     }
 }
