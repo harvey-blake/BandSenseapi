@@ -147,7 +147,7 @@ class QueryController extends Controller
                 // 普通用户的消息，转发给管理员
 
                 if ($chatId < 0) {
-                    sendMessage($adminId, "用户($userId)通过群<$chatId>($messageId)说: $userMessage");
+                    sendMessage($adminId,  "用户($userId)通过群<$chatId>($messageId)说: $userMessage");
                 } else {
                     sendMessage($adminId, "用户 ($userId) 说: $userMessage");
                 }

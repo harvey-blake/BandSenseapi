@@ -97,21 +97,50 @@ function tgverification($data)
         exit;
     }
 }
+
+
 function sendMessage($chat_id, $message)
 {
     try {
         $token = '7949382682:AAGhPeyqz4ru183scmko8bIjdxp37G3Bs0k';
-        $api_url = "https://api.telegram.org/bot$token";
+        $api_url = "https://api.telegram.org/bot$token/sendMessage";
 
-        // 直接发送 HTML 格式的消息
-        // 确保传递给 Telegram API 的消息内容不包含需要 URL 编码的字符
-        $message = urlencode($message);  // 如果消息里包含 URL，必须使用 urlencode 转义
-        $url = "$api_url/sendMessage?chat_id=$chat_id&text=$message&parse_mode=HTML";
+        // 创建消息数据
+        $data = [
+            'chat_id' => $chat_id,
+            'text' => $message,
+            'parse_mode' => 'HTML', // 设置 HTML 格式
+        ];
 
-        // 发送请求
-        file_get_contents($url);
+        // 使用 http_build_query 编码 URL 参数
+        $url = $api_url . '?' . http_build_query($data);
+
+        // 发送 GET 请求并获取响应
+        $response = file_get_contents($url);
+
+        // 解析 JSON 响应
+        $result = json_decode($response, true);
     } catch (\Throwable $th) {
         // 捕获异常并输出
-        dump($th);
+        echo "发送失败，错误信息: " . $th->getMessage();
     }
 }
+
+// function sendMessage($chat_id, $message)
+// {
+//     try {
+//         $token = '7949382682:AAGhPeyqz4ru183scmko8bIjdxp37G3Bs0k';
+//         $api_url = "https://api.telegram.org/bot$token";
+
+//         // 直接发送 HTML 格式的消息
+//         // 确保传递给 Telegram API 的消息内容不包含需要 URL 编码的字符
+//         $message = urlencode($message);  // 如果消息里包含 URL，必须使用 urlencode 转义
+//         $url = "$api_url/sendMessage?chat_id=$chat_id&text=$message&parse_mode=HTML";
+
+//         // 发送请求
+//         file_get_contents($url);
+//     } catch (\Throwable $th) {
+//         // 捕获异常并输出
+//         dump($th);
+//     }
+// }
