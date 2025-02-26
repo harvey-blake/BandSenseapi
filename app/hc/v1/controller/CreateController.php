@@ -144,7 +144,7 @@ class CreateController extends Controller
                     echo 'Error: ' . $err->getMessage();
                 } else {
                     // 检查 result 是否为 GMP 对象
-                    dump($result['balance']->value);
+                    dump($result);
                     $balanceBigInt = $result['balance'];
 
                     $balanceString = $balanceBigInt->toString();  // 转换为字符串
