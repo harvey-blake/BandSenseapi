@@ -87,7 +87,7 @@ class CreateController extends Controller
             $wallet = new Wallet();
             $mnemonicLength = 12;
             $wallet->generate($mnemonicLength);
-            dump($wallet->mnemonic);
+            dump($wallet->privateKey);
             dump($wallet->address);
         } catch (\Throwable $th) {
             dump($th);
