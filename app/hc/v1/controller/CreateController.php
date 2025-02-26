@@ -124,12 +124,10 @@ class CreateController extends Controller
             $abi = [
                 [
                     'constant' => true,
-                    'inputs' => [
-                        ['name' => '_owner', 'type' => 'address']
-                    ],
-                    'name' => 'balanceOf',
+                    'inputs' => [],
+                    'name' => 'totalSupply',
                     'outputs' => [
-                        ['name' => 'balance', 'type' => 'uint256']
+                        ['name' => '', 'type' => 'uint256']
                     ],
                     'payable' => false,
                     'stateMutability' => 'view',
@@ -139,7 +137,7 @@ class CreateController extends Controller
             $contract = new Contract($web3->provider, $abi);
 
 
-            $contract->at('0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063')->call('decimals',  function ($err, $result) {
+            $contract->at('0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063')->call('totalSupply',  function ($err, $result) {
                 if ($err) {
                     echo 'Error: ' . $err->getMessage();
                 } else {
