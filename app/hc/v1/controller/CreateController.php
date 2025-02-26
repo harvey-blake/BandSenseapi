@@ -121,7 +121,7 @@ class CreateController extends Controller
     {
         try {
             $myCallback = new CallbackController();
-            $web3 = new Web3(new HttpAsyncProvider('https://polygon-bor-rpc.publicnode.com'));
+            $web3 = new Web3(new HttpAsyncProvider('https://polygon-mainnet.g.alchemy.com/v2/s6pD2K_z7MFUSCP2xLkUEizCYM4_z3Hb'));
 
             $web3->clientVersion(function ($err, $version) {
                 if ($err !== null) {
