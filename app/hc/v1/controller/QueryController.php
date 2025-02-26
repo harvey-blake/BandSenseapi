@@ -126,7 +126,7 @@ class QueryController extends Controller
 
 
                 // 使用正则表达式提取用户 ID（假设 ID 在括号内）
-                $replyText =  urldecode($update["message"]["reply_to_message"]["text"]);
+                $replyText =  $update["message"]["reply_to_message"]["text"];
 
                 // 使用正则表达式提取用户 ID（假设 ID 在括号内）
                 preg_match('/\((\d+)\)/', $replyText, $matchesUserId);
@@ -141,7 +141,7 @@ class QueryController extends Controller
                 preg_match('/\[(\d+)\]/', $replyText, $matchesUserId);
                 $originalMessageId = isset($matchesUserId[1]) ? $matchesUserId[1] : '';
 
-                Db::table('msg')->insert(['json' => ['$originalUserId' => $originalUserId, '$originalChatId' => $originalChatId, '$originalMessageId' => $originalMessageId]]);
+                Db::table('msg')->insert(['text' => $replyText]);
 
 
                 // 如果是管理员发送的回复，直接私聊原用户
