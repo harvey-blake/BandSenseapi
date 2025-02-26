@@ -131,7 +131,7 @@ class QueryController extends Controller
 
                 // 使用正则表达式提取用户 ID（假设 ID 在括号内）
                 preg_match('/\((\d+)\)/', $replyText, $matchesUserId);
-                $originalUserId = 0;
+                $originalUserId = isset($matchesUserId[1]) ? $matchesUserId[1] : '';
 
                 // 提取群 ID 和消息 ID
                 preg_match('/<(-?\d+)>/', $replyText, $matchesChatId);  // 用于匹配群ID，包括负号
@@ -303,12 +303,21 @@ class QueryController extends Controller
     public function getTransaction()
     {
         $replyText = "用户(7234953607)通过群<-1002419501505>[15]说: 可以";
+
+        // 使用正则表达式提取用户 ID（假设 ID 在括号内）
+        preg_match('/\((\d+)\)/', $replyText, $matchesUserId);
+        $originalUserId = isset($matchesUserId[1]) ? $matchesUserId[1] : '';
+
+        // 提取群 ID 和消息 ID
         preg_match('/<(-?\d+)>/', $replyText, $matchesChatId);  // 用于匹配群ID，包括负号
 
-        // 确保变量名一致，使用 $matchesChatId 获取群 ID
-        $originalChatId = isset($matchesChatId[1]) ? $matchesChatId[1] : '';
-        dump($originalChatId);  // 输出：-1002419501505
 
+        $originalChatId = isset($matchesUserId[1]) ? $matchesUserId[1] : '';
+
+        preg_match('/\[(\d+)\]/', $replyText, $matchesUserId);
+        $originalMessageId = isset($matchesUserId[1]) ? $matchesUserId[1] : '';
+
+        dump($originalUserId, $originalChatId, $originalMessageId);
         // sendReplyMessage($originalChatId, $userMessage, $originalMessageId);
         // $message = htmlspecialchars("用户(99)<88>[77]通过群说: 22", ENT_QUOTES, 'UTF-8'); // 转义特殊字符
         sendReplyMessage(-1002419501505, '$userMessage', 15);
