@@ -145,18 +145,10 @@ class QueryController extends Controller
                     $originalMessageId = $matches[3];  // 提取出的消息 ID
                 }
 
-                echo "用户ID: $originalUserId\n";
-                echo "群ID: $originalChatId\n";
-                echo "消息ID: $originalMessageId\n";
-
-
-
-
-
                 // 如果是管理员发送的回复，直接私聊原用户
                 if ($userId == $adminId) {
                     sendMessage($originalUserId, $userMessage);
-                } else if (!empty($originalUserId) && !empty($originalChatId)) {
+                } else if (!empty($originalChatId) && !empty($originalChatId)) {
                     //私聊消息
                     sendReplyMessage($originalChatId, $userMessage, $originalMessageId);
                 } else {
