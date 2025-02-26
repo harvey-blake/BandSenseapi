@@ -121,7 +121,7 @@ class CreateController extends Controller
         try {
             $myCallback = new CallbackController();
             $web3 = new Web3('https://polygon-amoy-bor-rpc.publicnode.com');
-            $abi = $abi = [
+            $abi = [
                 [
                     'constant' => true,
                     'inputs' => [
@@ -137,23 +137,13 @@ class CreateController extends Controller
                 ]
             ];
             $contract = new Contract($web3->provider, $abi);
-            // 查询余额
-            dump($contract->at('0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063'));
 
-            // $contract->at('0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063')->call('symbol');
-            // // 处理结果(可能每个代币都不一样，到时候需要修改的)
 
-            // dump($myCallback->result);
-            // $balance =  $myCallback->result['balance']->value;
-            // $balance = $balance / (10 ** 18);
-            // dump($balance);
-
-            $web3 = new Web3('https://data-seed-prebsc-1-s1.binance.org:8545');
-
-            $contract = new Contract($web3->provider, $abi);
-
-            $contract->at('0xDD2f7682429EBf4818eacC8C50102d0DA8772900')->call('balanceOf', '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063', $myCallback);
-            dump($myCallback->result);
+            $contract->at('0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063')->call('balanceOf', '0x6a7f9a2592f4a942c44712f829e5018e6d668a3d', $myCallback);
+            // 处理结果(可能每个代币都不一样，到时候需要修改的)
+            $balance =  $myCallback->result['balance']->value;
+            $balance = $balance / (10 ** 18);
+            dump($balance);
         } catch (\Throwable $th) {
             dump($th);
         }
