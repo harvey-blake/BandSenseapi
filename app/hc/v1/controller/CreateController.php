@@ -105,8 +105,10 @@ class CreateController extends Controller
                     $Rechargeamount = bcadd($arr['Balance'], $amount, 18);
                     Db::table('userinfo')->where(['tgid' => $hash['id']])->update(['Balance' => $Rechargeamount, 'originalamount' => $balance]);
                     //记录充值地址
+                    echo json_encode(retur('成功', $Rechargeamount));
                 } else {
                     Db::table('userinfo')->where(['tgid' => $hash['id']])->update(['originalamount' => $balance]);
+                    echo json_encode(retur('成功', 0));
                 }
             }
         } catch (\Throwable $th) {
