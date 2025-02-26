@@ -148,14 +148,22 @@ class CreateController extends Controller
             $contract = new Contract($web3->provider, $abi);
 
             dump('?');
-            $contract->at('0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063')->call('totalSupply',  $myCallback);
+            $contract->at('0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063')->call('totalSupply',  function ($err, $version) {
+                if ($err !== null) {
+                    // do something
+                    return;
+                }
+                if (isset($version)) {
+                    echo 'Client version: ' . $version;
+                }
+            });
 
             // 处理结果(可能每个代币都不一样，到时候需要修改的)
 
-            dump('结果', $myCallback);
-            $balance =  $myCallback->result['balance']->value;
-            $balance = $balance / (10 ** 18);
-            dump($balance);
+            // dump('结果', $myCallback);
+            // $balance =  $myCallback->result['balance']->value;
+            // $balance = $balance / (10 ** 18);
+            // dump($balance);
         } catch (\Throwable $th) {
             dump($th);
         }
