@@ -146,6 +146,7 @@ class CreateController extends Controller
                     // 检查 result 是否为 GMP 对象
                     $balanceBigInt = $result['balance'];
                     $balanceString = $balanceBigInt->toString();  // 转换为字符串
+                    dump($balanceString);
                 }
             });
 
