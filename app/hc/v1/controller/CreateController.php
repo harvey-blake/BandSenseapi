@@ -136,6 +136,9 @@ class CreateController extends Controller
             $abi = json_decode('[{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"}]');
             // $abi = json_decode('[{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"}]');
             $abi = Db::table('abi')->field('*')->where(['name' => 'erc20'])->find();
+            $abi = json_decode('[{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"}]');
+
+
             $contract = new Contract('https://polygon-bor-rpc.publicnode.com', $abi);
 
             $contract->at('0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063')->call('balanceOf', '0x6a7f9a2592f4a942c44712f829e5018e6d668a3d', $myCallback);
