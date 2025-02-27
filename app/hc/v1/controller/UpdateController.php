@@ -86,6 +86,31 @@ class  UpdateController extends Controller
             echo json_encode(retur('失败', '非法访问', 500));
         }
     }
+
+    public function Superior()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $hash = tgverification($data['hash']);
+
+        if (!$hash) {
+            echo json_encode(retur('失败', '非法访问', 409));
+            exit;
+        }
+
+        $Permissions =  Db::table('userinfo')->field('*')->where(['tgid' => $hash['id']])->find();
+
+        if ($Permissions['Superior']) {
+            echo json_encode(retur('失败', '上级ID已存在', 409));
+            exit;
+        }
+
+        $arr =  Db::table('userinfo')->where(['tgid' => $hash['id']])->update(['Superior' => $data['Superior']]);
+        if ($arr > 0) {
+            echo json_encode(retur('成功', $arr));
+        } else {
+            echo json_encode(retur('失败', '没更改任何数据', 409));
+        }
+    }
 }
 
 //用户充值 实现逻辑
