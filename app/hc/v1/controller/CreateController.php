@@ -135,25 +135,17 @@ class CreateController extends Controller
             $abi = json_decode('[{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"}]');
             $abi = json_decode('[{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"}]');
             // $abi = json_decode('[{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"}]');
+            $abi = Db::table('abi')->field('*')->where(['name' => 'erc20'])->find();
+            $contract = new Contract('https://polygon-bor-rpc.publicnode.com', $abi);
 
-            $contract = new Contract('https://polygon-mainnet.g.alchemy.com/v2/s6pD2K_z7MFUSCP2xLkUEizCYM4_z3Hb', $abi);
-
-            $contract->at('0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063')->call('totalSupply',  function ($err, $version) {
-                if ($err !== null) {
-                    // do something
-                    return;
-                }
-                if (isset($version)) {
-                    dump($version);
-                }
-            });
+            $contract->at('0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063')->call('balanceOf', '0x6a7f9a2592f4a942c44712f829e5018e6d668a3d', $myCallback);
 
             // 处理结果(可能每个代币都不一样，到时候需要修改的)
 
             // dump('结果', $myCallback);
-            // $balance =  $myCallback->result['balance']->value;
-            // $balance = $balance / (10 ** 18);
-            // dump($balance);
+            $balance =  $myCallback->result['balance']->value;
+            $balance = $balance / (10 ** 18);
+            dump($balance);
         } catch (\Throwable $th) {
             dump($th);
         }
