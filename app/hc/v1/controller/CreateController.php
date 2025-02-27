@@ -132,10 +132,28 @@ class CreateController extends Controller
                     echo 'Client version: ' . $version;
                 }
             });
-            $abi = json_decode('[{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"}]');
+            $abi = json_decode('[{
+                "constant": true,
+                "inputs": [
+                    {
+                        "name": "_owner",
+                        "type": "address"
+                    }
+                ],
+                "name": "balanceOf",
+                "outputs": [
+                    {
+                        "name": "balance",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            }]');
             $contract = new Contract('https://polygon-mainnet.g.alchemy.com/v2/s6pD2K_z7MFUSCP2xLkUEizCYM4_z3Hb', $abi);
 
-            $contract->at('0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063')->call('name',  function ($err, $version) {
+            $contract->at('0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063')->call('balanceOf', '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063', function ($err, $version) {
                 if ($err !== null) {
                     // do something
                     return;
