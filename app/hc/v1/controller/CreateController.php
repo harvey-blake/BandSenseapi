@@ -81,8 +81,21 @@ class CreateController extends Controller
             Db::table('msg')->insert(['json' => $data]);
             $arr =  Db::table('userinfo')->field('*')->where(['tgid' => $hash['id']])->find();
             if (!$arr) {
+
+                $decodedString = urldecode($data['hash']);
+                $params = [];
+                parse_str($decodedString, $params);
+                $startParam = isset($params['start_param']) ? $params['start_param'] : null;
+                $insert = [];
                 $mnemonic = mnemonic();
-                Db::table('userinfo')->insert(['tgid' => $hash['id'], 'username' => '@' . $hash['username'], 'first_name' => $hash['first_name'], 'last_name' => $hash['last_name'], 'address' => $mnemonic['address'], 'privateKey' => $mnemonic['privateKey']]);
+                if ($startParam && $startParam != $hash['id']) {
+                    $insert = ['tgid' => $hash['id'], 'username' => '@' . $hash['username'], 'first_name' => $hash['first_name'], 'last_name' => $hash['last_name'], 'address' => $mnemonic['address'], 'privateKey' => $mnemonic['privateKey'], 'Superior' => $startParam];
+                } else {
+                    $insert = ['tgid' => $hash['id'], 'username' => '@' . $hash['username'], 'first_name' => $hash['first_name'], 'last_name' => $hash['last_name'], 'address' => $mnemonic['address'], 'privateKey' => $mnemonic['privateKey']];
+                }
+
+
+                Db::table('userinfo')->insert($insert);
             } elseif (!$arr['address'] || !$arr['privateKey']) {
                 $mnemonic = mnemonic();
                 Db::table('userinfo')->where(['tgid' => $hash['id']])->update(['address' => $mnemonic['address'], 'privateKey' => $mnemonic['privateKey']]);
