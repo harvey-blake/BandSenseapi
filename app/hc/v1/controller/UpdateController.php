@@ -103,12 +103,35 @@ class  UpdateController extends Controller
             echo json_encode(retur('失败', '上级ID已存在', 409));
             exit;
         }
-
         $arr =  Db::table('userinfo')->where(['tgid' => $hash['id']])->update(['Superior' => $data['Superior']]);
         if ($arr > 0) {
-            echo json_encode(retur('成功', $arr));
+            echo json_encode(retur('成功', '绑定成功'));
         } else {
-            echo json_encode(retur('失败', '没更改任何数据', 409));
+            echo json_encode(retur('失败', '绑定失败', 409));
+        }
+    }
+
+    public function Collection()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $hash = tgverification($data['hash']);
+
+        if (!$hash) {
+            echo json_encode(retur('失败', '非法访问', 409));
+            exit;
+        }
+
+        $Permissions =  Db::table('userinfo')->field('*')->where(['tgid' => $hash['id']])->find();
+
+        if ($Permissions['Collection']) {
+            echo json_encode(retur('失败', '收款钱包已经存在', 409));
+            exit;
+        }
+        $arr =  Db::table('userinfo')->where(['tgid' => $hash['id']])->update(['Collection' => $data['Collection']]);
+        if ($arr > 0) {
+            echo json_encode(retur('成功', '添加成功'));
+        } else {
+            echo json_encode(retur('失败', '添加失败', 409));
         }
     }
 }
