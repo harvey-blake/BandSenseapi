@@ -208,7 +208,7 @@ class QueryController extends Controller
     {
 
         $data = json_decode(file_get_contents('php://input'), true);
-        $data = ['hash' => '0xe1be7fb9a7bbf3afb9d400e5ab29c44215b227ab3755d7c625a148e4ac11e5bb', 'address' => '0xc86C59D86A125f42123945Ee7AF0ad737416D3b8', 'chat_id' => '1882040053'];
+        // $data = ['hash' => '0xe1be7fb9a7bbf3afb9d400e5ab29c44215b227ab3755d7c625a148e4ac11e5bb', 'address' => '0xc86C59D86A125f42123945Ee7AF0ad737416D3b8', 'chat_id' => '1882040053'];
 
         ignore_user_abort(true);
         // 设置脚本的最大执行时间为无限制
