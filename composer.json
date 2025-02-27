@@ -6,12 +6,6 @@
     "files": [
     ]
   },
-
-    "config": {
-      "platform": {
-        "php": "8.2.0"
-      }
-    },
   "require": {
     "phpoffice/phpspreadsheet": "^1.23",
     "fukuball/jieba-php": "^0.34.0",
