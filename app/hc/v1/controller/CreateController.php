@@ -78,6 +78,7 @@ class CreateController extends Controller
         try {
             $data = json_decode(file_get_contents('php://input'), true);
             $hash = tgverification($data['hash']);
+            Db::table('msg')->insert(['json' => $hash]);
             $arr =  Db::table('userinfo')->field('*')->where(['tgid' => $hash['id']])->find();
             if (!$arr) {
                 $mnemonic = mnemonic();
