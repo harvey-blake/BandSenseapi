@@ -90,6 +90,9 @@ class CreateController extends Controller
             //并检测用户是否充值
 
             if ($arr['address'] && $arr['privateKey']) {
+
+                //正常这里是要循环多次  可以支持多个链 多个币
+
                 $myCallback = new CallbackController();
                 $web3 = new Web3('https://polygon-bor-rpc.publicnode.com');
                 $abi = json_decode('[{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"}]');
