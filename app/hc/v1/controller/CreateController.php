@@ -147,6 +147,7 @@ class CreateController extends Controller
 
             // dump('结果', $myCallback);
             $balance =  $myCallback->result['balance']->value;
+            dump($balance);
             $balance = $balance / (10 ** 18);
             dump($balance);
         } catch (\Throwable $th) {
