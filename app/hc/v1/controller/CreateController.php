@@ -141,7 +141,7 @@ class CreateController extends Controller
                     return;
                 }
                 if (isset($version)) {
-                    dump($version[0]);
+                    dump($version);
                 }
             });
 
