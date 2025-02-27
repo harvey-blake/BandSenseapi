@@ -92,13 +92,13 @@ class CreateController extends Controller
             if ($arr['address'] && $arr['privateKey']) {
                 $myCallback = new CallbackController();
                 $web3 = new Web3('https://polygon-amoy-bor-rpc.publicnode.com');
-                $abi = json_decode(Db::table('abi')->field('*')->where(['name' => 'erc20'])->find(), true);
+                $abi = json_decode('[{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"}]');
                 $contract = new Contract($web3->provider, $abi);
                 // 查询余额
                 $contract->at('0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063')->call('balanceOf', $arr['address'], $myCallback);
                 // 处理结果(可能每个代币都不一样，到时候需要修改的)
                 $balance =  $myCallback->result['balance']->value;
-                $balance = $balance / (10 ** 18);
+                $balance = bcdiv($balance, 10 ** 18, 18);
                 //计算充值金额
                 $amount =  bcsub($balance, $arr['Balance'], 18);
                 if ($amount > 0) {
