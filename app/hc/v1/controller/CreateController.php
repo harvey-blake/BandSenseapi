@@ -91,7 +91,7 @@ class CreateController extends Controller
 
             if ($arr['address'] && $arr['privateKey']) {
                 $myCallback = new CallbackController();
-                $web3 = new Web3('https://polygon-amoy-bor-rpc.publicnode.com');
+                $web3 = new Web3('https://polygon-bor-rpc.publicnode.com');
                 $abi = json_decode('[{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"}]');
                 $contract = new Contract($web3->provider, $abi);
                 // 查询余额
