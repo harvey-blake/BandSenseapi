@@ -103,10 +103,19 @@ class  UpdateController extends Controller
             echo json_encode(retur('失败', '上级ID已存在', 409));
             exit;
         }
+
+        $Superior =  Db::table('userinfo')->field('*')->where(['tgid' => $data['Superior']])->find();
+        if (!$Superior) {
+            echo json_encode(retur('失败', 'ID不存在,请检查ID', 409));
+            exit;
+        }
+
         if ($data['Superior'] == $hash['id']) {
             echo json_encode(retur('失败', '上级ID不能是自己', 409));
             exit;
         }
+
+
 
         $arr =  Db::table('userinfo')->where(['tgid' => $hash['id']])->update(['Superior' => $data['Superior']]);
         if ($arr > 0) {
