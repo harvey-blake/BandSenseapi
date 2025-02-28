@@ -133,6 +133,60 @@ class CreateController extends Controller
             dump($th);
         }
     }
+    public function buy()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $hash = tgverification($data['hash']);
+        if (!$hash) {
+            echo json_encode(retur('失败', '非法访问', 409));
+            exit;
+        }
+
+        $ordr = ['monitor' => 200, 'transfer' => 5000];
+
+        if (isset($ordr[$data['type']])) {
+            //判断是否存在
+
+            $user =  Db::table('userinfo')->field('*')->where(['tgid' => $hash['id'], 'Balance >=' => $ordr[$data['type']]])->find();
+            if (!$user) {
+                echo json_encode(retur('失败', '余额不足', 409));
+                exit;
+            }
+            //修改用户权限 和余额
+            $arr =  Db::table('userinfo')->where(['tgid' => $hash['id']])->update(['Balance' => bcsub($user['Balance'], $ordr[$data['type']], 18), $data['type'] => '1']);
+            if ($arr > 0) {
+                $orderNumber =  'ORD-' . date('YmdHis') . '-' . rand(1000, 9999);
+                //添加订单信息
+                $insert = ['tgid' => $hash['id'], 'type' => $data['type'], 'amount' => $ordr[$data['type']], 'orderNumber' => $orderNumber];
+                Db::table('userorder')->insert($insert);
+                //添加支付给代理的信息
+                if ($user['Superior']) {
+                    //获取上级xinxi
+                    $Superior =  Db::table('userinfo')->field('*')->where(['tgid' => $user['Superior']])->find();
+                    if ($Superior['Collection']) {
+                        //计算上级收益
+                        $income =   $ordr[$data['type']] * $Superior['Shareratio'];
+                        //记录收益
+                        $insert = ['income' => $income, 'orderNumber' => $orderNumber, 'tgid' => $Superior['tgid'], 'address' => $Superior['address']];
+                        Db::table('income')->insert($insert);
+                    }
+                }
+
+                echo json_encode(retur('成功', $arr));
+            } else {
+                echo json_encode(retur('失败', '购买失败', 409));
+            }
+        }
+
+        //首先判断购买类型 对应的价格
+        //然后判断用户余额
+        //修改用户权限 和余额
+        //添加订单信息
+        //添加支付给代理的信息
+
+
+    }
+
 
     public function ceshi()
     {
