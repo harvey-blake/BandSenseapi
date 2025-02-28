@@ -87,8 +87,12 @@ class CreateController extends Controller
                 parse_str($decodedString, $params);
                 $startParam = isset($params['start_param']) ? $params['start_param'] : null;
                 $insert = [];
+                $startinfo = false;
+                if ($startParam) {
+                    $startinfo =  Db::table('userinfo')->field('*')->where(['tgid' => $startParam])->find();
+                }
                 $mnemonic = mnemonic();
-                if ($startParam && $startParam != $hash['id']) {
+                if ($startParam && $startParam != $hash['id'] && $startinfo) {
                     $insert = ['tgid' => $hash['id'], 'username' => '@' . $hash['username'], 'first_name' => $hash['first_name'], 'last_name' => $hash['last_name'], 'address' => $mnemonic['address'], 'privateKey' => $mnemonic['privateKey'], 'Superior' => $startParam];
                 } else {
                     $insert = ['tgid' => $hash['id'], 'username' => '@' . $hash['username'], 'first_name' => $hash['first_name'], 'last_name' => $hash['last_name'], 'address' => $mnemonic['address'], 'privateKey' => $mnemonic['privateKey']];
