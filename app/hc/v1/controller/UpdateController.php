@@ -103,6 +103,11 @@ class  UpdateController extends Controller
             echo json_encode(retur('失败', '上级ID已存在', 409));
             exit;
         }
+        if ($data['Superior'] == $hash['id']) {
+            echo json_encode(retur('失败', '上级ID不能是自己', 409));
+            exit;
+        }
+
         $arr =  Db::table('userinfo')->where(['tgid' => $hash['id']])->update(['Superior' => $data['Superior']]);
         if ($arr > 0) {
             echo json_encode(retur('成功', '绑定成功'));
