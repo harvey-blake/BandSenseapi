@@ -84,7 +84,8 @@ class TokenController extends Controller
             . "📥 *您的钱包尾号  收到代币转账！*\n"
             . "📌 *代币名称*   \n"
             . "💰 *数量*： \n"
-            . "🔗 *交易哈希*：[查看交易](https://polygonscan.com/tx/) \n\n";
+            . "🔗 *交易哈希*：`inline fixed-width code` \n\n"
+            . "*查看交易:* [查看交易](https://polygonscan.com/tx/)";
 
         // 构建请求 URL 和数据
         $url = "https://api.telegram.org/bot$apiToken/sendMessage";
