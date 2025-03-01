@@ -80,11 +80,11 @@ class TokenController extends Controller
         // >The last line of the expandable block quotation with the expandability mark||";
 
         // 只转义会破坏 MarkdownV2 格式的特殊字符
-        $message = "*【代币监听提醒】* \n";
-        // . "📥 *您的钱包尾号 $toaddress 收到代币转账！*\n"
-        // . "📌 *代币名称*：$toeknname  \n"
-        // . "💰 *数量*：$amount \n"
-        // . "🔗 *交易哈希*：<a href='https://polygonscan.com/tx/$txHash'>查看交易</a> \n\n";
+        $message = "*【代币监听提醒】* \n"
+            . "📥 *您的钱包尾号  收到代币转账！*\n"
+            . "📌 *代币名称*   \n"
+            . "💰 *数量*： \n"
+            . "🔗 *交易哈希*：[查看交易](https://polygonscan.com/tx/) \n\n";
 
         // 构建请求 URL 和数据
         $url = "https://api.telegram.org/bot$apiToken/sendMessage";
