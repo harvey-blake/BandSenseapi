@@ -11,6 +11,7 @@ use Web3\Web3;
 use Web3\Contract;
 use common\CallbackController;
 use Web3\Providers\HttpAsyncProvider;
+use function telegram\sendMessage;
 
 
 
@@ -84,29 +85,14 @@ class TokenController extends Controller
             . "📥 *您的钱包尾号  收到代币转账！*\n"
             . "📌 *代币名称*   \n"
             . "💰 *数量*： \n"
-            . "🔗 *交易哈希*：`inline fixed-width code` \n\n"
-            . "   *查看交易:* [查看交易](https://polygonscan.com/tx/0x948c83afa2b69438fbbda643ced62a68b53ba3ceafb2501340d0b9b9520901e4)";
+            . "🔗 *交易哈希*：[查看交易](https://polygonscan.com/tx/0x948c83afa2b69438fbbda643ced62a68b53ba3ceafb2501340d0b9b9520901e4) \n\n"
+            . " **>The expandable block quotation started right after the previous block quotation
+         >It is separated from the previous block quotation by an empty bold entity
+         >Expandable block quotation continued
+         >Hidden by default part of the expandable block quotation started
+         >Expandable block quotation continued
+         >The last line of the expandable block quotation with the expandability mark||";
 
-        // 构建请求 URL 和数据
-        $url = "https://api.telegram.org/bot$apiToken/sendMessage";
-        $postData = http_build_query([
-            'chat_id' => $chatId,
-            'text' => $message,
-            'parse_mode' => 'MarkdownV2',  // 使用 MarkdownV2 解析模式
-        ]);
-
-        // 使用 file_get_contents 发送请求
-        $options = [
-            'http' => [
-                'method'  => 'POST',
-                'header'  => "Content-Type: application/x-www-form-urlencoded\r\n",
-                'content' => $postData,
-            ]
-        ];
-        $context  = stream_context_create($options);
-        $response = file_get_contents($url, false, $context);
-
-        // 输出结果
-        echo $response;
+        sendMessage($chatId, $message);
     }
 }
