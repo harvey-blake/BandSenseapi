@@ -47,33 +47,41 @@ class TokenController extends Controller
         $chatId = "1882040053";               // 替换成你的 Chat ID
 
         // 原始消息内容
-        $message = "*bold \*text*
-_italic \*text_
-__underline__
-~strikethrough~
-||spoiler||
-*bold _italic bold ~italic bold strikethrough ||italic bold strikethrough spoiler||~ __underline italic bold___ bold*
-[inline URL](http://www.example.com/)
-[inline mention of a user](tg://user?id=123456789)
-![👍](tg://emoji?id=5368324170671202286)
-`inline fixed-width code`
-```
-pre-formatted fixed-width code block
-```
-```python
-pre-formatted fixed-width code block written in the Python programming language
-```
->Block quotation started
->Block quotation continued
->Block quotation continued
->Block quotation continued
->The last line of the block quotation
-**>The expandable block quotation started right after the previous block quotation
->It is separated from the previous block quotation by an empty bold entity
->Expandable block quotation continued
->Hidden by default part of the expandable block quotation started
->Expandable block quotation continued
->The last line of the expandable block quotation with the expandability mark||";
+
+
+        $message = "*【代币监听提醒】*\n\n"
+        // . "📥 *您的钱包尾号 $toaddress 收到代币转账！*\n"
+        // . "📌 *代币名称*：$toeknname  \n"
+        // . "💰 *数量*：$amount \n"
+        // . "🔗 *交易哈希*：<a href='https://polygonscan.com/tx/$txHash'>查看交易</a> \n\n";
+
+//         $message = "*bold \*text*
+//  _italic \*text_
+// __underline__
+// ~strikethrough~
+// ||spoiler||
+// *bold _italic bold ~italic bold strikethrough ||italic bold strikethrough spoiler||~ __underline italic bold___ bold*
+// [inline URL](http://www.example.com/)
+// [inline mention of a user](tg://user?id=123456789)
+// ![👍](tg://emoji?id=5368324170671202286)
+// `inline fixed-width code`
+// ```
+// pre-formatted fixed-width code block
+// ```
+// ```python
+// pre-formatted fixed-width code block written in the Python programming language
+// ```
+// >Block quotation started
+// >Block quotation continued
+// >Block quotation continued
+// >Block quotation continued
+// >The last line of the block quotation
+// **>The expandable block quotation started right after the previous block quotation
+// >It is separated from the previous block quotation by an empty bold entity
+// >Expandable block quotation continued
+// >Hidden by default part of the expandable block quotation started
+// >Expandable block quotation continued
+// >The last line of the expandable block quotation with the expandability mark||";
 
         // 只转义会破坏 MarkdownV2 格式的特殊字符
 
