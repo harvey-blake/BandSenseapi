@@ -25,12 +25,18 @@ class TokenController extends Controller
 
         echo json_encode(retur('成功', $arr));
     }
+
+    public function gettoken()
+    {
+        //除开0地址  根据链ID 获取
+        $data = json_decode(file_get_contents('php://input'), true);
+        $arr =  Db::table('tokenlist')->where(['chain' => $data['chain'], 'address !=' => '0x0000000000000000000000000000000000001010'])->select();
+        echo json_encode(retur('成功', $arr));
+    }
     public function getaddress()
     {
         $data = json_decode(file_get_contents('php://input'), true);
         $arr =  Db::table('onaddress')->where(['token' => $data['token']])->select();
         echo json_encode(retur('成功', $arr));
     }
-
-    public function gettoken() {}
 }
