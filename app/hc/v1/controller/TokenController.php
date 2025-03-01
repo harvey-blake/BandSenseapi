@@ -47,7 +47,7 @@ class TokenController extends Controller
         $chatId = "1882040053";               // 替换成你的 Chat ID
 
         // 要发送的消息
-        $message = "`inline fixed-width code`";
+        $message = "[inline URL](http://www.example.com/)";
 
         // 转义 MarkdownV2 特殊字符
         $specialChars = ['_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!'];
