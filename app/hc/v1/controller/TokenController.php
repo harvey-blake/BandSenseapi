@@ -47,24 +47,25 @@ class TokenController extends Controller
         $chatId = "1882040053";               // 替换成你的 Chat ID
 
         // 原始消息内容
-        $message = "*bold \\*text*\n"
-            . "_italic \\*text_\n"
-            . "__underline__\n"
-            . "~strikethrough~\n"
-            . "||spoiler||\n"
-            . "*bold _italic bold ~italic bold strikethrough ||italic bold strikethrough spoiler||~ __underline italic bold___ bold*\n"
-            . "[inline URL](http://www.example.com/)\n"
-            . "[inline mention of a user](tg://user?id=123456789)\n"
-            . "![👍](tg://emoji?id=5368324170671202286)\n"
-            . "`inline fixed-width code`\n"
-            . "```\npre-formatted fixed-width code block\n```\n"
-            . "```python\npre-formatted fixed-width code block written in the Python programming language\n```\n";
+        $message = "*bold \*text*
+_italic \*text_
+__underline__
+~strikethrough~
+||spoiler||
+*bold _italic bold ~italic bold strikethrough ||italic bold strikethrough spoiler||~ __underline italic bold___ bold*
+[inline URL](http://www.example.com/)
+[inline mention of a user](tg://user?id=123456789)
+![👍](tg://emoji?id=5368324170671202286)
+`inline fixed-width code`
+```
+pre-formatted fixed-width code block
+```
+```python
+pre-formatted fixed-width code block written in the Python programming language
+```";
 
         // 只转义会破坏 MarkdownV2 格式的特殊字符
-        $escapeChars = ['_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!'];
-        foreach ($escapeChars as $char) {
-            $message = str_replace($char, '\\' . $char, $message);
-        }
+
 
         // 构建请求 URL 和数据
         $url = "https://api.telegram.org/bot$apiToken/sendMessage";
