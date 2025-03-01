@@ -2,7 +2,8 @@
 
 namespace app\hc\v1\controller;
 
-require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'telegram' . DIRECTORY_SEPARATOR . 'telegram.php';
+require dirname(__DIR__, 3) . DIRECTORY_SEPARATOR . 'telegram' . DIRECTORY_SEPARATOR . 'telegram.php';
+
 
 use Db\Db;
 use function common\dump;
