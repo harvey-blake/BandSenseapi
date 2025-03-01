@@ -63,7 +63,19 @@ class QueryController extends Controller
         $arr =  Db::table('user')->where(['grade' => '1'])->select();
         echo json_encode(retur('成功', $arr));
     }
+    public function userswitch()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        // 获取用户信息
+        $user = Db::table('user')->where($data)->find();
 
+        // 确保查询到用户数据后进行处理
+        if ($user) {
+            // 判断 'switch' 字段的值，若为 '1' 则更新为 '0'，否则更新为 '1'
+            $newSwitchValue = isset($data['Manageprivatekeys']) ? '0' : '1';
+            Db::table('user')->where($data)->update(['switch' => $newSwitchValue]);
+        }
+    }
 
     //添加时 获取chain
     public function chain()
