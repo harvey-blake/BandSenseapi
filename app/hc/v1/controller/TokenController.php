@@ -46,7 +46,7 @@ class TokenController extends Controller
         $apiToken = '7949382682:AAGhPeyqz4ru183scmko8bIjdxp37G3Bs0k';  // 替换成你的 Bot Token
         $chatId = "1882040053";               // 替换成你的 Chat ID
 
-        // 要发送的消息
+        // 原始消息内容
         $message = "*bold \\*text*\n"
             . "_italic \\*text_\n"
             . "__underline__\n"
@@ -55,21 +55,14 @@ class TokenController extends Controller
             . "*bold _italic bold ~italic bold strikethrough ||italic bold strikethrough spoiler||~ __underline italic bold___ bold*\n"
             . "[inline URL](http://www.example.com/)\n"
             . "[inline mention of a user](tg://user?id=123456789)\n"
+            . "![👍](tg://emoji?id=5368324170671202286)\n"
             . "`inline fixed-width code`\n"
             . "```\npre-formatted fixed-width code block\n```\n"
-            . "```python\npre-formatted fixed-width code block written in the Python programming language\n```\n"
-            . ">Block quotation started\n"
-            . ">Block quotation continued\n"
-            . "**>The expandable block quotation started right after the previous block quotation\n"
-            . ">It is separated from the previous block quotation by an empty bold entity\n"
-            . ">Expandable block quotation continued\n"
-            . ">Hidden by default part of the expandable block quotation started\n"
-            . ">Expandable block quotation continued\n"
-            . ">The last line of the expandable block quotation with the expandability mark||\n";
+            . "```python\npre-formatted fixed-width code block written in the Python programming language\n```\n";
 
-        // 转义 MarkdownV2 特殊字符（保留格式）
-        $specialChars = ['_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!'];
-        foreach ($specialChars as $char) {
+        // 只转义会破坏 MarkdownV2 格式的特殊字符
+        $escapeChars = ['_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!'];
+        foreach ($escapeChars as $char) {
             $message = str_replace($char, '\\' . $char, $message);
         }
 
@@ -78,7 +71,7 @@ class TokenController extends Controller
         $postData = http_build_query([
             'chat_id' => $chatId,
             'text' => $message,
-            'parse_mode' => 'MarkdownV2',
+            'parse_mode' => 'MarkdownV2',  // 使用 MarkdownV2 解析模式
         ]);
 
         // 使用 file_get_contents 发送请求
@@ -93,6 +86,6 @@ class TokenController extends Controller
         $response = file_get_contents($url, false, $context);
 
         // 输出结果
-        dump($response);
+        echo $response;
     }
 }
