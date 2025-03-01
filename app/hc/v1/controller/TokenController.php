@@ -80,7 +80,7 @@ class TokenController extends Controller
         // >The last line of the expandable block quotation with the expandability mark||";
 
         // 只转义会破坏 MarkdownV2 格式的特殊字符
-        $message = "*【代币监听提醒】* \n"
+        $message = "*【代币监听提醒】* \n\n"
             . "📥 *您的钱包尾号  收到代币转账！*\n"
             . "📌 *代币名称*   \n"
             . "💰 *数量*： \n"
