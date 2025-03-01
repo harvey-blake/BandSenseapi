@@ -25,4 +25,12 @@ class TokenController extends Controller
 
         echo json_encode(retur('成功', $arr));
     }
+    public function getaddress()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $arr =  Db::table('onaddress')->where(['token' => $data['token']])->select();
+        echo json_encode(retur('成功', $arr));
+    }
+
+    public function gettoken() {}
 }
