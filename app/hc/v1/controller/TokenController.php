@@ -47,24 +47,29 @@ class TokenController extends Controller
     {
 
         // 配置写在函数内部
-        $apiToken = '7949382682:AAGhPeyqz4ru183scmko8bIjdxp37G3Bs0k';  // 替换成你的 Bot Token
-        $chatId = "1882040053";               // 替换成你的 Chat ID
+        $data = json_decode(file_get_contents('php://input'), true);
+
+
 
         // 原始消息内容
 
-
-
+        $toaddress = substr($data['to'], -6);
+        $fromaddress = $data['from'];
+        $name = $data['name'];
+        $value = $data['value'];
+        $hash = $data['hash'];
 
         // 只转义会破坏 MarkdownV2 格式的特殊字符
         $message = "*【代币监听提醒】* \n\n"
-            . "📥 *您的钱包尾号  收到代币转账！*\n"
-            . "📌 *代币名称*   \n"
-            . "💰 *数量*： \n"
-            . "🔗 *交易哈希*：[查看交易](https://polygonscan.com/tx/0x948c83afa2b69438fbbda643ced62a68b53ba3ceafb2501340d0b9b9520901e4) \n";
+            . "📥 *您的钱包尾号 $toaddress 收到代币转账！*\n"
+            . "📓 *来源地址* $fromaddress "
+            . "📌 *代币名称* $name   \n"
+            . "💰 *代币数量* $value \n"
+            . "🔗 *交易哈希*：[查看交易](https://polygonscan.com/tx/$hash) \n";
 
 
 
 
-        sendMessage($chatId, $message);
+        sendMessage($data['userid'], $message);
     }
 }
