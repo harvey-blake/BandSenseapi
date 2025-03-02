@@ -46,27 +46,31 @@ function botsendMessage($apiToken, $chatId, $message, $photoId = null, $videoId 
 {
 
     $apiToken = $apiToken;
-    $url = "https://api.telegram.org/bot$apiToken/sendMessage";
 
-    $message = MarkdownV2($photoId);
 
+    $message = MarkdownV2($message);
+    $method = 'sendMessage';
     $data = [
         'chat_id' => $chatId,
         'text' => $message,
         'parse_mode' => 'MarkdownV2',  // 使用 MarkdownV2 解析模式
-        'photo' => $photoId,
     ];
 
-
-    $data['photo'] = $message; // 图片的 file_id
-
+    if ($photoId) {
+        $data['photo'] = $photoId; // 图片的 file_id
+        $method = 'sendPhoto';
+    };
 
     if ($videoId) {
         $data['video'] = $videoId; // 图片的 file_id
+        $method = 'sendVideo';
     }
     if ($message_id) {
         $data['reply_to_message_id'] = $message_id; // 引用的消息 ID
     }
+
+
+    $url = "https://api.telegram.org/bot$apiToken/$method";
     $postData = http_build_query($data);
 
     // 使用 file_get_contents 发送请求
@@ -76,10 +80,6 @@ function botsendMessage($apiToken, $chatId, $message, $photoId = null, $videoId 
             'content' => $postData,
         ]
     ];
-    // 发送 GET 请求并获取响应
-    $url = $url  . $postData;
-    $response = file_get_contents($url);
-
-    // $context  = stream_context_create($options);
-    // file_get_contents($url, false, $context);
+    $context  = stream_context_create($options);
+    file_get_contents($url, false, $context);
 }
