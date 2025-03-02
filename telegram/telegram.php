@@ -58,12 +58,14 @@ function botsendMessage($apiToken, $chatId, $message, $photoId = null, $videoId 
 
     if ($photoId) {
         $data['photo'] = $photoId; // 图片的 file_id
+        $data['caption'] = $message; // 视频的文本消息
         $method = 'sendPhoto';
     };
 
     if ($videoId) {
         $data['video'] = $videoId; // 图片的 file_id
         $method = 'sendVideo';
+        $data['caption'] = $message; // 视频的文本消息
     }
     if ($message_id) {
         $data['reply_to_message_id'] = $message_id; // 引用的消息 ID
