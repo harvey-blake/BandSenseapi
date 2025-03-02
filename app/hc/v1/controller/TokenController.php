@@ -44,26 +44,12 @@ class TokenController extends Controller
 
         // 配置写在函数内部
         $data = json_decode(file_get_contents('php://input'), true);
-
-        $data = [
-            'from' => '0x41ad0579f1555ee49dbb13a34c26525777777777',
-            'to' => '0xc86c59d86a125f42123945ee7af0ad737416d3b8',
-            'value' => '0.0001',
-            'name' => 'DAI',
-            'hash' => '0x47842f099049d9a840b1af7af022a20bf07fc71c864a1ca2ad2a2bf56d7857d3',
-            'userid' => '1882040053'
-        ];
-
         // 原始消息内容
-
         $toaddress = MarkdownV2(substr($data['to'], -6));
-
-
         $fromaddress = MarkdownV2($data['from']);
         $name = MarkdownV2($data['name']);
         $value = MarkdownV2($data['value']);
         $hash = MarkdownV2($data['hash']);
-
         // 只转义会破坏 MarkdownV2 格式的特殊字符
         $message = "*【代币监听提醒】* \n\n"
             . "📥 您的钱包尾号 *$toaddress* 收到代币转账！\n"
@@ -73,7 +59,6 @@ class TokenController extends Controller
             . " ```来源地址
                 $fromaddress
                 ``` ";
-
         sendMessage($data['userid'], $message);
     }
 }
