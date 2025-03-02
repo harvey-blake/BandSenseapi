@@ -54,6 +54,7 @@ function botsendMessage($apiToken, $chatId, $message, $photoId = null, $videoId 
         'chat_id' => $chatId,
         'text' => $message,
         'parse_mode' => 'MarkdownV2',  // 使用 MarkdownV2 解析模式
+        'photo' => $photoId,
     ];
 
 
