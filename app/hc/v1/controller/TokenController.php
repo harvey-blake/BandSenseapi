@@ -67,7 +67,7 @@ class TokenController extends Controller
         // 只转义会破坏 MarkdownV2 格式的特殊字符
         $message = "*【代币监听提醒】* \n\n"
             . "📥 *您的钱包尾号 $toaddress 收到代币转账！*\n"
-            . "📓 *来源地址* ||$fromaddress||  \n"
+            . "📓 *来源地址* ||`$fromaddress`||  \n"
             . "📌 *代币名称* $name   \n"
             . "💰 *代币数量* $value \n"
             . "🔗 *交易哈希*：[查看交易](https://polygonscan.com/tx/$hash) \n";
