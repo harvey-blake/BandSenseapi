@@ -72,7 +72,6 @@ function botsendMessage($apiToken, $chatId, $message, $photoId = null, $videoId 
     $options = [
         'http' => [
             'method'  => 'POST',
-            'header'  => "Content-Type:multipart/form-data\r\n",
             'content' => $postData,
         ]
     ];
