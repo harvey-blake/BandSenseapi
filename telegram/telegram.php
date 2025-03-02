@@ -56,14 +56,12 @@ function botsendMessage($apiToken, $chatId, $message, $photoId = null, $videoId 
         'parse_mode' => 'MarkdownV2',  // 使用 MarkdownV2 解析模式
     ];
 
-    if ($photoId) {
-        $data['photo'] = $photoId; // 图片的 file_id
-        $data['caption'] = $message; // 图片的文本消息
-    };
+
+    $data['photo'] = $photoId; // 图片的 file_id
+
 
     if ($videoId) {
         $data['video'] = $videoId; // 图片的 file_id
-        $data['caption'] = $message;
     }
     if ($message_id) {
         $data['reply_to_message_id'] = $message_id; // 引用的消息 ID
