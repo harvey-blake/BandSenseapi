@@ -84,17 +84,34 @@ class TokenController extends Controller
             // 检查是否有视频
             if (isset($update["message"]["video"])) {
                 $videoId = $update["message"]["video"]["file_id"];
+                $userMessage = isset($update["message"]["video"]["caption"]) ? $update["message"]["video"]["caption"] : null; // 获取视频的描述（如果有）
             }
             // 检查是否有图片
             if (isset($update["message"]["photo"])) {
                 // Telegram 会提供不同尺寸的图片，这里取最后一个尺寸作为原始图片
                 $photoId = $update["message"]["photo"][count($update["message"]["photo"]) - 1]["file_id"];
+                $userMessage = isset($update["message"]["caption"]) ? $update["message"]["caption"] : null; // 获取图片的描述（如果有）
             }
             $adminId = '1882040053';  // 管理员 ID
             // 检查是否为引用消息
             if (isset($update["message"]["reply_to_message"])) {
                 // 使用正则表达式提取用户 ID（假设 ID 在括号内）
-                $replyText =  $update["message"]["reply_to_message"]["text"];
+
+                $replyToMessage = $update["message"]["reply_to_message"];
+                $replyText =  $replyToMessage["text"];
+                // 检查引用的消息是否包含图片
+                if (isset($replyToMessage["photo"])) {
+                    // Telegram 会提供不同尺寸的图片，取最后一个作为原始图片
+                    $replyText = isset($replyToMessage["caption"]) ? $replyToMessage["caption"] : $replyText; // 获取图片描述，如果没有则为空
+
+                }
+
+                // 检查引用的消息是否包含视频
+                if (isset($replyToMessage["video"])) {
+                    $replyText = isset($replyToMessage["caption"]) ? $replyToMessage["caption"] : $replyText; // 获取视频描述
+                }
+
+
                 // 使用正则表达式提取用户 ID（假设 ID 在括号内）
                 preg_match('/\((\d+)\)/', $replyText, $matchesUserId);
                 $originalUserId = isset($matchesUserId[1]) ? $matchesUserId[1] : '';
