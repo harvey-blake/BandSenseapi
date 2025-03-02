@@ -61,4 +61,91 @@ class TokenController extends Controller
                 ``` ";
         sendMessage($data['userid'], $message);
     }
+
+
+    public function bot($can)
+    {
+        dump($can);
+    }
+
+    //接收消息
+    //    public function bot()
+    //    {
+    //        // 解析 Telegram 发送的数据
+    //        $update = json_decode(file_get_contents("php://input"), true);
+
+    //        // 检查是否有消息
+    //        if (isset($update["message"])) {
+    //            $chatId = $update["message"]["chat"]["id"];  // 发送者的 Chat ID
+    //            $userMessage = $update["message"]["text"];   // 用户发送的消息
+    //            $userId = $update["message"]["from"]["id"];  // 发送者的 Telegram ID
+    //            $firstName = $update["message"]["from"]["first_name"] ?? ''; // 发送者的名字
+    //            $messageId = $update["message"]["message_id"]; // 该消息的 ID
+    //            $chatType = $update["message"]["chat"]["type"]; // 获取 chat 类型
+
+    //            $videoId = null;
+    //            $photoId = null;
+
+    //            // 检查是否有视频
+    //            if (isset($update["message"]["video"])) {
+    //                $videoId = $update["message"]["video"]["file_id"];
+    //            }
+
+    //            // 检查是否有图片
+    //            if (isset($update["message"]["photo"])) {
+    //                // Telegram 会提供不同尺寸的图片，这里取最后一个尺寸作为原始图片
+    //                $photoId = $update["message"]["photo"][count($update["message"]["photo"]) - 1]["file_id"];
+    //            }
+
+    //            $adminId = '1882040053';  // 管理员 ID
+
+    //            // 检查是否为引用消息
+    //            if (isset($update["message"]["reply_to_message"])) {
+    //                // 使用正则表达式提取用户 ID（假设 ID 在括号内）
+    //                $replyText =  $update["message"]["reply_to_message"]["text"];
+
+
+    //                // 使用正则表达式提取用户 ID（假设 ID 在括号内）
+    //                preg_match('/\((\d+)\)/', $replyText, $matchesUserId);
+    //                $originalUserId = isset($matchesUserId[1]) ? $matchesUserId[1] : '';
+
+    //                // 提取群 ID 和消息 ID
+    //                preg_match('/<(-?\d+)>/', $replyText, $matchesUserId);  // 用于匹配群ID，包括负号
+
+
+    //                $originalChatId = isset($matchesUserId[1]) ? $matchesUserId[1] : '';
+
+    //                preg_match('/\[(\d+)\]/', $replyText, $matchesUserId);
+    //                $originalMessageId = isset($matchesUserId[1]) ? $matchesUserId[1] : '';
+
+
+
+
+    //                // 如果是管理员发送的回复，直接私聊原用户
+    //                if (!empty($originalChatId) && !empty($originalMessageId && $userId == $adminId)) {
+    //                    //私聊消息
+
+    //                    sendReplyMessage($originalChatId, $userMessage, $originalMessageId, $photoId, $videoId);
+    //                } else if ($userId == $adminId) {
+
+    //                    sendMessage($originalUserId, $userMessage, $photoId, $videoId);
+    //                } else {
+    //                    $msg = htmlspecialchars("用户 ($userId) 说: $userMessage");
+
+    //                    sendMessage($adminId, $msg, $photoId, $videoId);
+    //                }
+    //            } else {
+    //                // 普通用户的消息，转发给管理员
+
+    //                if ($chatId < 0) {
+    //                    $msg = htmlspecialchars("用户($userId)通过群<$chatId>[$messageId]说: $userMessage");
+    //                    sendMessage($adminId,  $msg, $photoId, $videoId);
+    //                } else {
+    //                    $msg = htmlspecialchars("用户 ($userId) 说: $userMessage");
+    //                    sendMessage($adminId, $msg, $photoId, $videoId);
+    //                }
+    //            }
+    //        }
+    //    }
+
 }

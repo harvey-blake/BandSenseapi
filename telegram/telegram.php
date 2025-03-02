@@ -21,11 +21,13 @@ function sendMessage($chatId, $message)
 
     $apiToken = '7949382682:AAGhPeyqz4ru183scmko8bIjdxp37G3Bs0k';
     $url = "https://api.telegram.org/bot$apiToken/sendMessage";
-    $postData = http_build_query([
+
+    $data = [
         'chat_id' => $chatId,
         'text' => $message,
         'parse_mode' => 'MarkdownV2',  // 使用 MarkdownV2 解析模式
-    ]);
+    ];
+    $postData = http_build_query($data);
 
     // 使用 file_get_contents 发送请求
     $options = [
@@ -36,5 +38,5 @@ function sendMessage($chatId, $message)
         ]
     ];
     $context  = stream_context_create($options);
-    $response = file_get_contents($url, false, $context);
+    file_get_contents($url, false, $context);
 }

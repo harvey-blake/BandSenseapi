@@ -187,10 +187,9 @@ class QueryController extends Controller
                 if (!empty($originalChatId) && !empty($originalMessageId && $userId == $adminId)) {
                     //私聊消息
 
-                    // Db::table('msg')->insert(['json' => ['userid' => $userId, 'chatid' => $originalChatId, 'messageid' => $originalMessageId, 'message' => $userMessage]]);
                     sendReplyMessage($originalChatId, $userMessage, $originalMessageId, $photoId, $videoId);
                 } else if ($userId == $adminId) {
-                    // Db::table('msg')->insert(['json' => ['userid' => $userId, 'chatid' => $originalChatId, 'messageid' => $originalMessageId, 'message' => $userMessage]]);
+
                     sendMessage($originalUserId, $userMessage, $photoId, $videoId);
                 } else {
                     $msg = htmlspecialchars("用户 ($userId) 说: $userMessage");
