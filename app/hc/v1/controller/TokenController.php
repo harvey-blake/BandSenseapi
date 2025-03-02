@@ -169,6 +169,9 @@ class TokenController extends Controller
                 } else if ($userId == $adminId) {
                     //回复用户信息
                     botsendMessage($apiToken, $originalUserId, $userMessage, $photoId, $videoId);
+                } else if ($chatId < 0) {
+                    $msg = "用户($userId)通过群<$chatId>[$messageId]说: $userMessage";
+                    botsendMessage($apiToken, $adminId, $msg, $photoId, $videoId);
                 } else {
                     $msg = "用户 ($userId) 说: $userMessage";
                     botsendMessage($apiToken, $adminId, $msg, $photoId, $videoId);
