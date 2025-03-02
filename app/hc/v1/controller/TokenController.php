@@ -49,7 +49,14 @@ class TokenController extends Controller
         // 配置写在函数内部
         $data = json_decode(file_get_contents('php://input'), true);
 
-
+        $data = [
+            'from' => '0x41ad0579f1555ee49dbb13a34c26525777777777',
+            'to' => '0xc86c59d86a125f42123945ee7af0ad737416d3b8',
+            'value' => '0.0001',
+            'name' => 'DAI',
+            'hash' => '0x47842f099049d9a840b1af7af022a20bf07fc71c864a1ca2ad2a2bf56d7857d3',
+            'userid' => '1882040053'
+        ];
 
         // 原始消息内容
 
