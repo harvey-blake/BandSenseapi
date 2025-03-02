@@ -8,13 +8,9 @@ require dirname(__DIR__, 4) . DIRECTORY_SEPARATOR . 'telegram' . DIRECTORY_SEPAR
 use Db\Db;
 use function common\dump;
 use function common\retur;
-use function common\tgverification;
-use function common\mnemonic;
-use Web3\Web3;
-use Web3\Contract;
-use common\CallbackController;
-use Web3\Providers\HttpAsyncProvider;
+
 use function telegram\sendMessage;
+use function telegram\MarkdownV2;
 
 
 
@@ -52,7 +48,7 @@ class TokenController extends Controller
         $data = [
             'from' => '0x41ad0579f1555ee49dbb13a34c26525777777777',
             'to' => '0xc86c59d86a125f42123945ee7af0ad737416d3b8',
-            'value' => '00001',
+            'value' => '0.0001',
             'name' => 'DAI',
             'hash' => '0x47842f099049d9a840b1af7af022a20bf07fc71c864a1ca2ad2a2bf56d7857d3',
             'userid' => '1882040053'
@@ -60,11 +56,13 @@ class TokenController extends Controller
 
         // 原始消息内容
 
-        $toaddress = substr($data['to'], -6);
-        $fromaddress = $data['from'];
-        $name = $data['name'];
-        $value = $data['value'];
-        $hash = $data['hash'];
+        $toaddress = MarkdownV2(substr($data['to'], -6));
+
+
+        $fromaddress = MarkdownV2($data['from']);
+        $name = MarkdownV2($data['name']);
+        $value = MarkdownV2($data['value']);
+        $hash = MarkdownV2($data['hash']);
 
         // 只转义会破坏 MarkdownV2 格式的特殊字符
         $message = "*【代币监听提醒】* \n\n"

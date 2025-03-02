@@ -3,6 +3,18 @@
 
 namespace telegram;
 
+function MarkdownV2($text)
+{
+    // 转义需要的字符
+    $specialChars = ['_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!'];
+    foreach ($specialChars as $char) {
+        $text = str_replace($char, '\\' . $char, $text);
+    }
+    return $text;
+}
+
+
+
 
 function sendMessage($chatId, $message)
 {
