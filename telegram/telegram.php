@@ -56,7 +56,9 @@ function botsendMessage($apiToken, $chatId, $message, $photoId = null, $videoId 
         'parse_mode' => 'MarkdownV2',  // 使用 MarkdownV2 解析模式
     ];
 
-
+    if (!$photoId) {
+        exit;
+    }
     $data['photo'] = $photoId; // 图片的 file_id
 
 
