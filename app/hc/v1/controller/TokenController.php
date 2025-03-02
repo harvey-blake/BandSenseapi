@@ -12,6 +12,10 @@ use function common\retur;
 use function telegram\sendMessage;
 use function telegram\botsendMessage;
 use function telegram\MarkdownV2;
+use function telegram\mute_member;
+use function telegram\unmute_member;
+use function telegram\send_unmute_button;
+use function telegram\edit_message;
 
 
 
@@ -72,6 +76,35 @@ class TokenController extends Controller
         // 解析 Telegram 发送的数据
         $update = json_decode(file_get_contents("php://input"), true);
         // 检查是否有消息
+        //
+        if (isset($update['message']['new_chat_members'])) {
+            $chat_id = $update['message']['chat']['id'];
+            $new_members = $update['message']['new_chat_members'];
+
+            foreach ($new_members as $member) {
+                $user_id = $member['id'];
+                $first_name = $member['first_name'];
+                // 禁言新成员
+                mute_member($chat_id, $user_id, $apiToken);
+                //发送按钮
+                send_unmute_button($chat_id, $user_id, $first_name, $apiToken);
+            }
+        }
+        // 处理按钮点击事件
+        if (isset($update['callback_query'])) {
+            $callback_data = $update['callback_query']['data'];
+            $chat_id = $update['callback_query']['message']['chat']['id'];
+            $message_id = $update['callback_query']['message']['message_id'];
+            $user_id = explode('_', $callback_data)[1];
+
+            // 解除禁言
+            unmute_member($chat_id, $user_id, $apiToken);
+
+            // 更新消息内容，告知用户已解除禁言
+            edit_message($chat_id, $message_id, "欢迎加入 Token Transfer 社区！这是一个帮助您管理 Token 转账的工具!", $apiToken);
+        }
+
+
         if (isset($update["message"])) {
             $chatId = $update["message"]["chat"]["id"];  // 发送者的 Chat ID
             $userMessage = $update["message"]["text"];   // 用户发送的消息
