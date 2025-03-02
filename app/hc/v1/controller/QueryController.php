@@ -189,7 +189,7 @@ class QueryController extends Controller
 
                     sendReplyMessage($originalChatId, $userMessage, $originalMessageId, $photoId, $videoId);
                 } else if ($userId == $adminId) {
-
+                    //回复用户信息
                     sendMessage($originalUserId, $userMessage, $photoId, $videoId);
                 } else {
                     $msg = htmlspecialchars("用户 ($userId) 说: $userMessage");
