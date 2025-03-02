@@ -92,7 +92,7 @@ class TokenController extends Controller
             .  " ```
              pre-formatted fixed-width code block
                 ``` \n"
-            .  " **>The expandable block quotation started right after the previous block quotation ";
+            .  " >The expandable block quotation started right after the previous block quotation ";
 
 
 
