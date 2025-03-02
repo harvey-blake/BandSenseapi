@@ -70,8 +70,7 @@ class TokenController extends Controller
             . "📌 *代币名称* $name   \n"
             . "💰 *代币数量* $value \n"
             . "🔗 *交易哈希*：[查看交易](https://polygonscan.com/tx/$hash) \n"
-            . "📓 *来源地址* \n"
-            . " ```address
+            . " ```来源地址
                 $fromaddress
                 ``` ";
 
