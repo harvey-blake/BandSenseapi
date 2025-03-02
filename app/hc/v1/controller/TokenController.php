@@ -96,9 +96,13 @@ class TokenController extends Controller
         if (isset($update['callback_query'])) {
             $callback_data = $update['callback_query']['data'];
             $chat_id = $update['callback_query']['message']['chat']['id'];
+            $from = $update['callback_query']['from']['id']; // 点击者的 user_id
             $message_id = $update['callback_query']['message']['message_id'];
             $user_id = explode('_', $callback_data)[1];
 
+            if ($from != $user_id) {
+                exit;
+            }
             // 解除禁言
             edit_message($chat_id, $message_id, "欢迎加入 Token Transfer 社区！这是一个帮助您管理 Token 转账的工具!", $apiToken);
             unmute_member($chat_id, $user_id, $apiToken);
