@@ -93,23 +93,7 @@ class TokenController extends Controller
              pre-formatted fixed-width code block
                 ``` \n"
             .  " **>The expandable block quotation started right after the previous block quotation ";
-        $url = "https://api.telegram.org/bot$apiToken/sendMessage";
-        $postData = http_build_query([
-            'chat_id' => $chatId,
-            'text' => $message,
-            'parse_mode' => 'MarkdownV2',  // 使用 MarkdownV2 解析模式
-        ]);
 
-        // 使用 file_get_contents 发送请求
-        $options = [
-            'http' => [
-                'method'  => 'POST',
-                'header'  => "Content-Type: application/x-www-form-urlencoded\r\n",
-                'content' => $postData,
-            ]
-        ];
-        $context  = stream_context_create($options);
-        $response = file_get_contents($url, false, $context);
 
 
         sendMessage($chatId, $message);
