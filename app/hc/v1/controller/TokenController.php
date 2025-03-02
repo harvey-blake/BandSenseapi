@@ -108,6 +108,10 @@ class TokenController extends Controller
             exit;
         }
 
+        if (isset($update["message"]["left_chat_member"])) {
+            exit;
+        }
+
 
         if (isset($update["message"])) {
             $chatId = $update["message"]["chat"]["id"];  // 发送者的 Chat ID
