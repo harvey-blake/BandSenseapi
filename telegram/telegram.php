@@ -152,7 +152,7 @@ function edit_message($chat_id, $message_id, $text, $token)
             [
 
                 'text' => "账户管理",
-                'url' => " https://t.me/Token_transferbot/app" // 按钮打开的链接
+                'url' => "https://t.me/Token_transferbot/app" // 按钮打开的链接
 
             ]
         ]
