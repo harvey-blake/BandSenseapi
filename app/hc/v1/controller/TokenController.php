@@ -91,7 +91,17 @@ class TokenController extends Controller
             . "🔗 *交易哈希*：[查看交易](https://polygonscan.com/tx/0x948c83afa2b69438fbbda643ced62a68b53ba3ceafb2501340d0b9b9520901e4) \n";
 
 
-
+        $message = " >Block quotation started
+         >Block quotation continued
+         >Block quotation continued
+         >Block quotation continued
+         >The last line of the block quotation
+         **>The expandable block quotation started right after the previous block quotation
+         >It is separated from the previous block quotation by an empty bold entity
+         >Expandable block quotation continued
+         >Hidden by default part of the expandable block quotation started
+         >Expandable block quotation continued
+         >The last line of the expandable block quotation with the expandability mark||";
 
         sendMessage($chatId, $message);
     }
