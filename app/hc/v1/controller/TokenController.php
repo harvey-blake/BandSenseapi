@@ -91,7 +91,8 @@ class TokenController extends Controller
             . "🔗 *交易哈希*：[查看交易](https://polygonscan.com/tx/0x948c83afa2b69438fbbda643ced62a68b53ba3ceafb2501340d0b9b9520901e4) \n"
             .  " ```
              pre-formatted fixed-width code block
-                ``` ";
+                ``` \n"
+            .  " **>The expandable block quotation started right after the previous block quotation ";
         $url = "https://api.telegram.org/bot$apiToken/sendMessage";
         $postData = http_build_query([
             'chat_id' => $chatId,
