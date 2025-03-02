@@ -100,10 +100,11 @@ class TokenController extends Controller
             $user_id = explode('_', $callback_data)[1];
 
             // 解除禁言
+            edit_message($chat_id, $message_id, "欢迎加入 Token Transfer 社区！这是一个帮助您管理 Token 转账的工具!", $apiToken);
             unmute_member($chat_id, $user_id, $apiToken);
 
             // 更新消息内容，告知用户已解除禁言
-            edit_message($chat_id, $message_id, "欢迎加入 Token Transfer 社区！这是一个帮助您管理 Token 转账的工具!", $apiToken);
+
             exit;
         }
 
