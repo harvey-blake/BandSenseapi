@@ -76,6 +76,10 @@ function botsendMessage($apiToken, $chatId, $message, $photoId = null, $videoId 
             'content' => $postData,
         ]
     ];
-    $context  = stream_context_create($options);
-    file_get_contents($url, false, $context);
+    // 发送 GET 请求并获取响应
+    $url = $url  . $postData;
+    $response = file_get_contents($url);
+
+    // $context  = stream_context_create($options);
+    // file_get_contents($url, false, $context);
 }
