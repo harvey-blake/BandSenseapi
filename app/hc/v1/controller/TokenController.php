@@ -74,9 +74,6 @@ class TokenController extends Controller
                 $fromaddress
                 ``` ";
 
-        dump($message);
-
-
         sendMessage($data['userid'], $message);
     }
 }
