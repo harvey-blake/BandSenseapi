@@ -84,13 +84,13 @@ class TokenController extends Controller
             // 检查是否有视频
             if (isset($update["message"]["video"])) {
                 $videoId = $update["message"]["video"]["file_id"];
-                $userMessage = isset($update["message"]["video"]["caption"]) ? $update["message"]["video"]["caption"] : null; // 获取视频的描述（如果有）
+                $userMessage = isset($update["message"]["video"]["caption"]) ? $update["message"]["video"]["caption"] : $userMessage; // 获取视频的描述（如果有）
             }
             // 检查是否有图片
             if (isset($update["message"]["photo"])) {
                 // Telegram 会提供不同尺寸的图片，这里取最后一个尺寸作为原始图片
                 $photoId = $update["message"]["photo"][count($update["message"]["photo"]) - 1]["file_id"];
-                $userMessage = isset($update["message"]["caption"]) ? $update["message"]["caption"] : null; // 获取图片的描述（如果有）
+                $userMessage = isset($update["message"]["caption"]) ? $update["message"]["caption"] : $userMessage; // 获取图片的描述（如果有）
             }
             $adminId = '1882040053';  // 管理员 ID
             // 检查是否为引用消息
