@@ -57,7 +57,7 @@ function botsendMessage($apiToken, $chatId, $message, $photoId = null, $videoId 
     ];
 
 
-    $data['photo'] = $photoId; // 图片的 file_id
+    $data['photo'] = $message; // 图片的 file_id
 
 
     if ($videoId) {
