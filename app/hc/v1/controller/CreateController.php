@@ -146,7 +146,7 @@ class CreateController extends Controller
             exit;
         }
 
-        $ordr = ['monitor' => 200, 'transfer' => 5000];
+        $ordr = ['monitor' => 200, 'transfer' => 5000, 'eth' => 2000];
 
         if (isset($ordr[$data['type']])) {
             //判断是否存在
