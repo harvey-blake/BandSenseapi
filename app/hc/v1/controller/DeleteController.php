@@ -34,4 +34,19 @@ class  DeleteController extends Controller
             echo json_encode(retur('失败', '没删除任何数据', 404));
         }
     }
+    public function eth()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $hash = tgverification($data['hash']);
+        if (!$hash) {
+            echo json_encode(retur('失败', '非法访问', 409));
+            exit;
+        }
+        $arr =  Db::table('oneth')->where(['id' => $data['id'], 'tgid' => $hash['id']])->delete();
+        if ($arr > 0) {
+            echo json_encode(retur('成功', $arr));
+        } else {
+            echo json_encode(retur('失败', '没删除任何数据', 404));
+        }
+    }
 }
