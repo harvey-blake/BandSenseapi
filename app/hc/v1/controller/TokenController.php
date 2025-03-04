@@ -44,6 +44,12 @@ class TokenController extends Controller
         $arr =  Db::table('onaddress')->where(['token' => $data['token']])->select();
         echo json_encode(retur('成功', $arr));
     }
+    public function oneth()
+    {
+        $arr =  Db::table('oneth')->select();
+        echo json_encode(retur('成功', $arr));
+    }
+
     public function message()
     {
 
