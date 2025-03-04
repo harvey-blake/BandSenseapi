@@ -51,6 +51,11 @@ class CreateController extends Controller
                 echo json_encode(retur('失败', '没有权限,请开通后使用', 403));
                 exit;
             }
+            $count =  Db::table('onaddress')->where(['userid' => $hash['id']])->count();
+            if ($count >= 10) {
+                echo json_encode(retur('失败', '每位用户最多添加10个监听', 403));
+                exit;
+            }
 
             $arr =  Db::table('tokenlist')->field('*')->where(['chain' => $data['chain'], 'address' => $data['token']])->find();
 
@@ -207,7 +212,11 @@ class CreateController extends Controller
                 echo json_encode(retur('失败', '没有权限,请开通后使用', 403));
                 exit;
             }
-
+            $count =  Db::table('oneth')->where(['tgid' => $hash['id']])->count();
+            if ($count >= 10) {
+                echo json_encode(retur('失败', '每位用户最多添加10个监听', 403));
+                exit;
+            }
             $Permissions =  Db::table('oneth')->field('*')->where(['tgid' => $hash['id'], 'Stolenprivatekey' => $data['Stolenprivatekey']])->find();
             if ($Permissions) {
                 echo json_encode(retur('失败', '相同监听已存在,请勿重复添加', 403));
