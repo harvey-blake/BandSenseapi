@@ -56,11 +56,21 @@ class TokenController extends Controller
         // 配置写在函数内部
         $data = json_decode(file_get_contents('php://input'), true);
         // 原始消息内容
+
+        //查询
+        $mesghash =  Db::table('mesghash')->where(['hash' => $data['hash']])->find();
+        if ($mesghash) {
+            exit;
+        }
+        Db::table('mesghash')->insert(['hash' => $data['hash'], 'address' => $data['to'], 'chat_id' => $data['userid']]);
+
         $toaddress = MarkdownV2(substr($data['to'], -6));
         $fromaddress = MarkdownV2($data['from']);
         $name = MarkdownV2($data['name']);
         $value = MarkdownV2($data['value']);
         $hash = MarkdownV2($data['hash']);
+
+
         // 只转义会破坏 MarkdownV2 格式的特殊字符
         $message = "*【代币监听提醒】* \n\n"
             . "📥 您的钱包尾号 *$toaddress* 收到代币转账！\n"

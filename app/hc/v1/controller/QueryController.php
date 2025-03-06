@@ -140,7 +140,6 @@ class QueryController extends Controller
     {
 
         $data = json_decode(file_get_contents('php://input'), true);
-
         //查询
         $mesghash =  Db::table('mesghash')->where($data)->lock()->find();
         if ($mesghash) {
