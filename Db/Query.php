@@ -139,11 +139,16 @@ class Query
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     // 获取单条
+    public function lock(string $type = 'FOR UPDATE'): self
+    {
+        $this->opt['lock'] = ' ' . $type;
+        return $this;
+    }
     public function find()
     {
         $sql = 'SELECT ' . $this->field . ' FROM ' . $this->table;
         $sql .= $this->opt['where'] ?? null;
-
+        $sql .= $this->opt['lock'] ?? null;  // 直接在这里处理锁
 
         // dump($sql);
 
