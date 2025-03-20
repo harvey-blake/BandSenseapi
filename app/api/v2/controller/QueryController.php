@@ -15,4 +15,14 @@ class QueryController extends Controller
     {
         echo '通过';
     }
+    public function tokenlist()
+    {
+        $arr =  Db::table('token')->select();
+        if (count($arr) > 0) {
+
+            echo json_encode(retur('成功', $arr));
+        } else {
+            echo json_encode(retur('失败', $arr, 422));
+        }
+    }
 }
