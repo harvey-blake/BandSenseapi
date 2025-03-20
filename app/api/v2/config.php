@@ -37,7 +37,7 @@ return [
         'charset' => 'utf8',
 
         // 默认用户名
-        'username' => 'BandSenseapi_dex',
+        'username' => 'bandsenseapi_dex',
 
         // 默认用户密码
         'password' => 'eeAW7fpcy3LMsLAi'
