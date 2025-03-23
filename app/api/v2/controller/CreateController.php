@@ -50,7 +50,7 @@ class CreateController extends Controller
             exit;
         }
         //判断验证码是否正确
-
+        $arr =  Db::table('mailcode')->where(['mail' => $data['email']])->order('id', 'DESC')->limit(1)->select();
     }
 
     public function ceshi()
@@ -61,5 +61,7 @@ class CreateController extends Controller
 
         $jieguo =  Db::table('mailcode')->field('*')->where(['mail' =>  $mail, 'time >=' => $time])->count();
         dump($jieguo);
+        $arr =  Db::table('mailcode')->where(['mail' => $mail])->order('id', 'DESC')->limit(1)->select();
+        dump($arr);
     }
 }
