@@ -40,9 +40,15 @@ function mail($to, $title, $text)
     $htmlContent = str_replace('{text}', $text, $htmlContent);
     $htmlContent = str_replace('{title}', $title, $htmlContent);
 
-    send($to, $title, $htmlContent);
+    $rusl = send($to, $title, $htmlContent);
 
-    Db::table('mailcode')->insert(['mail' => strtolower($to), 'code' => $verificationCode, 'ip' => $ip]);
+
+    if ($rusl) {
+        Db::table('mailcode')->insert(['mail' => strtolower($to), 'code' => $verificationCode, 'ip' => $ip]);
+        echo json_encode(retur('成功', '发送成功'));
+    } else {
+        echo json_encode(retur('失败', '发送失败', 404));
+    }
 }
 
 function send($to, $title, $content)
