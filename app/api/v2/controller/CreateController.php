@@ -19,9 +19,37 @@
 // 客户端请求存在问题：400
 namespace app\api\v2\controller;
 
+require dirname(__DIR__, 4) . DIRECTORY_SEPARATOR . 'mail' . DIRECTORY_SEPARATOR . 'mail.php';
+
 use Db\Db;
 use function common\dump;
 use function common\retur;
+use function bandsenmail\mail;
 use common\Controller;
 // 写入
-class CreateController extends Controller {}
+class CreateController extends Controller
+{
+
+
+
+
+
+    public function register()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        //判断 邮箱  密码  是否存在
+        if (!isset($data['email']) || !isset($data['password'])) {
+            echo json_encode(retur('失败', '参数错误', 422));
+            exit;
+        }
+        //判断验证码是否存在
+        if (!isset($data['code'])) {
+            //发送验证码
+            mail($data['email'], '波段智投-用户注册', '注册新账户');
+            exit;
+        }
+        //判断验证码是否正确
+
+    }
+}
