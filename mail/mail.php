@@ -11,6 +11,8 @@ use Db\Db;
 function mail($to, $title, $text)
 {
     $ip = $_SERVER['REMOTE_ADDR'];
+
+    //判断是否可以发送邮件
     $verificationCode = rand(100000, 999999);
     $template_path = __DIR__ . '/../mail/subscription.html'; // 替换为模板文件的实际路径
     $template_content = file_get_contents($template_path);
