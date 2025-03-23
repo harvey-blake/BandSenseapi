@@ -12,6 +12,11 @@ function mail($to, $title, $text)
 {
     $ip = $_SERVER['REMOTE_ADDR'];
 
+
+
+
+
+
     //判断是否可以发送邮件
     $verificationCode = rand(100000, 999999);
     $template_path = __DIR__ . '/../mail/subscription.html'; // 替换为模板文件的实际路径
@@ -23,6 +28,7 @@ function mail($to, $title, $text)
     $htmlContent = str_replace('{title}', $title, $htmlContent);
 
     send($to, $title, $htmlContent);
+
     Db::table('mailcode')->insert(['mail' => $to, 'code' => $verificationCode, 'ip' => $ip]);
 }
 

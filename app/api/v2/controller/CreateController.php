@@ -52,4 +52,13 @@ class CreateController extends Controller
         //判断验证码是否正确
 
     }
+
+    public function ceshi()
+    {
+        $ip = '94.177.131.202';
+        $mail = 'hbniubi@gmail.com';
+        $time = date('Y-m-d H:i:s', strtotime('-24 hours'));
+
+        $jieguo =  Db::table('mailcode')->field('*')->where(['mail' =>  $mail, 'created_at >=' => $time])->count();
+    }
 }
