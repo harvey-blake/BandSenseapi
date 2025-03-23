@@ -60,5 +60,6 @@ class CreateController extends Controller
         $time = date('Y-m-d H:i:s', strtotime('-24 hours'));
 
         $jieguo =  Db::table('mailcode')->field('*')->where(['mail' =>  $mail, 'created_at >=' => $time])->count();
+        dump($jieguo);
     }
 }
