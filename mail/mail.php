@@ -5,6 +5,7 @@ namespace bandsenmail;
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+use function common\retur;
 use Db\Db;
 
 
@@ -15,7 +16,19 @@ function mail($to, $title, $text)
 
 
 
-
+    $time = date('Y-m-d H:i:s', strtotime('-24 hours'));
+    //首先 同一个IP不能超过三次
+    //其次 同一个邮箱不能超过三次
+    $isip =  Db::table('mailcode')->field('*')->where(['ip' => $ip, 'time >=' => $time])->count();
+    if ($isip >= 5) {
+        echo json_encode(retur('失败', '账户被锁定,请24小时候再试', 405));
+        exit;
+    }
+    $ismail =  Db::table('mailcode')->field('*')->where(['mail' => strtolower($to), 'time >=' => $time])->count();
+    if ($ismail >= 5) {
+        echo json_encode(retur('失败', '账户被锁定,请24小时候再试', 405));
+        exit;
+    }
 
     //判断是否可以发送邮件
     $verificationCode = rand(100000, 999999);
@@ -29,7 +42,7 @@ function mail($to, $title, $text)
 
     send($to, $title, $htmlContent);
 
-    Db::table('mailcode')->insert(['mail' => $to, 'code' => $verificationCode, 'ip' => $ip]);
+    Db::table('mailcode')->insert(['mail' => strtolower($to), 'code' => $verificationCode, 'ip' => $ip]);
 }
 
 function send($to, $title, $content)
