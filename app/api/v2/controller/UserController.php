@@ -184,7 +184,7 @@ class UserController extends Controller
             }
 
             if ($arr > 0) {
-                echo json_encode(retur('成功', $uniqid));
+                echo json_encode(retur('登陆成功', $uniqid));
             } else {
                 echo json_encode(retur('失败', '网络拥堵请稍后再试', 9000));
             }
