@@ -50,11 +50,42 @@ class CreateController extends Controller
             exit;
         }
         //判断验证码是否正确
-        $arr =  Db::table('mailcode')->where(['mail' => $data['email']])->order('id',  'desc')->limit(1)->find();
+        $time = date('Y-m-d H:i:s', strtotime('-5 minutes'));
 
-        if ($arr['code'] != $data['code']) {
+        $arr =  Db::table('mailcode')->where(['mail' => $data['email'], 'time >=' => $time])->order('id',  'desc')->limit(1)->select();
+
+        if ($arr[0]['code'] != $data['code']) {
             echo json_encode(retur('失败', '验证码错误', 422));
             exit;
+        }
+        //判断邮箱是否存在
+        $arr =  Db::table('user')->where(['email' => $data['email']])->find();
+        if ($arr) {
+            echo json_encode(retur('失败', '邮箱已存在', 422));
+            exit;
+        }
+        //写入数据库
+
+        $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; // 仅大写字母
+        $charactersLength = strlen($characters);
+
+        do {
+            // 生成一个随机字符串
+            $randomString = '';
+            for ($i = 0; $i < 8; $i++) {
+                $randomString .= $characters[rand(0, $charactersLength - 1)];
+            }
+
+            // 查询数据库，检查生成的随机字符串是否已经存在
+            $exists = Db::table('user')->field('*')->where(['Invitationcode' =>  $randomString])->count();
+        } while ($exists > 0); // 如果存在，继续生成新的字符串
+
+
+        $arr =  Db::table('user')->insert(['email' => $data['email'], 'password' => $data['password'], 'Invitationcode' =>  $randomString]);
+        if ($arr) {
+            echo json_encode(retur('成功', '注册成功'));
+        } else {
+            echo json_encode(retur('失败', '注册失败', 422));
         }
     }
 

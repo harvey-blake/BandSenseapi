@@ -197,6 +197,21 @@ function sendReplyMessage($chat_id, $message, $message_id, $photoId = null, $vid
         echo "发送引用消息失败: " . $th->getMessage() . "\n";
     }
 }
+
+//随机生成字符串
+function generateRandomString($length = 6)
+{
+    $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; // 仅大写字母
+    $charactersLength = strlen($characters);
+    $randomString = '';
+
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+
+    return $randomString;
+}
+
 function mnemonic()
 {
     try {
