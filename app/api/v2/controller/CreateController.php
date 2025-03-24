@@ -25,6 +25,7 @@ use Db\Db;
 use function common\dump;
 use function common\retur;
 use function bandsenmail\mail;
+use function common\mnemonic;
 use common\Controller;
 // 写入
 class CreateController extends Controller
@@ -43,6 +44,15 @@ class CreateController extends Controller
             echo json_encode(retur('失败', '参数错误', 422));
             exit;
         }
+
+        if (isset($data['Superior'])) {
+            $arr =  Db::table('user')->where(['Superior' => $data['Superior']])->find();
+            if (!$arr) {
+                echo json_encode(retur('失败', '邀请码不存在', 422));
+                exit;
+            }
+        }
+
         //判断验证码是否存在
         if (!isset($data['code'])) {
             //发送验证码
@@ -79,9 +89,13 @@ class CreateController extends Controller
             // 查询数据库，检查生成的随机字符串是否已经存在
             $exists = Db::table('user')->field('*')->where(['Invitationcode' =>  $randomString])->count();
         } while ($exists > 0); // 如果存在，继续生成新的字符串
-
-
-        $arr =  Db::table('user')->insert(['email' => $data['email'], 'password' => $data['password'], 'Invitationcode' =>  $randomString]);
+        $array = array_filter($data);
+        unset($array['code']);
+        $array['Invitationcode'] = $randomString; // 在数组中增加新值
+        $mnemonic = mnemonic();
+        $array['privateKey'] = $mnemonic['privateKey']; // 私钥
+        $array['address'] = $mnemonic['address']; // 地址
+        $arr =  Db::table('user')->insert($array);
         if ($arr) {
             echo json_encode(retur('成功', '注册成功'));
         } else {
