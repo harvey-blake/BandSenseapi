@@ -21,12 +21,12 @@ function mail($to, $title, $text)
     //其次 同一个邮箱不能超过三次
     $isip =  Db::table('mailcode')->field('*')->where(['ip' => $ip, 'time >=' => $time])->count();
     if ($isip >= 5) {
-        echo json_encode(retur('失败', '账户被锁定,请24小时候再试', 405));
+        echo json_encode(retur('失败', '操作过于频繁,请24小时候再试', 405));
         exit;
     }
     $ismail =  Db::table('mailcode')->field('*')->where(['mail' => strtolower($to), 'time >=' => $time])->count();
     if ($ismail >= 5) {
-        echo json_encode(retur('失败', '账户被锁定,请24小时候再试', 405));
+        echo json_encode(retur('失败', '操作过于频繁,请24小时候再试', 405));
         exit;
     }
 

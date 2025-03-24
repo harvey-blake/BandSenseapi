@@ -53,6 +53,13 @@ class CreateController extends Controller
             }
         }
 
+        //判断邮箱是否存在
+        $arr =  Db::table('user')->where(['email' => $data['email']])->find();
+        if ($arr) {
+            echo json_encode(retur('失败', '邮箱已存在', 422));
+            exit;
+        }
+
         //判断验证码是否存在
         if (!isset($data['code'])) {
             //发送验证码
@@ -68,12 +75,7 @@ class CreateController extends Controller
             echo json_encode(retur('失败', '验证码错误', 422));
             exit;
         }
-        //判断邮箱是否存在
-        $arr =  Db::table('user')->where(['email' => $data['email']])->find();
-        if ($arr) {
-            echo json_encode(retur('失败', '邮箱已存在', 422));
-            exit;
-        }
+
         //写入数据库
 
         $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; // 仅大写字母
