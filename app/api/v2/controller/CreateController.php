@@ -50,7 +50,7 @@ class CreateController extends Controller
             exit;
         }
         //判断验证码是否正确
-        $arr =  Db::table('mailcode')->where(['mail' => $data['email']])->order('id', 'DESC')->limit(1)->find();
+        $arr =  Db::table('mailcode')->where(['mail' => $data['email']])->order('id',  'desc')->limit(1)->find();
 
         if ($arr['code'] != $data['code']) {
             echo json_encode(retur('失败', '验证码错误', 422));
@@ -66,7 +66,7 @@ class CreateController extends Controller
 
         $jieguo =  Db::table('mailcode')->field('*')->where(['mail' =>  $mail, 'time >=' => $time])->count();
         dump($jieguo);
-        $arr =  Db::table('mailcode')->where(['mail' => $mail])->order('time', 'DESC')->limit('1')->find();
+        $arr =  Db::table('mailcode')->where(['mail' => $mail])->order('time',  'desc')->limit('1')->select();
         dump($arr);
     }
 }
