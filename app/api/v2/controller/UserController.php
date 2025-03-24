@@ -119,8 +119,6 @@ class UserController extends Controller
 
         if ($arr && !isset($data['code'])) {
             //判断是否在常用环境登陆
-
-
             $ip = getIPPrefix($_SERVER['REMOTE_ADDR']);
             $lastip = getIPPrefix($arr['ip']);
             if ($ip != $lastip) {
