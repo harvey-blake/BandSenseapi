@@ -1,22 +1,5 @@
 <?php
-// 所有自定义控制器的基本控制器,应该继承自它
-// 添加（插入）：
 
-// 数据格式不正确或验证失败：422
-// 客户端请求存在问题：400
-// 修改（更新）：
-
-// 资源状态的冲突：409
-// 数据格式不正确或验证失败：422
-// 客户端请求存在问题：400
-// 删除：
-
-// 资源未找到：404
-// 客户端请求存在问题：400
-// 查询：
-
-// 资源未找到：404
-// 客户端请求存在问题：400
 namespace app\api\v2\controller;
 
 require dirname(__DIR__, 4) . DIRECTORY_SEPARATOR . 'mail' . DIRECTORY_SEPARATOR . 'mail.php';
@@ -28,12 +11,8 @@ use function bandsenmail\mail;
 use function common\mnemonic;
 use common\Controller;
 // 写入
-class CreateController extends Controller
+class UserController extends Controller
 {
-
-
-
-
 
     public function register()
     {
@@ -104,23 +83,6 @@ class CreateController extends Controller
             echo json_encode(retur('成功', '注册成功'));
         } else {
             echo json_encode(retur('失败', '注册失败', 422));
-        }
-    }
-
-    public function ceshi()
-    {
-        try {
-            $ip = '94.177.131.202';
-            $mail = 'hbniubi@gmail.com';
-            $time = date('Y-m-d H:i:s', strtotime('-24 hours'));
-
-            // $jieguo =  Db::table('mailcode')->field('*')->where(['mail' =>  $mail, 'time >=' => $time])->count();
-            // dump($jieguo);
-            $arr =  Db::table('mailcode')->where(['mail' => $mail])->order('id',  'DESC')->limit('1')->select();
-            $mnemonic = mnemonic();
-            dump($mnemonic);
-        } catch (\Throwable $th) {
-            dump($th);
         }
     }
 }
