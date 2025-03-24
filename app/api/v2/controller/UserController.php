@@ -9,7 +9,24 @@ use function common\dump;
 use function common\retur;
 use function bandsenmail\mail;
 use function common\mnemonic;
+use function common\getIPPrefix;
+use Lcobucci\JWT\Configuration;
+use Lcobucci\JWT\Signer\Hmac\Sha256;
+use Lcobucci\JWT\Signer\Key\InMemory;
+use Ramsey\Uuid\Uuid;
+use Lcobucci\Clock\SystemClock;
+use Lcobucci\JWT\Validation\Constraint\StrictValidAt;
+use Lcobucci\JWT\Encoding\JoseEncoder;
+use Lcobucci\JWT\Token\Parser;
+use Lcobucci\JWT\Validation\Validator;
+use Lcobucci\JWT\Validation\Constraint\SignedWith;
+
+use function common\encryptData;
+use function common\decryptData;
 use common\Controller;
+
+
+
 // 写入
 class UserController extends Controller
 {
@@ -17,7 +34,6 @@ class UserController extends Controller
     public function register()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-
         //判断 邮箱  密码  是否存在
         if (!isset($data['email']) || !isset($data['password'])) {
             echo json_encode(retur('失败', '参数错误', 422));
@@ -83,6 +99,155 @@ class UserController extends Controller
             echo json_encode(retur('成功', '注册成功'));
         } else {
             echo json_encode(retur('失败', '注册失败', 422));
+        }
+    }
+
+    public function Login()
+    {
+
+        $data = json_decode(file_get_contents('php://input'), true);
+        //判断 邮箱  密码  是否存在
+        if (!isset($data['email']) || !isset($data['password'])) {
+            echo json_encode(retur('失败', '参数错误', 422));
+            exit;
+        }
+        $arr =  Db::table('user')->where(['email' => $data['email'], 'password' => $data['password']])->find();
+        if (!$arr) {
+            echo json_encode(retur('失败', '账号或密码错误', 422));
+            exit;
+        }
+
+        if ($arr && !isset($data['code'])) {
+            //判断是否在常用环境登陆
+            $ip = getIPPrefix($_SERVER['REMOTE_ADDR']);
+            $lastip = getIPPrefix($arr['ip']);
+            if ($ip != $lastip) {
+                //发送邮件
+
+                mail($data['email'], '波段智投-用户登陆', '登陆');
+                exit;
+            }
+        }
+
+        //判断验证码是否正确
+        if (isset($data['code'])) {
+
+            $time = date('Y-m-d H:i:s', strtotime('-5 minutes'));
+
+            $arr =  Db::table('mailcode')->where(['mail' => $data['email'], 'time >=' => $time])->order('id',  'desc')->limit(1)->select();
+
+            if ($arr[0]['code'] != $data['code']) {
+                echo json_encode(retur('失败', '验证码错误', 493));
+                exit;
+            }
+        }
+        self::getJWT($data['email'], $data['password']);
+        //这里 登陆成功
+
+
+    }
+
+    public function getJWT($username, $password)
+    {
+        try {
+            $expirationTimeInMinutes = 10080;
+            $key = InMemory::plainText($password);
+            $config = Configuration::forSymmetricSigner(
+                new Sha256(),
+                $key
+            );
+            $systemTimezone = date_default_timezone_get(); // 获取系统默认时区
+            $timezone = new \DateTimeZone($systemTimezone);
+            $currentTime = new \DateTimeImmutable('now', $timezone);
+            $expirationTime = $currentTime->modify("+$expirationTimeInMinutes minutes");
+            $builder = $config->builder()
+                ->issuedAt($currentTime) // 签发时间
+                ->canOnlyBeUsedAfter($currentTime) // 生效时间
+                ->expiresAt($expirationTime); // 过期时间
+            $builder->withClaim('username', $username);
+            $builder->withClaim('password', $password);
+            $token = $builder->getToken($config->signer(), $config->signingKey());
+            $token = encryptData($token->toString());
+            $uniqid = Uuid::uuid4();
+            $uniqid = $uniqid->toString();
+            //这里判断下 存哪个仓库
+            $table = 'LoginKey';
+
+
+            $arr =  Db::table($table)->field('*')->where(['username' => $username])->find();
+            if ($arr) {
+                // 修改
+                $arr =  Db::table($table)->where(['username' => $username])->update(['username' => $username, 'keyid' => $uniqid, 'token' => $token]);
+            } else {
+                // 添加
+                $arr =  Db::table($table)->insert(['username' => $username, 'keyid' => $uniqid, 'token' => $token]);
+            }
+
+            if ($arr > 0) {
+                echo json_encode(retur('成功', $uniqid));
+            } else {
+                echo json_encode(retur('失败', '网络拥堵请稍后再试', 9000));
+            }
+        } catch (\Throwable $th) {
+            $errorMessage = $th->getMessage();
+            $errorLine = $th->getLine();
+            echo json_encode(retur('失败', "错误信息：{$errorMessage}，发生在第 {$errorLine} 行。", 9000));
+        }
+    }
+
+    //获取用户信息
+    function isvalidateJWT()
+    {
+
+        // 解密
+        header('Access-Control-Allow-Headers: Authorization, Content-Type');
+
+        $data = $_SERVER['HTTP_AUTHORIZATION'];
+
+
+        if (!$data) {
+            // 账号未登录
+            echo json_encode(retur('错误', '账号未登陆', 403));
+            exit;
+        }
+        $keyid = str_replace('Bearer ', '', $data);
+        $data =  Db::table('LoginKey')->field('*')->where(['keyid' => $keyid])->find();
+
+        // 获取数据库
+        if ($data) {
+            $data =  $data['token'];
+            $data = decryptData($data);
+        } else {
+            // 这里返回账号在其他地方登陆
+            echo json_encode(retur('出错了', '账号在其他地方登陆', 498));
+            exit;
+        }
+
+        if ($data) {
+            $parser = new Parser(new JoseEncoder());
+            $token = $parser->parse($data);
+            // 创建验证器
+            $validator = new Validator();
+            // 获取系统默认时区
+            $systemTimezone = date_default_timezone_get();
+            $timezone = new \DateTimeZone($systemTimezone);
+            $time = new SystemClock($timezone);
+            // 使用ValidAt约束验证令牌的时间范围
+
+            if (!$validator->validate($token, new StrictValidAt($time)) || !$validator->validate($token, new SignedWith(new Sha256(), InMemory::plainText($token->claims()->get('password'))))) {
+                echo json_encode(retur('出错了', '登陆已过期', 401));
+                exit;
+            } else {
+                // 考虑验证签名https://lcobucci-jwt.readthedocs.io/en/latest/validating-tokens/
+                // 成功 返回用户账号密码
+                $arr =   Db::table('user')->field('*')->where(['email' => $token->claims()->get('username')])->find();
+                unset($array['password'], $array['privateKey'], $array['originalamount']);
+                echo json_encode(retur('成功', $arr));
+            }
+        } else {
+            //账号登陆失效
+            echo json_encode(retur('出错了', '非法登陆', 401));
+            exit;
         }
     }
 }

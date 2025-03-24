@@ -231,7 +231,12 @@ function mnemonic()
 
 }
 
-
+// 获取 IP 前两段
+function getIPPrefix($ip)
+{
+    $parts = explode('.', $ip);
+    return $parts[0] . '.' . $parts[1];
+}
 
 
 // function sendMessage($chat_id, $message)
