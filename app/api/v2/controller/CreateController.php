@@ -56,7 +56,7 @@ class CreateController extends Controller
         //判断邮箱是否存在
         $arr =  Db::table('user')->where(['email' => $data['email']])->find();
         if ($arr) {
-            echo json_encode(retur('失败', '邮箱已存在', 495));
+            echo json_encode(retur('失败', '邮箱已存在,请更换', 495));
             exit;
         }
 
