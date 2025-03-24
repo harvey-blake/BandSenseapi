@@ -45,7 +45,7 @@ function mail($to, $title, $text)
 
     if ($rusl) {
         Db::table('mailcode')->insert(['mail' => strtolower($to), 'code' => $verificationCode, 'ip' => $ip]);
-        echo json_encode(retur('成功', '发送成功'));
+        echo json_encode(retur('成功', '验证码发送成功'));
     } else {
         echo json_encode(retur('失败', '发送失败', 404));
     }

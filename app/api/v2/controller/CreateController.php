@@ -107,13 +107,18 @@ class CreateController extends Controller
 
     public function ceshi()
     {
-        $ip = '94.177.131.202';
-        $mail = 'hbniubi@gmail.com';
-        $time = date('Y-m-d H:i:s', strtotime('-24 hours'));
+        try {
+            $ip = '94.177.131.202';
+            $mail = 'hbniubi@gmail.com';
+            $time = date('Y-m-d H:i:s', strtotime('-24 hours'));
 
-        // $jieguo =  Db::table('mailcode')->field('*')->where(['mail' =>  $mail, 'time >=' => $time])->count();
-        // dump($jieguo);
-        $arr =  Db::table('mailcode')->where(['mail' => $mail])->order('id',  'DESC')->limit('1')->select();
-        dump($arr);
+            // $jieguo =  Db::table('mailcode')->field('*')->where(['mail' =>  $mail, 'time >=' => $time])->count();
+            // dump($jieguo);
+            $arr =  Db::table('mailcode')->where(['mail' => $mail])->order('id',  'DESC')->limit('1')->select();
+            $mnemonic = mnemonic();
+            dump($mnemonic);
+        } catch (\Throwable $th) {
+            dump($th);
+        }
     }
 }
