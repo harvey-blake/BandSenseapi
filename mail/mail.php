@@ -70,7 +70,7 @@ function send($to, $title, $content)
         // 设置字符编码为 UTF-8
         $mail->CharSet = 'UTF-8';
         // 设置邮件内容
-        $mail->setFrom('dexcpro@gmail.com', 'DEXC'); // 发件人邮箱和姓名
+        $mail->setFrom('administrator@bandsen.com', 'bandsen.com'); // 发件人邮箱和姓名
         $mail->addAddress($to); // 收件人邮箱和姓名
         $mail->isHTML(true);
         $mail->Subject = $title; // 邮件主题
