@@ -48,7 +48,7 @@ class CreateController extends Controller
         if (isset($data['Superior'])) {
             $arr =  Db::table('user')->where(['Superior' => $data['Superior']])->find();
             if (!$arr) {
-                echo json_encode(retur('失败', '邀请码不存在', 422));
+                echo json_encode(retur('失败', '邀请码不存在', 494));
                 exit;
             }
         }
@@ -56,7 +56,7 @@ class CreateController extends Controller
         //判断邮箱是否存在
         $arr =  Db::table('user')->where(['email' => $data['email']])->find();
         if ($arr) {
-            echo json_encode(retur('失败', '邮箱已存在', 422));
+            echo json_encode(retur('失败', '邮箱已存在', 495));
             exit;
         }
 
@@ -72,7 +72,7 @@ class CreateController extends Controller
         $arr =  Db::table('mailcode')->where(['mail' => $data['email'], 'time >=' => $time])->order('id',  'desc')->limit(1)->select();
 
         if ($arr[0]['code'] != $data['code']) {
-            echo json_encode(retur('失败', '验证码错误', 422));
+            echo json_encode(retur('失败', '验证码错误', 493));
             exit;
         }
 
