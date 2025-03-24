@@ -234,8 +234,18 @@ function mnemonic()
 // 获取 IP 前两段
 function getIPPrefix($ip)
 {
-    $parts = explode('.', $ip);
-    return $parts[0] . '.' . $parts[1];
+    // 检查 IP 格式是否有效
+    try {
+        if (filter_var($ip, FILTER_VALIDATE_IP)) {
+            $parts = explode('.', $ip);
+            if (count($parts) >= 2) {
+                return $parts[0] . '.' . $parts[1];  // 返回前两段
+            }
+        }
+        return null;  // 返回 null 或空值，表示无效 IP
+    } catch (\Throwable $th) {
+        return null;
+    }
 }
 
 
