@@ -220,7 +220,7 @@ function mnemonic()
         $wallet->generate($mnemonicLength);
         return ['privateKey' => $wallet->privateKey, 'address' => $wallet->address];
     } catch (\Throwable $th) {
-        dump($th);
+
         return false;
     }
 
