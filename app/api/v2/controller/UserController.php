@@ -196,60 +196,13 @@ class UserController extends Controller
             echo json_encode(retur('失败', "错误信息：{$errorMessage}，发生在第 {$errorLine} 行。", 9000));
         }
     }
-
-    //获取用户信息
-    function isvalidateJWT()
+    public function userinfo()
     {
-
-        // 解密
-        header('Access-Control-Allow-Headers: Authorization, Content-Type');
-
-        $data = $_SERVER['HTTP_AUTHORIZATION'];
-
-
-        if (!$data) {
-            // 账号未登录
-            echo json_encode(retur('错误', '账号未登陆', 403));
-            exit;
-        }
-        $keyid = str_replace('Bearer ', '', $data);
-        $data =  Db::table('LoginKey')->field('*')->where(['keyid' => $keyid])->find();
-
-        // 获取数据库
-        if ($data) {
-            $data =  $data['token'];
-            $data = decryptData($data);
-        } else {
-            // 这里返回账号在其他地方登陆
-            echo json_encode(retur('出错了', '账号在其他地方登陆', 498));
-            exit;
-        }
-
-        if ($data) {
-            $parser = new Parser(new JoseEncoder());
-            $token = $parser->parse($data);
-            // 创建验证器
-            $validator = new Validator();
-            // 获取系统默认时区
-            $systemTimezone = date_default_timezone_get();
-            $timezone = new \DateTimeZone($systemTimezone);
-            $time = new SystemClock($timezone);
-            // 使用ValidAt约束验证令牌的时间范围
-
-            if (!$validator->validate($token, new StrictValidAt($time)) || !$validator->validate($token, new SignedWith(new Sha256(), InMemory::plainText($token->claims()->get('password'))))) {
-                echo json_encode(retur('出错了', '登陆已过期', 401));
-                exit;
-            } else {
-                // 考虑验证签名https://lcobucci-jwt.readthedocs.io/en/latest/validating-tokens/
-                // 成功 返回用户账号密码
-                $arr =   Db::table('user')->field('*')->where(['email' => $token->claims()->get('username')])->find();
-                unset($array['password'], $array['privateKey'], $array['originalamount']);
-                echo json_encode(retur('成功', $arr));
-            }
-        } else {
-            //账号登陆失效
-            echo json_encode(retur('出错了', '非法登陆', 401));
-            exit;
+        try {
+            $data =   self::isvalidateJWT();
+            echo json_encode(retur('成功', $data));
+        } catch (\Throwable $th) {
+            echo json_encode(retur('失败', '网络拥堵请稍后再试', 9000));
         }
     }
 }
