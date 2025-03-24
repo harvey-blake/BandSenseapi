@@ -66,7 +66,7 @@ class CreateController extends Controller
 
         $jieguo =  Db::table('mailcode')->field('*')->where(['mail' =>  $mail, 'time >=' => $time])->count();
         dump($jieguo);
-        $arr =  Db::table('mailcode')->where(['mail' => $mail])->order('id', 'DESC')->limit(1)->find();
+        $arr =  Db::table('mailcode')->where(['mail' => $mail])->order('time', 'DESC')->limit('1')->find();
         dump($arr);
     }
 }
