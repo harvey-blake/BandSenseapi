@@ -184,6 +184,8 @@ class UserController extends Controller
             }
 
             if ($arr > 0) {
+                $ip = $_SERVER['REMOTE_ADDR'];
+                Db::table('user')->where(['email' => $username])->update(['ip' => $ip]);
                 echo json_encode(retur('登陆成功', $uniqid));
             } else {
                 echo json_encode(retur('失败', '网络拥堵请稍后再试', 9000));
