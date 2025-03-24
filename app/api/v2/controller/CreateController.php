@@ -50,7 +50,12 @@ class CreateController extends Controller
             exit;
         }
         //判断验证码是否正确
-        $arr =  Db::table('mailcode')->where(['mail' => $data['email']])->order('id', 'DESC')->limit(1)->select();
+        $arr =  Db::table('mailcode')->where(['mail' => $data['email']])->order('id', 'DESC')->limit(1)->find();
+
+        if ($arr['code'] != $data['code']) {
+            echo json_encode(retur('失败', '验证码错误', 422));
+            exit;
+        }
     }
 
     public function ceshi()
@@ -61,7 +66,7 @@ class CreateController extends Controller
 
         $jieguo =  Db::table('mailcode')->field('*')->where(['mail' =>  $mail, 'time >=' => $time])->count();
         dump($jieguo);
-        $arr =  Db::table('mailcode')->where(['mail' => $mail])->order('id', 'DESC')->limit(1)->select();
+        $arr =  Db::table('mailcode')->where(['mail' => $mail])->order('id', 'DESC')->limit(1)->find();
         dump($arr);
     }
 }
