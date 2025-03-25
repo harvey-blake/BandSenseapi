@@ -86,15 +86,12 @@ class BinanceController extends Controller
         // 更新账户
         self::updateaccount($user['id']);
 
-        $arr =  Db::table('cexkey')->where(['userid' => $user['id']])->order('time', 'desc')->limit($data['perPage'])->page($data['page'])->select();
-        if (count($arr) > 0) {
-            foreach ($arr as $key => $value) {
-                $arr[$key]['Balance'] = json_decode(stripslashes($arr[$key]['Balance']), true);
-                $arr[$key]['APIKey'] = substr($arr[$key]['APIKey'], 0, 10) . '...' . substr($arr[$key]['APIKey'], -15);
-                $arr[$key]['income'] = Db::table('income')->where(['keyid' => $value['id']])->SUM('income') ?? 0;
-                unset($arr[$key]['SecretKey']);
-                # code...
-            }
+        $arr =  Db::table('cexkey')->where(['userid' => $user['id'], 'Label' => $data['Label']])->find();
+        if ($arr) {
+            $arr['Balance'] = json_decode(stripslashes($arr['Balance']), true);
+            $arr['APIKey'] = substr($arr['APIKey'], 0, 10) . '...' . substr($arr['APIKey'], -15);
+            unset($arr['SecretKey']);
+            # code...
             echo json_encode(retur($arr));
         } else {
             echo json_encode(retur('错误', $arr, 422));
