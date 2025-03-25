@@ -49,7 +49,7 @@ class UserController extends Controller
         }
 
         //判断邮箱是否存在
-        $arr =  Db::table('user')->where(['email' => $data['email']])->find();
+        $arr =  Db::table('user')->where(['email' => strtolower($data['email'])])->find();
         if ($arr) {
             echo json_encode(retur('失败', '邮箱已存在,请更换', 495));
             exit;
@@ -58,13 +58,13 @@ class UserController extends Controller
         //判断验证码是否存在
         if (!isset($data['code'])) {
             //发送验证码
-            mail($data['email'], '波段智投-用户注册', '注册新账户');
+            mail(strtolower($data['email']), '波段智投-用户注册', '注册新账户');
             exit;
         }
         //判断验证码是否正确
         $time = date('Y-m-d H:i:s', strtotime('-5 minutes'));
 
-        $arr =  Db::table('mailcode')->where(['mail' => $data['email'], 'time >=' => $time])->order('id',  'desc')->limit(1)->select();
+        $arr =  Db::table('mailcode')->where(['mail' => strtolower($data['email']), 'time >=' => $time])->order('id',  'desc')->limit(1)->select();
 
         if ($arr[0]['code'] != $data['code']) {
             echo json_encode(retur('失败', '验证码错误', 493));
@@ -111,7 +111,7 @@ class UserController extends Controller
             echo json_encode(retur('失败', '参数错误', 422));
             exit;
         }
-        $arr =  Db::table('user')->where(['email' => $data['email'], 'password' => $data['password']])->find();
+        $arr =  Db::table('user')->where(['email' => strtolower($data['email']), 'password' => $data['password']])->find();
         if (!$arr) {
             echo json_encode(retur('失败', '账号或密码错误', 422));
             exit;
@@ -124,7 +124,7 @@ class UserController extends Controller
             if ($ip != $lastip) {
                 //发送邮件
 
-                mail($data['email'], '波段智投-用户登陆', '登陆');
+                mail(strtolower($data['email']), '波段智投-用户登陆', '登陆');
                 exit;
             }
         }
@@ -134,14 +134,14 @@ class UserController extends Controller
 
             $time = date('Y-m-d H:i:s', strtotime('-5 minutes'));
 
-            $arr =  Db::table('mailcode')->where(['mail' => $data['email'], 'time >=' => $time])->order('id',  'desc')->limit(1)->select();
+            $arr =  Db::table('mailcode')->where(['mail' => strtolower($data['email']), 'time >=' => $time])->order('id',  'desc')->limit(1)->select();
 
             if ($arr[0]['code'] != $data['code']) {
                 echo json_encode(retur('失败', '验证码错误', 493));
                 exit;
             }
         }
-        self::getJWT($data['email'], $data['password']);
+        self::getJWT(strtolower($data['email']), $data['password']);
         //这里 登陆成功
 
 
@@ -206,7 +206,7 @@ class UserController extends Controller
             exit;
         }
         //判断邮箱是否存在
-        $arr =  Db::table('user')->where(['email' => $data['email']])->find();
+        $arr =  Db::table('user')->where(['email' => strtolower($data['email'])])->find();
         if (!$arr) {
             echo json_encode(retur('失败', '邮箱不存在', 495));
             exit;
@@ -214,12 +214,12 @@ class UserController extends Controller
         //发送验证码
 
         if (!isset($data['code'])) {
-            mail($data['email'], '波段智投-找回密码', '找回密码');
+            mail(strtolower($data['email']), '波段智投-找回密码', '找回密码');
             exit;
         }
         //判断验证码是否正确
         $time = date('Y-m-d H:i:s', strtotime('-20 minutes'));
-        $arr =  Db::table('mailcode')->where(['mail' => $data['email'], 'time >=' => $time])->order('id',  'desc')->limit(1)->select();
+        $arr =  Db::table('mailcode')->where(['mail' => strtolower($data['email']), 'time >=' => $time])->order('id',  'desc')->limit(1)->select();
         if ($arr[0]['code'] != $data['code']) {
             echo json_encode(retur('失败', '验证码错误', 493));
             exit;
@@ -229,7 +229,7 @@ class UserController extends Controller
             exit;
         }
         //修改密码
-        $arr =  Db::table('user')->where(['email' => $data['email']])->update(['password' => $data['password']]);
+        $arr =  Db::table('user')->where(['email' => strtolower($data['email'])])->update(['password' => $data['password']]);
         if ($arr) {
             echo json_encode(retur('成功', '修改成功'));
         } else {
