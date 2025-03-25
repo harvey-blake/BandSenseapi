@@ -196,6 +196,46 @@ class UserController extends Controller
             echo json_encode(retur('失败', "错误信息：{$errorMessage}，发生在第 {$errorLine} 行。", 9000));
         }
     }
+
+    public function Verifyemail()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        //判断 邮箱  密码  是否存在
+        if (!isset($data['email'])) {
+            echo json_encode(retur('失败', '请输入邮箱地址', 422));
+            exit;
+        }
+        //判断邮箱是否存在
+        $arr =  Db::table('user')->where(['email' => $data['email']])->find();
+        if (!$arr) {
+            echo json_encode(retur('失败', '邮箱不存在', 495));
+            exit;
+        }
+        //发送验证码
+
+        if (!isset($data['code'])) {
+            mail($data['email'], '波段智投-找回密码', '找回密码');
+            exit;
+        }
+        //判断验证码是否正确
+        $time = date('Y-m-d H:i:s', strtotime('-20 minutes'));
+        $arr =  Db::table('mailcode')->where(['mail' => $data['email'], 'time >=' => $time])->order('id',  'desc')->limit(1)->select();
+        if ($arr[0]['code'] != $data['code']) {
+            echo json_encode(retur('失败', '验证码错误', 493));
+            exit;
+        }
+        if (!isset($data['password'])) {
+            exit;
+        }
+        //修改密码
+        $arr =  Db::table('user')->where(['email' => $data['email']])->update(['password' => $data['password']]);
+        if ($arr) {
+            echo json_encode(retur('成功', '修改成功'));
+        } else {
+            echo json_encode(retur('失败', '未修改任何数据', 422));
+        }
+    }
+
     public function userinfo()
     {
         try {
