@@ -225,6 +225,7 @@ class UserController extends Controller
             exit;
         }
         if (!isset($data['password'])) {
+            echo json_encode(retur('成功', '验证成功'));
             exit;
         }
         //修改密码
