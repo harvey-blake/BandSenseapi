@@ -36,7 +36,11 @@ class BinanceController extends Controller
 
             $client = self::getClient($data['APIKey'], $data['SecretKey']);
 
-            $response = $client->account();
+            $response = $client->account(
+                [
+                    'omitZeroBalances' => true, // 隐藏零余额
+                ]
+            );
 
             $arr =  Db::table('cexkey')->field('*')->where(['userid' => $user['id'], 'Label' => $data['Label']])->find();
             if (!$arr) {
