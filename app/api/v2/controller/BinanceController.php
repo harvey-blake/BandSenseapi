@@ -94,7 +94,7 @@ class BinanceController extends Controller
             $arr['APIKey'] = substr($arr['APIKey'], 0, 10) . '...' . substr($arr['APIKey'], -15);
             unset($arr['SecretKey']);
             # code...
-            echo json_encode(retur($arr));
+            echo json_encode(retur('成功', $arr));
         } else {
             echo json_encode(retur('错误', $arr, 422));
         }
