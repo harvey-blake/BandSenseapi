@@ -69,7 +69,9 @@ class BinanceController extends Controller
             foreach ($arr as $key => $value) {
                 $client = self::getClient($value['APIKey'], $value['SecretKey']);
 
-                $response = $client->account();
+                $response = $client->account([
+                    'omitZeroBalances' => true, // 隐藏零余额
+                ]);
                 $arr =  Db::table('cexkey')->where(['APIKey' => $value['APIKey']])->update(['canTrade' => $response['canTrade'], 'accountType' => $response['accountType'], 'Balance' => $response['balances']]);
             }
         } catch (\Throwable $th) {
