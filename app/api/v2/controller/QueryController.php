@@ -36,7 +36,7 @@ class QueryController extends Controller
 
         if ($Strategy) {
 
-            echo json_encode(retur('成功', '添加成功'));
+            echo json_encode(retur('成功', $Strategy));
         } else {
             echo json_encode(retur('失败', '添加失败请查看参数', 422));
         }
