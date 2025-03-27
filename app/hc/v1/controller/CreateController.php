@@ -109,7 +109,7 @@ class CreateController extends Controller
                 $balance =  $myCallback->result['balance']->value;
                 $balance = bcdiv($balance, 10 ** 18, 18);
                 //计算充值金额
-                $amount =  bcsub($balance, $arr['Balance'], 18);
+                $amount =  bcsub($balance, $arr['originalamount'], 18);
                 if ($amount > 0) {
                     //充值
                     $Rechargeamount = bcadd($arr['Balance'], $amount, 18);
