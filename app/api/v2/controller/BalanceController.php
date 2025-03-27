@@ -79,13 +79,14 @@ class  BalanceController extends Controller
             $Rechargeamount = bcadd($user['Balance'], $amount, 18);
 
             // 更新用户的数据库余额，并记录最新的原始区块链余额
-            Db::table('userinfo')->where(['id' => $user['id']])->update(['Balance' => $Rechargeamount, 'originalamount' => $balance]);
-
+            Db::table('user')->where(['id' => $user['id']])->update(['Balance' => $Rechargeamount, 'originalamount' => $balance]);
+            //记录充值
+            Db::table('Balancerecord')->insert(['userid' => $user['id'], 'Amount' => $amount, 'Remark' => '用户充值']);
             // 返回 JSON 响应，通知前端充值成功，并返回最新余额
             echo json_encode(retur('成功', $Rechargeamount));
         } else {
 
-            Db::table('userinfo')->where(['id' => $user['id']])->update(['originalamount' => $balance]);
+            Db::table('user')->where(['id' => $user['id']])->update(['originalamount' => $balance]);
             echo json_encode(retur('成功', 0));
         }
     }

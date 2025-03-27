@@ -238,7 +238,7 @@ class Controller
                 // 考虑验证签名https://lcobucci-jwt.readthedocs.io/en/latest/validating-tokens/
                 // 成功 返回用户账号密码
                 $arr =   Db::table('user')->field('*')->where(['email' => $token->claims()->get('username')])->find();
-                unset($arr['password'], $arr['privateKey'], $arr['originalamount']);
+                unset($arr['password'], $arr['privateKey'], $arr['Superior'], $arr['ip']);
                 return $arr;
             }
         } else {
