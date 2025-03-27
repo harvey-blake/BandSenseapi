@@ -35,7 +35,7 @@ class  UpdateController extends Controller
                 echo json_encode(retur('失败', '添加失败请查看参数', 422));
             }
         } else {
-            dump($data['compoundinterest']);
+
             $arr =   Db::table('Strategy')->where(['userid' => $user['id'], 'Label' => $data['Label'], 'token' => $data['token']])->update(['Strategy' => $data['Strategy'], 'compoundinterest' => $data['compoundinterest']]);
 
             if ($arr > 0) {
