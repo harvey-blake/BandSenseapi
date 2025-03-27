@@ -23,7 +23,7 @@ class  UpdateController extends Controller
             exit;
         }
 
-        $arr =  Db::table('token')->where(['token' => $data['token']])->find();
+        $arr =  Db::table('token')->where(['symbol' => $data['token']])->find();
         if (!$arr) {
             echo json_encode(retur('失败', '暂不支持此代币', 489));
             exit;
