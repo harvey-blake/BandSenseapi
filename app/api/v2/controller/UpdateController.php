@@ -28,14 +28,14 @@ class  UpdateController extends Controller
 
         $Strategy = Db::table('Strategy')->field('*')->where(['userid' => $user['id'], 'Label' => $data['Label'], 'token' => $data['token']])->find();
         if (!$Strategy) {
-            $arr = Db::table('Strategy')->insert(['userid' => $user['id'], 'Label' => $data['Label'], 'token' => $data['token'], 'Strategy' => $data['Strategy']]);
+            $arr = Db::table('Strategy')->insert(['userid' => $user['id'], 'Label' => $data['Label'], 'token' => $data['token'], 'compoundinterest' => $data['compoundinterest'], 'Strategy' => $data['Strategy']]);
             if ($arr > 0) {
                 echo json_encode(retur('成功', '添加成功'));
             } else {
                 echo json_encode(retur('失败', '添加失败请查看参数', 422));
             }
         } else {
-            $arr =   Db::table('Strategy')->where(['userid' => $user['id'], 'Label' => $data['Label'], 'token' => $data['token']])->update(['Strategy' => $data['Strategy']]);
+            $arr =   Db::table('Strategy')->where(['userid' => $user['id'], 'Label' => $data['Label'], 'compoundinterest' => $data['compoundinterest'], 'token' => $data['token']])->update(['Strategy' => $data['Strategy']]);
 
             if ($arr > 0) {
                 echo json_encode(retur('成功', '修改成功'));
