@@ -36,7 +36,7 @@ class  UpdateController extends Controller
             }
         } else {
             dump($data['compoundinterest']);
-            $arr =   Db::table('Strategy')->where(['userid' => $user['id'], 'Label' => $data['Label'], 'compoundinterest' => $data['compoundinterest'], 'token' => $data['token']])->update(['Strategy' => $data['Strategy']]);
+            $arr =   Db::table('Strategy')->where(['userid' => $user['id'], 'Label' => $data['Label'], 'token' => $data['token']])->update(['Strategy' => $data['Strategy'], 'compoundinterest' => $data['compoundinterest']]);
 
             if ($arr > 0) {
                 echo json_encode(retur('成功', '修改成功'));
