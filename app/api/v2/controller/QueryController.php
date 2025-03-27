@@ -11,10 +11,7 @@ use common\Controller;
 
 class QueryController extends Controller
 {
-    public function too()
-    {
-        echo '通过';
-    }
+
     public function tokenlist()
     {
         $arr =  Db::table('token')->select();

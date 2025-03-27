@@ -23,8 +23,16 @@ class  UpdateController extends Controller
             exit;
         }
 
+        $arr =  Db::table('token')->where(['token' => $data['token']])->find();
+        if (!$arr) {
+            echo json_encode(retur('失败', '暂不支持此代币', 489));
+            exit;
+        }
+
         // 验证用户身份，获取用户信息（如 id、钱包地址、余额等）
         $user = self::isvalidateJWT();
+
+
 
         $Strategy = Db::table('Strategy')->field('*')->where(['userid' => $user['id'], 'Label' => $data['Label'], 'token' => $data['token']])->find();
         if (!$Strategy) {
