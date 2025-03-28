@@ -56,4 +56,22 @@ class QueryController extends Controller
             echo json_encode(retur('失败', '无数据', 422));
         }
     }
+
+    public function Profit()
+    {
+        try {
+            $user = self::isvalidateJWT();
+            $todayStart = date('Y-m-d 00:00:00');  // 今日开始时间
+            $todayEnd = date('Y-m-d 23:59:59');    // 今日结束时间
+            $monthStart = date('Y-m-01 00:00:00');  // 本月开始时间
+            $monthEnd = date('Y-m-t 23:59:59');     // 本月结束时间
+            $todasum =  Db::table('income')->where(['userid' => $user['id'], 'time >=' => $todayStart, 'time <=' => $todayEnd])->SUM('income') ?? 0;
+            $monthsum =  Db::table('income')->where(['userid' => $user['id'], 'time >=' => $monthStart, 'time <=' => $monthEnd])->SUM('income') ?? 0;
+            $pastProfit =  Db::table('income')->where(['userid' => $user['id']])->SUM('income') ?? 0;
+
+            echo json_encode(retur('成功', ['todasum' => $todasum, 'monthsum' => $monthsum, 'pastProfit' => $pastProfit]));
+        } catch (\Throwable $th) {
+            echo json_encode(retur('失败', '未知错误', 409));
+        }
+    }
 }
