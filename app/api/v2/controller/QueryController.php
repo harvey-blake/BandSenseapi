@@ -48,7 +48,9 @@ class QueryController extends Controller
         $user = self::isvalidateJWT();
         $Strategy = Db::table('Strategy')->field('*')->where(['userid' => $user['id'], 'Label' => $data['Label']])->select();
         if (count($Strategy) > 0) {
-
+            foreach ($Strategy as $key => $value) {
+                $Strategy[$key]['income'] = Db::table('income')->where(['Strategyid' => $value['id']])->SUM('income') ?? 0;
+            }
             echo json_encode(retur('成功',  $Strategy));
         } else {
             echo json_encode(retur('失败', '无数据', 422));
