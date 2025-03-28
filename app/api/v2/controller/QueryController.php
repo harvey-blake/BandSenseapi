@@ -40,4 +40,18 @@ class QueryController extends Controller
             echo json_encode(retur('失败', '添加失败请查看参数', 422));
         }
     }
+
+    public function Strategyall()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        $user = self::isvalidateJWT();
+        $Strategy = Db::table('Strategy')->field('*')->where(['userid' => $user['id'], 'Label' => $data['Label']])->select();
+        if (count($Strategy) > 0) {
+
+            echo json_encode(retur('成功',  $Strategy));
+        } else {
+            echo json_encode(retur('失败', '无数据', 422));
+        }
+    }
 }
