@@ -115,7 +115,7 @@ class BinanceController extends Controller
         if (count($arr) > 0) {
             foreach ($arr as $key => $value) {
                 $arr[$key]['orderinfo'] = json_decode(stripslashes($arr[$key]['orderinfo']), true);
-                $arr[$key]['exchangeInfo'] = Db::table('token')->field('baseAsset', 'quoteAsset')->where(['symbol' => $data['symbol']])->find();
+                $arr[$key]['exchangeInfo'] = Db::table('token')->where(['symbol' => $data['symbol']])->find();
             }
             echo json_encode(retur($count, $arr));
         } else {
