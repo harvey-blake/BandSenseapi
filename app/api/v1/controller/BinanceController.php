@@ -143,7 +143,10 @@ class BinanceController extends Controller
 
                 ]
             );
-
+            Db::table('bnsell')->insert([
+                'token' => 'buy',
+                'ding' => $response
+            ]);
             // 计算本次订单的净数量（使用 BCMath）
             $totalNetQty = '0';
             foreach ($response['fills'] as $fill) {
@@ -260,7 +263,7 @@ class BinanceController extends Controller
             $lastOrder = $Historicalorders[count($Historicalorders) - 1];
             $response = $client->exchangeInfo(['symbol' => $Strategy['token']]);
 
-            $lotSize = array_filter($response['symbols'][0]['filters'], fn($filter) => $filter['filterType'] === 'LOT_SIZE');
+            $lotSize = array_filter($response['symbols'][0]['filters'], fn ($filter) => $filter['filterType'] === 'LOT_SIZE');
 
             $lotSize = array_values($lotSize); // 获取第一个匹配的过滤器
             // dump($lotSize[0]['stepSize']);
@@ -293,6 +296,11 @@ class BinanceController extends Controller
 
                 ]
             );
+
+            Db::table('bnsell')->insert([
+                'token' => 'sell',
+                'ding' => $response
+            ]);
 
             // 计算本次交易的手续费总额
             $totalCommission = 0;
