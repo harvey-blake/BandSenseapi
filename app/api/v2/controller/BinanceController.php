@@ -134,6 +134,7 @@ class BinanceController extends Controller
 
         if ($arr) {
             $arr['Position'] =  Db::table('buyorder')->where(['Strategyid' => $arr['id'], 'state' => 1])->SUM('origQty') ?? 0;
+            $arr['exchangeInfo'] = Db::table('token')->where(['symbol' => $data['token']])->find();
             echo json_encode(retur('成功', $arr));
         } else {
             echo json_encode(retur('失败', '获取失败', 422));
