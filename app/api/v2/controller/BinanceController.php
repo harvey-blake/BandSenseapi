@@ -101,4 +101,24 @@ class BinanceController extends Controller
         //获取账户
 
     }
+    public function getorder()
+    {
+
+        //根据代币  用户ID
+        $data = json_decode(file_get_contents('php://input'), true);
+        $user = self::isvalidateJWT();
+
+        $arr =  Db::table('bnorder')->where(['userid' => $user['id'], 'symbol' => $data['symbol'], 'tab' => $data['tab']])->order('time', 'desc')->limit($data['perPage'])->page($data['page'])->select();
+
+        $count =  Db::table('bnorder')->where(['userid' => $user['id']])->count();
+
+        if (count($arr) > 0) {
+            foreach ($arr as $key => $value) {
+                $arr[$key]['orderinfo'] = json_decode(stripslashes($arr[$key]['orderinfo']), true);
+            }
+            echo json_encode(retur($count, $arr));
+        } else {
+            echo json_encode(retur($count, $arr, 422));
+        }
+    }
 }
