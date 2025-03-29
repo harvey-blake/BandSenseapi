@@ -292,7 +292,7 @@ class BinanceController extends Controller
                 'SELL',             // 卖出
                 'MARKET',           // 市价单
                 [
-                    'quantity' => $adjustedQuantity, // 卖出的数量，保留8位精度
+                    'quantity' => $adjustedQuantity, // 卖出的数量，注意精度 和步长
 
                 ]
             );
