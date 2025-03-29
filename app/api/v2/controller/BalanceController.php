@@ -62,7 +62,7 @@ class  BalanceController extends Controller
         $contract = new Contract($web3->provider, $abi);
 
         // 调用 balanceOf 查询用户的代币余额
-        $contract->at('0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063')->call('balanceOf', $user['address'], $myCallback);
+        $contract->at('0x55d398326f99059fF775485246999027B3197955')->call('balanceOf', $user['address'], $myCallback);
 
         // 获取 balanceOf 方法返回的余额（单位为 wei）
         $balance =  $myCallback->result['balance']->value;
