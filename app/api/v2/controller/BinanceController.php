@@ -122,4 +122,21 @@ class BinanceController extends Controller
             echo json_encode(retur($count, $arr, 422));
         }
     }
+    public function getordertop()
+    {
+
+        //根据代币  用户ID
+        $data = json_decode(file_get_contents('php://input'), true);
+        $user = self::isvalidateJWT();
+
+        $arr =  Db::table('Strategy')->where(['token' => $data['token'], 'userid' => $user['id']])->find();
+
+
+        if ($arr) {
+            $arr['Position'] =  Db::table('buyorder')->where(['Strategyid' => $arr['id'], 'state' => 1])->SUM('origQty') ?? 0;
+            echo json_encode(retur('成功', $arr));
+        } else {
+            echo json_encode(retur('失败', '获取失败', 422));
+        }
+    }
 }
